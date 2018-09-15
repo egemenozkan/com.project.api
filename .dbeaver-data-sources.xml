@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data-sources>
+	<data-source id="mysql5-165cbf27805-59aa3739b6399789" provider="mysql" driver="mysql5" name="MySQL - 178.62.106.129" save-password="true" read-only="false">
+		<connection host="178.62.106.129" port="3306" server="" database="" url="jdbc:mysql://178.62.106.129:3306/" user="dbuser" password="NwZMcRMQEENTRV5e9g==" type="dev"/>
+	</data-source>
+	<filters/>
+</data-sources>

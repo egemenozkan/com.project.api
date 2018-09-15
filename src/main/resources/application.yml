@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:mysql://178.62.106.129:3306
+    username: dbuser
+    password: Db*12345678
+    driver-class-name: com.mysql.jdbc.Driver
