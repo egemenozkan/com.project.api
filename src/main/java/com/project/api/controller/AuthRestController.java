@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.google.gson.Gson;
@@ -23,6 +24,7 @@ import com.project.api.data.model.ApiResponse;
 import com.project.api.data.model.SignUpRequest;
 import com.project.common.model.User;
 
+@RestController
 public class AuthRestController {
 
     @Autowired

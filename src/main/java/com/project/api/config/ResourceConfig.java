@@ -1,7 +1,5 @@
 package com.project.api.config;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +12,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Configuration
 @EnableResourceServer
@@ -38,13 +38,9 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-	http.requestMatcher(new OAuthRequestedMatcher()).anonymous().disable()
-	.authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll()
-		.antMatchers("/api/test").permitAll()
-		.antMatchers("/api/hello").access("hasAnyRole('USER')")
-		.antMatchers("/api/me").hasAnyRole("USER", "ADMIN")
-		.antMatchers("/api/do").hasAuthority("ROLE_TRUSTED_CLIENT")
-		.antMatchers("/api/register").hasAuthority("ROLE_REGISTER");
+	http.requestMatcher(new OAuthRequestedMatcher()).anonymous().disable().authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll()
+		.antMatchers("/api/test").permitAll().antMatchers("/api/hello").access("hasAnyRole('USER')").antMatchers("/api/me").hasAnyRole("USER", "ADMIN")
+		.antMatchers("/api/do").hasAuthority("ROLE_TRUSTED_CLIENT").antMatchers("/api/register").hasAuthority("ROLE_REGISTER");
     }
 
     private static class OAuthRequestedMatcher implements RequestMatcher {

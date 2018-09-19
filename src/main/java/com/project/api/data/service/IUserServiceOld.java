@@ -6,7 +6,7 @@ import com.project.api.data.enums.UserType;
 import com.project.api.data.model.common.Address;
 import com.project.api.data.model.common.Email;
 import com.project.api.data.model.common.Phone;
-import com.project.api.data.model.common.User;
+import com.project.common.model.User;
 
 public interface IUserServiceOld {
     // UserAccount loadUserByUsername(String username, UserType userType);
