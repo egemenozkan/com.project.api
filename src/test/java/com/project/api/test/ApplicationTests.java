@@ -2,6 +2,8 @@ package com.project.api.test;
 
 import static java.util.Arrays.asList;
 
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
@@ -17,11 +19,12 @@ import org.springframework.security.oauth2.client.token.grant.client.ClientCrede
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.google.gson.Gson;
+import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
+import com.restfb.FacebookClient.AccessToken;
 import com.restfb.Parameter;
 import com.restfb.Version;
 import com.restfb.types.Place;
-import com.restfb.types.User;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -36,18 +39,25 @@ public class ApplicationTests {
 //    private static final String AUTHORIZE_PATH = "/oauth/authorize";
     private static final String CC_CLIENT_ID  = "748547722151955";
     private static final String CLIENT_SECRET = "0906127b57b84d3e7e79ad609e33777c";
+    private static final String APP_TOKEN = "7b5498718e83abbb4fec8bba2e86073c";
 //    private static final String SCOPE = "read";
-//    
+//    // https://developers.facebook.com/docs/places/web/search
     
 	@Test
 	public void contextLoads() {
-		DefaultFacebookClient facebookClient = new DefaultFacebookClient(Version.VERSION_3_1);
-		facebookClient.obtainAppAccessToken(CC_CLIENT_ID, CLIENT_SECRET);
+		
+		AccessToken accessToken = new DefaultFacebookClient(Version.VERSION_3_1).obtainAppAccessToken(CC_CLIENT_ID, CLIENT_SECRET);
+		DefaultFacebookClient facebookClient = new DefaultFacebookClient(accessToken.getAccessToken(), Version.VERSION_3_1);
+		logger.warn("accessToken: {}", gson.toJson(accessToken));
 		try {
-			Place place = facebookClient.fetchObject("search",Place.class,
-					Parameter.with("q", "Crystal"),
-					Parameter.with("type", "place"));
-			logger.warn(gson.toJson(place));
+
+			Connection<Place> publicSearch = facebookClient.fetchConnection("search", Place.class,
+					    Parameter.with("q", "Crystal W"), Parameter.with("type", "place"),
+					    Parameter.with("center", "38.734802,35.467987"),
+					    Parameter.with("distance", 400000),
+					    Parameter.with("fields", "about, name, category_list, checkins, rating_count, overall_star_rating, location, is_verified"));
+			List<Place> places=  publicSearch.getData();
+			logger.warn(places.size() + " " + gson.toJson(places));
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
