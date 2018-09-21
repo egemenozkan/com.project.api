@@ -10,7 +10,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
@@ -19,6 +21,7 @@ import org.springframework.security.oauth2.client.token.grant.client.ClientCrede
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.google.gson.Gson;
+import com.project.event.PlaceEvent;
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient.AccessToken;
@@ -28,6 +31,7 @@ import com.restfb.types.Place;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ComponentScan(basePackages = "com.project")
 public class ApplicationTests {
 
     @Autowired
@@ -42,6 +46,9 @@ public class ApplicationTests {
     private static final String APP_TOKEN = "7b5498718e83abbb4fec8bba2e86073c";
 //    private static final String SCOPE = "read";
 //    // https://developers.facebook.com/docs/places/web/search
+    // https://medium.com/@damithchathuranga/spring-4-3-event-listener-abd47c8b9891
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
     
 	@Test
 	public void contextLoads() {
@@ -50,7 +57,9 @@ public class ApplicationTests {
 		DefaultFacebookClient facebookClient = new DefaultFacebookClient(accessToken.getAccessToken(), Version.VERSION_3_1);
 		logger.warn("accessToken: {}", gson.toJson(accessToken));
 		try {
-
+			PlaceEvent placeEvent = new PlaceEvent(this, "Egemen");
+			applicationEventPublisher.publishEvent(placeEvent);
+			
 			Connection<Place> publicSearch = facebookClient.fetchConnection("search", Place.class,
 					    Parameter.with("q", "Crystal W"), Parameter.with("type", "place"),
 					    Parameter.with("center", "38.734802,35.467987"),
