@@ -169,7 +169,7 @@ public class PlaceService implements IPlaceService {
 				
 			}
 			
-		} else if (place.getType() == PlaceType.SHOPPING || place.getType() == PlaceType.EATING_DRINKING) {
+		} else if (place.getType() == PlaceType.SHOPPING || place.getType() == PlaceType.RESTAURANT_CAFE) {
 			if (place.getId() == 0) {
 				placeMapper.createPlace(place);
 			} else {

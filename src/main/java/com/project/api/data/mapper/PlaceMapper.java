@@ -12,8 +12,8 @@ import org.apache.ibatis.annotations.Update;
 
 import com.project.api.data.model.common.Address;
 import com.project.api.data.model.common.MyPlace;
-import com.project.api.data.model.place.EatingDrinking;
 import com.project.api.data.model.place.Place;
+import com.project.api.data.model.place.RestaurantCafe;
 
 @Mapper
 public interface PlaceMapper {
@@ -46,10 +46,10 @@ public interface PlaceMapper {
 	
 	@Insert("INSERT INTO project.place(type) VALUES(#{type.id}) ")
     @SelectKey(statement = "SELECT last_insert_id() as id", keyProperty = "id", keyColumn = "Id", before = false, resultType = Long.class)
-	void createEatingDrinking(EatingDrinking eatingDrinking);
+	void createRestaurantCafe(RestaurantCafe restaurantCafe);
 	
 	@Update("UPDATE project.place SET")
-	void updateEatingDrinking(EatingDrinking eatingDrinking);
+	void updateRestaurantCafe(RestaurantCafe restaurantCafe);
 	
 	
 
