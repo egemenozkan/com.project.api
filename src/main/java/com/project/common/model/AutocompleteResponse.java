@@ -3,8 +3,9 @@ package com.project.common.model;
 import java.util.List;
 
 public class AutocompleteResponse {
-	private List<AutocompleteData> data;
+	private List data;
 	private String searchQuery;
+	private boolean success;
 	
 	public String getSearchQuery() {
 		return searchQuery;
@@ -14,12 +15,20 @@ public class AutocompleteResponse {
 		this.searchQuery = searchQuery;
 	}
 
-	public List<AutocompleteData> getData() {
+	public List getData() {
 		return data;
 	}
 
-	public void setData(List<AutocompleteData> data) {
+	public void setData(List data) {
 		this.data = data;
+	}
+
+	public boolean isSuccess() {
+	    return success;
+	}
+
+	public void setSuccess(boolean success) {
+	    this.success = success;
 	}
 
 }

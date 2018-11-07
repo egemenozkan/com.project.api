@@ -1,22 +1,27 @@
 package com.project.event;
 
+import java.util.List;
+
 import org.springframework.context.ApplicationEvent;
+
+import com.project.api.data.model.common.MyPlace;
 
 public class PlaceEvent extends ApplicationEvent {
 
-	private static final long serialVersionUID = 4594589591081023398L;
-	private String name;
-	
-	public PlaceEvent(Object source, String name) {
-		super(source);
-		this.name = name;
-	}
+    private static final long serialVersionUID = 4594589591081023398L;
+    private List<MyPlace> places;
 
-	public String getName() {
-		return name;
-	}
+    public PlaceEvent(Object source, List<MyPlace> places) {
+	super(source);
+	this.setPlaces(places);
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}	
+    public List<MyPlace> getPlaces() {
+	return places;
+    }
+
+    public void setPlaces(List<MyPlace> places) {
+	this.places = places;
+    }
+
 }
