@@ -1,0 +1,7 @@
+https://developers.google.com/maps/solutions/store-locator/clothing-store-locator?csw=1
+
+SELECT id, ( 3959 * acos( cos( radians(37) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(-122) ) + sin( radians(37) ) * sin( radians( lat ) ) ) ) AS distance FROM markers HAVING distance < 25 ORDER BY distance LIMIT 0 , 20;
+
+https://www.percona.com/blog/2013/10/21/using-the-new-mysql-spatial-functions-5-6-for-geo-enabled-applications/
+
+https://www.gps-latitude-longitude.com/address-to-longitude-latitude-gps-coordinates

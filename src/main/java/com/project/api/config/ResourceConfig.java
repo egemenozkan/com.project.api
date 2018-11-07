@@ -38,9 +38,17 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-	http.requestMatcher(new OAuthRequestedMatcher()).anonymous().disable().authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll()
-		.antMatchers("/api/test").permitAll().antMatchers("/api/hello").access("hasAnyRole('USER')").antMatchers("/api/me").hasAnyRole("USER", "ADMIN")
-		.antMatchers("/api/do").hasAuthority("ROLE_TRUSTED_CLIENT").antMatchers("/api/register").hasAuthority("ROLE_REGISTER");
+    	http
+    		.requestMatcher(new OAuthRequestedMatcher())
+   // 		.anonymous().disable()
+    		.authorizeRequests()
+    			.antMatchers(HttpMethod.OPTIONS).permitAll()
+    			.antMatchers("/test").permitAll()
+    			.antMatchers("/api/v1/test/**").permitAll()
+    			.antMatchers("/api/hello").access("hasAnyRole('USER')")
+    			.antMatchers("/api/me").hasAnyRole("USER", "ADMIN")
+    			.antMatchers("/api/do").hasAuthority("ROLE_TRUSTED_CLIENT")
+    			.antMatchers("/api/register").hasAuthority("ROLE_REGISTER");
     }
 
     private static class OAuthRequestedMatcher implements RequestMatcher {
@@ -49,7 +57,7 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
 	    // Determine if the client request contained an OAuth Authorization
 	    boolean haveOauth2Token = (auth != null) && (auth.startsWith("Bearer") || auth.startsWith("bearer"));
 	    boolean haveAccessToken = request.getParameter("access_token") != null;
-	    return haveOauth2Token || haveAccessToken;
+	    return haveOauth2Token || haveAccessToken || true;
 	}
     }
 
