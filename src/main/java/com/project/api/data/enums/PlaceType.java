@@ -1,7 +1,7 @@
 package com.project.api.data.enums;
 
 public enum PlaceType {
-	ALL(1), HOTEL_LODGING(2), AIRPORT(3), BUS_TERMINAL(4), SHOPPING(5), NOTSET(0),;
+	ALL(1), HOTEL_LODGING(2), AIRPORT(3), BUS_TERMINAL(4), SHOPPING(5), EATING_DRINKING(6), NOTSET(0),;
 
 	private final int id;
 
