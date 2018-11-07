@@ -18,6 +18,7 @@ import com.project.api.data.mapper.HotelMapper;
 import com.project.api.data.mapper.PlaceMapper;
 import com.project.api.data.model.common.Address;
 import com.project.api.data.model.common.MyPlace;
+import com.project.api.data.model.flight.Airport;
 import com.project.api.data.model.hotel.Hotel;
 import com.project.api.data.model.place.Place;
 import com.project.api.data.model.place.PlaceAutocompleteData;
@@ -147,18 +148,33 @@ public class PlaceService implements IPlaceService {
 				hotel.setName(place.getName());
 				
 				/** Address **/
-//				Address address = new Address();
-//				place.setAddress(address);
+				Address address = new Address();
+				place.setAddress(address);
 				
 				/** PlaceId, hotel does not use its id **/
 				hotel.setId(place.getId());
 				hotelMapper.createHotel(hotel);
 			} else {
+				Hotel hotel = new Hotel();
+				hotel.setName(place.getName());
 				
+				hotelMapper.updateHotel(hotel);
 			}
 			
 		} else if (place.getType() == PlaceType.AIRPORT) {
+			if (place.getId() == 0) {
+    			Airport airport = new Airport();
+    			airport.setName(place.getName());
+			} else {
+				
+			}
 			
+		} else if (place.getType() == PlaceType.SHOPPING || place.getType() == PlaceType.EATING_DRINKING) {
+			if (place.getId() == 0) {
+				placeMapper.createPlace(place);
+			} else {
+				placeMapper.updatePlace(place);
+			}
 		} 
 		
 		return null;

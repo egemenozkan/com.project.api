@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Update;
 
 import com.project.api.data.model.common.Address;
 import com.project.api.data.model.common.MyPlace;
+import com.project.api.data.model.place.EatingDrinking;
 import com.project.api.data.model.place.Place;
 
 @Mapper
@@ -33,13 +34,22 @@ public interface PlaceMapper {
     @SelectKey(statement = "SELECT last_insert_id() as id", keyProperty = "id", keyColumn = "Id", before = false, resultType = Long.class)
 	void createPlace(Place place);
 	
+	@Update("UPDATE project.place SET")
+	void updatePlace(Place place);
+	
 	@Insert("INSERT INTO project.address(lat, lng) VALUES(#{lat}, #{coordinate.x}, #{coordinate.y}, #{fbPlaceId}) "
 			+ "ON DUPLICATE KEY UPDATE lat = #{lat}, lng = #{lng}")
 	void createPlaceAddress(Address address);
 	
-	@Update("INSERT INTO project.address(lat, lng) VALUES(#{lat}, #{coordinate.x}, #{coordinate.y}, #{fbPlaceId}) "
-			+ "ON DUPLICATE KEY UPDATE lat = #{lat}, lng = #{lng}")
+	@Update("INSERT INTO project.address(lat, lng) VALUES(#{lat}, #{coordinate.x}, #{coordinate.y}, #{fbPlaceId})")
 	void updatePlaceAddress(Address address);
+	
+	@Insert("INSERT INTO project.place(type) VALUES(#{type.id}) ")
+    @SelectKey(statement = "SELECT last_insert_id() as id", keyProperty = "id", keyColumn = "Id", before = false, resultType = Long.class)
+	void createEatingDrinking(EatingDrinking eatingDrinking);
+	
+	@Update("UPDATE project.place SET")
+	void updateEatingDrinking(EatingDrinking eatingDrinking);
 	
 	
 
