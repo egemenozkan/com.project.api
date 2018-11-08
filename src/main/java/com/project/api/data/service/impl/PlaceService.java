@@ -148,15 +148,22 @@ public class PlaceService implements IPlaceService {
 				hotel.setName(place.getName());
 				
 				/** Address **/
-				Address address = new Address();
-				place.setAddress(address);
+				Address address = place.getAddress();
+				if (place.getAddress() != null) {
+    				placeMapper.createPlaceAddress(address);
+				}
 				
 				/** PlaceId, hotel does not use its id **/
 				hotel.setId(place.getId());
 				hotelMapper.createHotel(hotel);
+				
+				if (LOG.isDebugEnabled()) {
+					LOG.debug("Hotel (Place) has been created. hotel: {}", gson.toJson(hotel));
+				}
 			} else {
 				Hotel hotel = new Hotel();
 				hotel.setName(place.getName());
+				hotel.setId(place.getId());;
 				
 				hotelMapper.updateHotel(hotel);
 			}
@@ -169,14 +176,19 @@ public class PlaceService implements IPlaceService {
 				
 			}
 			
-		} else if (place.getType() == PlaceType.SHOPPING || place.getType() == PlaceType.RESTAURANT_CAFE) {
+		} else if (place.getType() == PlaceType.SHOPPING) {
 			if (place.getId() == 0) {
 				placeMapper.createPlace(place);
 			} else {
 				placeMapper.updatePlace(place);
 			}
-		} 
-		
+		} else if (place.getType() == PlaceType.RESTAURANT_CAFE) {
+			if (place.getId() == 0) {
+				placeMapper.createPlace(place);
+			} else {
+				placeMapper.updatePlace(place);
+			}
+		} 		
 		return null;
 	}
 

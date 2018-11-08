@@ -3,7 +3,7 @@ package com.project.api.data.model.common;
 import com.project.api.data.enums.AddressType;
 
 public class Address {
-	private int id;
+	private Long id;
 	private AddressType type;
 	private String addressTitle;
 	private String addressLine1;
@@ -22,10 +22,11 @@ public class Address {
 	private int countryId;
 	private String country;
 	
-	public int getId() {
+
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public AddressType getType() {

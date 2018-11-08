@@ -13,6 +13,6 @@ public interface HotelMapper {
     @SelectKey(statement = "select last_insert_id() as id", keyProperty = "id", keyColumn = "Id", before = false, resultType = Long.class)
 	void createHotel(Hotel hotel);
     
-    @Update("UPDATE project.hotel SET name = #{name}, former_name = #{formerName}")
+    @Update("UPDATE project.hotel SET name = #{name}, former_name = #{formerName} WHERE place_id = #{id}")
     void updateHotel(Hotel hotel);
 }

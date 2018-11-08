@@ -62,8 +62,11 @@ public class TransferRestController {
 	@RequestMapping(value = "/transfers/places2", method = RequestMethod.GET)
 	public ResponseEntity<Place> savePlace() {
 		Place place = new Place();
+		place.setId(1L);
 		place.setType(PlaceType.HOTEL_LODGING);
-		place.setName("Test Hotel 2");
+		place.setName("Test Hotel 4");
+		
+		/** Address Save **/
 		Address address = new Address();
 		address.setAddressLine1("Bla bla bla");
 		address.setAddressLine2("address line 2");
@@ -72,8 +75,11 @@ public class TransferRestController {
 		address.setCityId(1);
 		address.setLat(35.3);
 		address.setLng(33.4);
+		place.setAddress(address);
+		/** END of Address Save **/
 		
 		placeService.savePlace(place);
+		LOG.debug("::place {}" , gson.toJson(place));
 //		Place place = placeService.findPlaceById(id);
 //		ResponseEntity<Place> response = new ResponseEntity<Place>(place, HttpStatus.OK);
 

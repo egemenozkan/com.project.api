@@ -37,8 +37,8 @@ public interface PlaceMapper {
 	@Update("UPDATE project.place SET")
 	void updatePlace(Place place);
 	
-	@Insert("INSERT INTO project.address(lat, lng) VALUES(#{lat}, #{coordinate.x}, #{coordinate.y}, #{fbPlaceId}) "
-			+ "ON DUPLICATE KEY UPDATE lat = #{lat}, lng = #{lng}")
+	@Insert("INSERT INTO project.address(lat, lng, address_line_1, address_line_2) VALUES(#{lat}, #{lng}, #{addressLine1}, #{addressLine2})")
+    @SelectKey(statement = "SELECT last_insert_id() as id", keyProperty = "id", keyColumn = "Id", before = false, resultType = Long.class)
 	void createPlaceAddress(Address address);
 	
 	@Update("INSERT INTO project.address(lat, lng) VALUES(#{lat}, #{coordinate.x}, #{coordinate.y}, #{fbPlaceId})")
