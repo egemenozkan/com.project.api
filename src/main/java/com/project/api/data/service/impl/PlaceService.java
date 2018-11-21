@@ -14,6 +14,8 @@ import org.springframework.util.CollectionUtils;
 
 import com.google.gson.Gson;
 import com.project.api.data.enums.PlaceType;
+import com.project.api.data.enums.Star;
+import com.project.api.data.mapper.AirportMapper;
 import com.project.api.data.mapper.HotelMapper;
 import com.project.api.data.mapper.PlaceMapper;
 import com.project.api.data.model.common.Address;
@@ -52,13 +54,10 @@ public class PlaceService implements IPlaceService {
     @Autowired
     private HotelMapper hotelMapper;
 
-    public PlaceMapper getPlaceMapper() {
-	return placeMapper;
-    }
-
-    public void setPlaceMapper(PlaceMapper placeMapper) {
-	this.placeMapper = placeMapper;
-    }
+    @Autowired
+    private AirportMapper airportMapper;
+    
+  
 
     @Override
     public AutocompleteResponse autocompletePlace(String query) {
@@ -141,17 +140,25 @@ public class PlaceService implements IPlaceService {
 
 	@Override
 	public Place savePlace(Place place) {
+		/** Address **/
+		Address address = place.getAddress();
+		if (place.getId() == 0 || (place.getAddress() != null && place.getAddress().getId() == 0)) {
+			placeMapper.createPlaceAddress(address);
+		} else if (place.getId() != 0 && (place.getAddress() != null && place.getAddress().getId() != 0)) {
+			placeMapper.updatePlaceAddress(address);
+		} else {
+			LOG.error("::savePlace PlaceId and AddressId are not defined!..");
+		}
+		/** END of Address **/ 
+		
 		if (place.getType() == PlaceType.HOTEL_LODGING) {
 			if (place.getId() == 0) {
 				placeMapper.createPlace(place);
 				Hotel hotel = new Hotel();
 				hotel.setName(place.getName());
-				
-				/** Address **/
-				Address address = place.getAddress();
-				if (place.getAddress() != null) {
-    				placeMapper.createPlaceAddress(address);
-				}
+				hotel.setOriginalName(place.getOriginalName());
+				hotel.setStar(Star.NOTSET);
+
 				
 				/** PlaceId, hotel does not use its id **/
 				hotel.setId(place.getId());
@@ -160,35 +167,51 @@ public class PlaceService implements IPlaceService {
 				if (LOG.isDebugEnabled()) {
 					LOG.debug("Hotel (Place) has been created. hotel: {}", gson.toJson(hotel));
 				}
-			} else {
-				Hotel hotel = new Hotel();
-				hotel.setName(place.getName());
-				hotel.setId(place.getId());;
-				
-				hotelMapper.updateHotel(hotel);
 			}
-			
 		} else if (place.getType() == PlaceType.AIRPORT) {
 			if (place.getId() == 0) {
+				placeMapper.createPlace(place);
+
     			Airport airport = new Airport();
     			airport.setName(place.getName());
-			} else {
-				
-			}
+    			airport.setLanguage(place.getLanguage());
+    			airport.setOriginalName(place.getOriginalName());
+    			airport.setOriginalLanguage(place.getOriginalLanguage());
+    			airport.setId(place.getId());
+    			
+    			airportMapper.createAirport(airport);
+    			
+    			if (LOG.isDebugEnabled()) {
+					LOG.debug("Airport (Place) has been created. airport: {}", gson.toJson(airport));
+				}
+    			
+			} 
 			
 		} else if (place.getType() == PlaceType.SHOPPING) {
 			if (place.getId() == 0) {
 				placeMapper.createPlace(place);
-			} else {
-				placeMapper.updatePlace(place);
-			}
+
+			} 
 		} else if (place.getType() == PlaceType.RESTAURANT_CAFE) {
 			if (place.getId() == 0) {
 				placeMapper.createPlace(place);
-			} else {
-				placeMapper.updatePlace(place);
 			}
-		} 		
+		}
+		
+		/** PlaceName SAVE--UPDATE **/
+		if (place.getOriginalLanguage().equals(place.getLanguage())) {
+			placeMapper.savePlaceName(place.getOriginalName(), place.getOriginalLanguage().getCode(), place.getId());
+		} else {
+			if (place.getLanguage() != null) {
+				placeMapper.savePlaceName(place.getName(), place.getLanguage().getCode(), place.getId());
+			}
+			if (place.getOriginalLanguage() != null) {
+				placeMapper.savePlaceName(place.getOriginalName(), place.getOriginalLanguage().getCode(), place.getId());
+			}
+		}
+		/** END of PlaceName SAVE--UPDATE **/
+		
+
 		return null;
 	}
 

@@ -1,7 +1,7 @@
 package com.project.api.data.enums;
 
 public enum Star {
-	ALL(1), STAR_3(3), STAR_4(5), STAR_5(5),  NOTSET(0),;
+	ALL(1), STAR_3(3), STAR_4(5), STAR_5(5),  NOTSET(0);
 
 	private final int id;
 

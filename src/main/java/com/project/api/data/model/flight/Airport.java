@@ -1,78 +1,72 @@
 package com.project.api.data.model.flight;
 
 import com.project.api.data.model.common.Location;
+import com.project.api.data.model.place.Place;
 
-public class Airport {
-	private int id;
+public class Airport extends Place {
+	
 	private String iata;
-	private String name;
-	private int venueId;
 	private String icao;
 	private String faa;
-	private int dhmId; 
+	private int dhmId;
 	private Location location;
 	private boolean internationalFlights;
 	private String slug;
-	
-	public int getId() {
-	    return id;
-	}
-	public void setId(int id) {
-	    this.id = id;
-	}
+
 	public String getIata() {
-	    return iata;
+		return iata;
 	}
+
 	public void setIata(String iata) {
-	    this.iata = iata;
+		this.iata = iata;
 	}
-	public String getName() {
-	    return name;
-	}
-	public void setName(String name) {
-	    this.name = name;
-	}
-	public int getVenueId() {
-	    return venueId;
-	}
-	public void setVenueId(int venueId) {
-	    this.venueId = venueId;
-	}
+
 	public String getIcao() {
-	    return icao;
+		return icao;
 	}
+
 	public void setIcao(String icao) {
-	    this.icao = icao;
+		this.icao = icao;
 	}
+
 	public String getFaa() {
-	    return faa;
+		return faa;
 	}
+
 	public void setFaa(String faa) {
-	    this.faa = faa;
+		this.faa = faa;
 	}
+
 	public int getDhmId() {
-	    return dhmId;
+		return dhmId;
 	}
+
 	public void setDhmId(int dhmId) {
-	    this.dhmId = dhmId;
+		this.dhmId = dhmId;
 	}
+
 	public Location getLocation() {
-	    return location;
+		return location;
 	}
+
 	public void setLocation(Location location) {
-	    this.location = location;
+		this.location = location;
 	}
+
 	public boolean isInternationalFlights() {
-	    return internationalFlights;
+		return internationalFlights;
 	}
+
 	public void setInternationalFlights(boolean internationalFlights) {
-	    this.internationalFlights = internationalFlights;
+		this.internationalFlights = internationalFlights;
 	}
+
 	public String getSlug() {
-	    return slug;
+		return slug;
 	}
+
 	public void setSlug(String slug) {
-	    this.slug = slug;
+		this.slug = slug;
 	}
-	
+
 }

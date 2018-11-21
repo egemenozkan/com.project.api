@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.project.api.data.enums.AddressType;
+import com.project.api.data.enums.Language;
 import com.project.api.data.enums.PlaceType;
+import com.project.api.data.enums.Star;
 import com.project.api.data.model.common.Address;
+import com.project.api.data.model.hotel.Hotel;
 import com.project.api.data.model.place.Place;
 import com.project.api.data.service.IPlaceService;
 import com.project.common.model.AutocompleteResponse;
@@ -61,15 +64,24 @@ public class TransferRestController {
 	
 	@RequestMapping(value = "/transfers/places2", method = RequestMethod.GET)
 	public ResponseEntity<Place> savePlace() {
-		Place place = new Place();
-		place.setId(1L);
+		
+		Hotel place = new Hotel();
+		
+		place.setStar(Star.STAR_5);
+		
+		place.setId(20L);
 		place.setType(PlaceType.HOTEL_LODGING);
-		place.setName("Test Hotel 4");
+		place.setName("Test Hotel RU");
+		place.setLanguage(Language.RUSSIAN);
+		place.setOriginalName("Test Otel TR");
+		place.setOriginalLanguage(Language.TURKISH);
 		
 		/** Address Save **/
 		Address address = new Address();
+		address.setId(14);
 		address.setAddressLine1("Bla bla bla");
 		address.setAddressLine2("address line 2");
+		address.setAddressTitle("Adres Başlık Deneme");
 		address.setType(AddressType.NOTSET);
 		address.setRegionId(1);
 		address.setCityId(1);
