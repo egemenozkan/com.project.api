@@ -6,7 +6,7 @@
 
 	<groupId>com.project</groupId>
 	<artifactId>com.project.api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>alfa</version>
 	<packaging>jar</packaging>
 
 	<name>com.opetra.api</name>
@@ -28,7 +28,23 @@
 		<utils.apache-poi.version>3.17</utils.apache-poi.version>
 		<utils.jsoup.version>1.7.2</utils.jsoup.version>
 	</properties>
-
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<spring.profiles.active>dev</spring.profiles.active>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<spring.profiles.active>prod</spring.profiles.active>
+			</properties>
+		</profile>
+	</profiles>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -130,9 +146,9 @@
 		</dependency>
 		<!-- GIS -->
 		<dependency>
-		    <groupId>org.locationtech.spatial4j</groupId>
-		    <artifactId>spatial4j</artifactId>
-		    <version>0.7</version>
+			<groupId>org.locationtech.spatial4j</groupId>
+			<artifactId>spatial4j</artifactId>
+			<version>0.7</version>
 		</dependency>
 	</dependencies>
 
@@ -148,7 +164,22 @@
 		</dependencies>
 	</dependencyManagement>
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
 		<plugins>
+			<!-- <plugin> -->
+			<!-- <groupId>org.springframework.boot</groupId> -->
+			<!-- <artifactId>spring-boot-maven-plugin</artifactId> -->
+			<!-- <configuration> -->
+			<!-- <executable>true</executable> -->
+			<!-- </configuration> -->
+			<!-- </plugin> -->
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

@@ -8,6 +8,6 @@ import com.project.common.model.AutocompleteResponse;
 public interface IPlaceService {
     AutocompleteResponse autocompletePlace(String query); 
     Place findPlaceById(long id);
-    List<Place> findAllPlace();
+    List<Place> findAllPlace(String language, String originalLanguage);
     Place savePlace(Place place);
 }

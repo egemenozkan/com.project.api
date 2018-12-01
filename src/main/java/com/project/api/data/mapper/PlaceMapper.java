@@ -18,17 +18,31 @@ import com.project.api.data.model.place.RestaurantCafe;
 @Mapper
 public interface PlaceMapper {
 
+	final String SELECT_PLACE = "SELECT pv.id, pv.type, pv.slug, #{language} AS language," + 
+			"CASE #{language}" + 
+			" WHEN 'TR' THEN pv.tr_name WHEN 'EN' THEN pv.en_name WHEN 'RU' THEN pv.ru_name WHEN 'DE' THEN pv.de_name END AS name," + 
+			"#{originalLanguage} AS original_language," +
+			"CASE #{originalLanguage}" + 
+			" WHEN 'TR' THEN pv.tr_name WHEN 'EN' THEN pv.en_name WHEN 'RU' THEN pv.ru_name WHEN 'DE' THEN pv.de_name END AS original_name " + 
+			"FROM project.place_view_v2 pv";
+	
+	
+	
 	@Insert("INSERT INTO datapool.place(name, longitude, latitude, fb_place_id) VALUES(#{name}, #{coordinate.x}, #{coordinate.y}, #{fbPlaceId}) "
 			+ "ON DUPLICATE KEY UPDATE name = #{name}, longitude = #{coordinate.x}, latitude = #{coordinate.y}")
 	void saveFacebookPlace(MyPlace place);
 
-	@Select("SELECT pv.id, pv.name, pv.type FROM project.place_view_v2 pv WHERE pv.id = #{id} AND pv.closed 0")
-	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.PlaceType.class, typeHandler = com.project.api.data.mapper.handler.PlaceTypeTypeHandler.class) })
+	@Select(SELECT_PLACE + " WHERE pv.id = #{id}")
+	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.PlaceType.class, typeHandler = com.project.api.data.mapper.handler.PlaceTypeTypeHandler.class),
+			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class),
+			@Result(property = "originalLanguage", column = "original", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	Place findPlaceById(long id);
 	
-	@Select("SELECT pv.id, pv.name, pv.type FROM project.place_view_v2 pv")
-	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.PlaceType.class, typeHandler = com.project.api.data.mapper.handler.PlaceTypeTypeHandler.class) })
-	List<Place> findAllPlace();
+	@Select(SELECT_PLACE)
+	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.PlaceType.class, typeHandler = com.project.api.data.mapper.handler.PlaceTypeTypeHandler.class),
+			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class),
+			@Result(property = "originalLanguage", column = "original", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
+	List<Place> findAllPlace(String language, String originalLanguage);
 	
 	@Insert("INSERT INTO project.place(type, address_id) VALUES(#{type.id}, #{address.id}) ")
     @SelectKey(statement = "SELECT last_insert_id() as id", keyProperty = "id", keyColumn = "Id", before = false, resultType = Long.class)
@@ -46,11 +60,11 @@ public interface PlaceMapper {
 			+ "region_id = #{regionId}, city_id = #{cityId}, post_code = #{postCode}, description = #{description} WHERE id = #{id}")
 	void updatePlaceAddress(Address address);
 	
-	@Insert("INSERT INTO project.place(type) VALUES(#{type.id}) ")
+	@Insert("INSERT INTO project.restaurant_cafe(place_id) VALUES(#{id}) ")
     @SelectKey(statement = "SELECT last_insert_id() as id", keyProperty = "id", keyColumn = "Id", before = false, resultType = Long.class)
 	void createRestaurantCafe(RestaurantCafe restaurantCafe);
 	
-	@Update("UPDATE project.place SET")
+	@Update("UPDATE project.restaurant_cafe SET place_id = place_id WHERE place_id = #{id}")
 	void updateRestaurantCafe(RestaurantCafe restaurantCafe);
 	
 	@Insert("INSERT INTO project.place_name(name, language, place_id) VALUES(#{name}, #{language}, #{placeId}) "

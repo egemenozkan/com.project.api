@@ -15,6 +15,8 @@ public class Place {
 	private PlaceType type;
 	private Address address;
 	
+	private String slug;
+	
 	public long getId() {
 		return id;
 	}
@@ -56,6 +58,12 @@ public class Place {
 	}
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+	public String getSlug() {
+		return slug;
+	}
+	public void setSlug(String slug) {
+		this.slug = slug;
 	}
 
 

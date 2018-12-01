@@ -24,6 +24,7 @@ import com.project.api.data.model.flight.Airport;
 import com.project.api.data.model.hotel.Hotel;
 import com.project.api.data.model.place.Place;
 import com.project.api.data.model.place.PlaceAutocompleteData;
+import com.project.api.data.model.place.RestaurantCafe;
 import com.project.api.data.service.IPlaceService;
 import com.project.common.model.AutocompleteResponse;
 import com.project.event.PlaceEvent;
@@ -133,8 +134,8 @@ public class PlaceService implements IPlaceService {
 	}
 
 	@Override
-	public List<Place> findAllPlace() {
-		List<Place> places = placeMapper.findAllPlace();
+	public List<Place> findAllPlace(String language, String originalLanguage) {
+		List<Place> places = placeMapper.findAllPlace(language, originalLanguage);
 		return places;
 	}
 
@@ -167,6 +168,8 @@ public class PlaceService implements IPlaceService {
 				if (LOG.isDebugEnabled()) {
 					LOG.debug("Hotel (Place) has been created. hotel: {}", gson.toJson(hotel));
 				}
+			} else {
+				placeMapper.updatePlace(place);
 			}
 		} else if (place.getType() == PlaceType.AIRPORT) {
 			if (place.getId() == 0) {
@@ -177,24 +180,44 @@ public class PlaceService implements IPlaceService {
     			airport.setLanguage(place.getLanguage());
     			airport.setOriginalName(place.getOriginalName());
     			airport.setOriginalLanguage(place.getOriginalLanguage());
-    			airport.setId(place.getId());
     			
+    			
+    			/** PlaceId, airport does not use its id **/
+    			airport.setId(place.getId());
     			airportMapper.createAirport(airport);
     			
     			if (LOG.isDebugEnabled()) {
 					LOG.debug("Airport (Place) has been created. airport: {}", gson.toJson(airport));
 				}
-    			
-			} 
+			} else {
+				placeMapper.updatePlace(place);
+			}
 			
 		} else if (place.getType() == PlaceType.SHOPPING) {
 			if (place.getId() == 0) {
 				placeMapper.createPlace(place);
-
-			} 
+			} else {
+				placeMapper.updatePlace(place);
+			}
 		} else if (place.getType() == PlaceType.RESTAURANT_CAFE) {
 			if (place.getId() == 0) {
 				placeMapper.createPlace(place);
+				
+				RestaurantCafe restaurantCafe = new RestaurantCafe();
+				restaurantCafe.setName(place.getName());
+				restaurantCafe.setLanguage(place.getLanguage());
+				restaurantCafe.setOriginalName(place.getName());
+				restaurantCafe.setOriginalLanguage(place.getOriginalLanguage());
+				
+    			/** PlaceId, restaurant/Cafe does not use its id **/
+				restaurantCafe.setId(place.getId());
+				placeMapper.createRestaurantCafe(restaurantCafe);
+				
+				if (LOG.isDebugEnabled()) {
+					LOG.debug("Restaurant/Cafe (Place) has been created. restaurant/cafe: {}", gson.toJson(restaurantCafe));
+				}
+			} else {
+				placeMapper.updatePlace(place);
 			}
 		}
 		
@@ -211,7 +234,6 @@ public class PlaceService implements IPlaceService {
 		}
 		/** END of PlaceName SAVE--UPDATE **/
 		
-
 		return null;
 	}
 

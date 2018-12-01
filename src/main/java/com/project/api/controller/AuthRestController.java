@@ -27,69 +27,71 @@ import com.project.common.model.User;
 @RestController
 public class AuthRestController {
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
-    @Autowired
-    UserAccountMapper userAccountMapper;
-    @Autowired
-    Gson gson;
+	@Autowired
+	UserAccountMapper userAccountMapper;
+	@Autowired
+	Gson gson;
 
-    private static final Logger logger = LogManager.getLogger(AuthRestController.class);
+	private static final Logger LOG = LogManager.getLogger(AuthRestController.class);
 
-    @GetMapping("/principal")
-    public Principal user(Principal principal) {
-	logger.error("MyPrincipal-MyApp {}", gson.toJson(principal));
-	return principal;
-    }
-
-    @GetMapping("/api/test")
-    public ResponseEntity<?> test() {
-	// logger.error(":: result {}",
-	// gson.toJson(userAccountMapper.findByUsername("admin")));
-	// logger.error(":: result {}",
-	// gson.toJson(userAccountMapper.findRolesByUserId(1L)));
-	//
-	// // String name =
-	// SecurityContextHolder.getContext().getAuthentication().getName();
-	String msg = String.format("Hello %s", "test");
-	return new ResponseEntity<Object>(msg, HttpStatus.OK);
-    }
-
-    @GetMapping("/api/do")
-    public ResponseEntity<?> hello() {
-	String name = SecurityContextHolder.getContext().getAuthentication().getName();
-	String msg = String.format("Hello %s", name);
-	return new ResponseEntity<Object>(msg, HttpStatus.OK);
-    }
-
-    @GetMapping(path = "/api/me", produces = "application/json")
-    public User me() {
-	String username = SecurityContextHolder.getContext().getAuthentication().getName();
-	return new User();
-    }
-
-    @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-	if (userAccountMapper.existsByEmail(signUpRequest.getEmail())) {
-	    return new ResponseEntity(new ApiResponse(false, "Email Address is already taken!"), HttpStatus.BAD_REQUEST);
+	@GetMapping("/principal")
+	public Principal user(Principal principal) {
+		LOG.error("MyPrincipal-MyApp {}", gson.toJson(principal));
+		return principal;
 	}
 
-	// Creating user's account
-	User user = new User(signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(), signUpRequest.getPassword(),
-		signUpRequest.getUserType());
+	@GetMapping("/api/test")
+	public ResponseEntity<?> test() {
+		// logger.error(":: result {}",
+		// gson.toJson(userAccountMapper.findByUsername("admin")));
+		// logger.error(":: result {}",
+		// gson.toJson(userAccountMapper.findRolesByUserId(1L)));
+		//
+		// // String name =
+		// SecurityContextHolder.getContext().getAuthentication().getName();
+		String msg = String.format("Hello %s", "test");
+		return new ResponseEntity<Object>(msg, HttpStatus.OK);
+	}
 
-	user.setPassword(passwordEncoder.encode(user.getPassword()));
+	@GetMapping("/api/do")
+	public ResponseEntity<?> hello() {
+		String name = SecurityContextHolder.getContext().getAuthentication().getName();
+		String msg = String.format("Hello %s", name);
+		return new ResponseEntity<Object>(msg, HttpStatus.OK);
+	}
 
-	// Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
-	// .orElseThrow(() -> new AppException("User Role not set."));
+	@GetMapping(path = "/api/me", produces = "application/json")
+	public User me() {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		return new User();
+	}
 
-	// user.setRoles(Collections.singleton(userRole));
+	@PostMapping("/signup")
+	public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
+		if (userAccountMapper.existsByEmail(signUpRequest.getEmail())) {
+			return new ResponseEntity(new ApiResponse(false, "Email Address is already taken!"),
+					HttpStatus.BAD_REQUEST);
+		}
 
-	User result = userAccountMapper.save(user);
+		// Creating user's account
+		User user = new User(signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(),
+				signUpRequest.getPassword(), signUpRequest.getUserType());
 
-	URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/users/{username}").buildAndExpand(result.getUsername()).toUri();
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-	return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
-    }
+		// Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+		// .orElseThrow(() -> new AppException("User Role not set."));
+
+		// user.setRoles(Collections.singleton(userRole));
+
+		User result = userAccountMapper.save(user);
+
+		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/users/{username}")
+				.buildAndExpand(result.getUsername()).toUri();
+
+		return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
+	}
 }
