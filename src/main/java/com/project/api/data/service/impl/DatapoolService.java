@@ -20,96 +20,107 @@ import com.project.common.model.Subregion;
 @Service
 public class DatapoolService extends BaseService implements IDatapoolService {
 
-    @Autowired
-    private DatapoolMapper datapoolMapper;
-    
-    @Override
-    public List<Nationality> getNationalities() {
-	return datapoolMapper.getNationalities();
-    }
+	@Autowired
+	private DatapoolMapper datapoolMapper;
 
-    @Override
-    public List<Country> getCountries() {
-	return datapoolMapper.getCountries();
-    }
+	@Override
+	public List<Nationality> getNationalities() {
+		return datapoolMapper.getNationalities();
+	}
 
-    @Override
-    public List<IdValue> getColors() {
-	// TODO Auto-generated method stub
-	return null;
-    }
+	@Override
+	public List<Country> getCountries() {
+		return datapoolMapper.getCountries();
+	}
 
-    @Override
-    public List<City> getCitiesByCountryId(int countryId) {
-	return datapoolMapper.getCitiesByCountryId(countryId);
-    }
+	@Override
+	public List<IdValue> getColors() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    @Override
-    public List<Region> getRegionsByCityId(int cityId) {
-	return datapoolMapper.getRegionsByCityId(cityId);
-    }
+	@Override
+	public List<City> getCitiesByCountryId(int countryId) {
+		return datapoolMapper.getCitiesByCountryId(countryId);
+	}
 
-    @Override
-    public List<Subregion> getSubregionsByRegionId(int regionId) {
-	return datapoolMapper.getSubregionsByRegionId(regionId);
-    }
+	@Override
+	public List<Region> getRegionsByCityId(int cityId) {
+		return datapoolMapper.getRegionsByCityId(cityId);
+	}
 
-    @Override
-    public List<DestinationAutocomplete> getDestinations() {
-	// TODO Auto-generated method stub
-	return null;
-    }
+	@Override
+	public List<Subregion> getSubregionsByRegionId(int regionId) {
+		return datapoolMapper.getSubregionsByRegionId(regionId);
+	}
 
-//    @Override
-//    public List<IdValue> getNationalities() {
-//	List<IdValue> result = (List<IdValue>) this.callList("PKG_DATAPOOL__P_GET_NATIONALITIES", new IdValueRowMapper());
-//
-//	return result;
-//    }
-//
-//    @Override
-//    public List<Country> getCountries() {
-//	List<Country> result = (List<Country>) this.callList("PKG_DATAPOOL__P_GET_COUNTRIES", new CountryRowMapper());
-//
-//	return result;
-//    }
-//
-//    @Override
-//    public List<IdValue> getColors() {
-//	List<IdValue> result = (List<IdValue>) this.callList("PKG_DATAPOOL__P_GET_COLORS", new IdValueRowMapper());
-//
-//	return result;
-//    }
-//
-//    @Override
-//    public List<City> getCitiesByCountryId(int countryId) {
-//	List<City> result = (List<City>) this.callList("PKG_DATAPOOL__P_GET_CITIES_BY_COUNTRY_ID", new CityRowMapper(),
-//		countryId);
-//
-//	return result;
-//    }
-//
-//    @Override
-//    public List<Region> getRegionsByCityId(int cityId) {
-//	List<Region> result = (List<Region>) this.callList("PKG_DATAPOOL__P_GET_REGIONS_BY_CITY_ID", new RegionRowMapper(),
-//		cityId);
-//
-//	return result;
-//    }
-//
-//    @Override
-//    public List<Subregion> getSubregionsByRegionId(int regionId) {
-//	List<Subregion> result = (List<Subregion>) this.callList("PKG_DATAPOOL__P_GET_SUBREGIONS_BY_REGION_ID", new SubregionRowMapper(),
-//		regionId);
-//
-//	return result;
-//    }
-//
-//    @Override
-//    public List<DestinationAutocomplete> getDestinations() {
-//	List<DestinationAutocomplete> result = (List<DestinationAutocomplete>) this.callList("PKG_DATAPOOL__P_GET_DESTINATIONS", new DestinationAutocompleteRowMapper());
-//
-//	return result;
-//    }
+	@Override
+	public List<DestinationAutocomplete> getDestinations() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// @Override
+	// public List<IdValue> getNationalities() {
+	// List<IdValue> result = (List<IdValue>)
+	// this.callList("PKG_DATAPOOL__P_GET_NATIONALITIES", new IdValueRowMapper());
+	//
+	// return result;
+	// }
+	//
+	// @Override
+	// public List<Country> getCountries() {
+	// List<Country> result = (List<Country>)
+	// this.callList("PKG_DATAPOOL__P_GET_COUNTRIES", new CountryRowMapper());
+	//
+	// return result;
+	// }
+	//
+	// @Override
+	// public List<IdValue> getColors() {
+	// List<IdValue> result = (List<IdValue>)
+	// this.callList("PKG_DATAPOOL__P_GET_COLORS", new IdValueRowMapper());
+	//
+	// return result;
+	// }
+	//
+	// @Override
+	// public List<City> getCitiesByCountryId(int countryId) {
+	// List<City> result = (List<City>)
+	// this.callList("PKG_DATAPOOL__P_GET_CITIES_BY_COUNTRY_ID", new
+	// CityRowMapper(),
+	// countryId);
+	//
+	// return result;
+	// }
+	//
+	// @Override
+	// public List<Region> getRegionsByCityId(int cityId) {
+	// List<Region> result = (List<Region>)
+	// this.callList("PKG_DATAPOOL__P_GET_REGIONS_BY_CITY_ID", new
+	// RegionRowMapper(),
+	// cityId);
+	//
+	// return result;
+	// }
+	//
+	// @Override
+	// public List<Subregion> getSubregionsByRegionId(int regionId) {
+	// List<Subregion> result = (List<Subregion>)
+	// this.callList("PKG_DATAPOOL__P_GET_SUBREGIONS_BY_REGION_ID", new
+	// SubregionRowMapper(),
+	// regionId);
+	//
+	// return result;
+	// }
+	//
+	// @Override
+	// public List<DestinationAutocomplete> getDestinations() {
+	// List<DestinationAutocomplete> result = (List<DestinationAutocomplete>)
+	// this.callList("PKG_DATAPOOL__P_GET_DESTINATIONS", new
+	// DestinationAutocompleteRowMapper());
+	//
+	// return result;
+	// }
 
 }

@@ -100,6 +100,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 					.secret(passwordEncoder.encode("secret"))
 					.authorizedGrantTypes("authorization_code")
 					.scopes("places", "transfer")
+					.accessTokenValiditySeconds(accessTokenValiditySeconds)
+					.refreshTokenValiditySeconds(refreshTokenValiditySeconds)
 					//.authorities(TwoFactorAuthenticationFilter.ROLE_TWO_FACTOR_AUTHENTICATION_ENABLED)
 					.autoApprove(true);
 				 	//.resourceIds(resourceId)

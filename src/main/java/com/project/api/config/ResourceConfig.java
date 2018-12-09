@@ -41,6 +41,7 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
 		http.requestMatcher(new OAuthRequestedMatcher()).anonymous().disable().authorizeRequests()
 				.antMatchers(HttpMethod.OPTIONS).permitAll()
 				.antMatchers("/api/test").permitAll()
+				.antMatchers("/api/datapool").permitAll()
 				.antMatchers("/api/hello").access("hasAnyRole('USER')")
 				.antMatchers("/api/me").hasAnyRole("USER", "ADMIN")
 				.antMatchers("/api/do").hasAuthority("ROLE_TRUSTED_CLIENT")

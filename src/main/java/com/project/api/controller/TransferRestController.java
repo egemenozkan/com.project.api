@@ -43,8 +43,8 @@ public class TransferRestController {
 
 	
 	@RequestMapping(value = "/transfers/places/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Place> findPlaceById(@PathVariable long id) {
-		Place place = placeService.findPlaceById(id);
+	public ResponseEntity<Place> findPlaceById(@PathVariable long id, @RequestParam(defaultValue = "RU", required=false) String language, @RequestParam(defaultValue = "TR", required=false) String originalLanguage) {
+		Place place = placeService.findPlaceById(id, language, originalLanguage);
 		ResponseEntity<Place> responseEntity = new ResponseEntity<Place>(place, HttpStatus.OK);
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("::findPlaceById {}" , gson.toJson(place));

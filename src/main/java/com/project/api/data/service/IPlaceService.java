@@ -7,7 +7,7 @@ import com.project.common.model.AutocompleteResponse;
 
 public interface IPlaceService {
     AutocompleteResponse autocompletePlace(String query); 
-    Place findPlaceById(long id);
+	Place findPlaceById(long id,String language, String originalLanguage);
     List<Place> findAllPlace(String language, String originalLanguage);
     Place savePlace(Place place);
 }
