@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.google.gson.Gson;
+import com.project.api.data.enums.MainType;
 import com.project.api.data.enums.PlaceType;
 import com.project.api.data.enums.Star;
 import com.project.api.data.mapper.AirportMapper;
@@ -128,8 +129,8 @@ public class PlaceService implements IPlaceService {
     }
 
 	@Override
-	public Place findPlaceById(long id) {
-		Place place = placeMapper.findPlaceById(id);
+	public Place findPlaceById(long id,String language, String originalLanguage) {
+		Place place = placeMapper.findPlaceById(id,language, originalLanguage);
 		return place;
 	}
 
@@ -152,7 +153,7 @@ public class PlaceService implements IPlaceService {
 		}
 		/** END of Address **/ 
 		
-		if (place.getType() == PlaceType.HOTEL_LODGING) {
+		if (place.getType() == PlaceType.HOTEL) {
 			if (place.getId() == 0) {
 				placeMapper.createPlace(place);
 				Hotel hotel = new Hotel();
@@ -193,13 +194,13 @@ public class PlaceService implements IPlaceService {
 				placeMapper.updatePlace(place);
 			}
 			
-		} else if (place.getType() == PlaceType.SHOPPING) {
+		} else if (place.getType().getMainType() == MainType.SHOPPING) {
 			if (place.getId() == 0) {
 				placeMapper.createPlace(place);
 			} else {
 				placeMapper.updatePlace(place);
 			}
-		} else if (place.getType() == PlaceType.RESTAURANT_CAFE) {
+		} else if (place.getType().getMainType() == MainType.FOOD_AND_BEVERAGE) {
 			if (place.getId() == 0) {
 				placeMapper.createPlace(place);
 				
@@ -216,6 +217,12 @@ public class PlaceService implements IPlaceService {
 				if (LOG.isDebugEnabled()) {
 					LOG.debug("Restaurant/Cafe (Place) has been created. restaurant/cafe: {}", gson.toJson(restaurantCafe));
 				}
+			} else {
+				placeMapper.updatePlace(place);
+			}
+		} else {
+			if (place.getId() == 0) {
+				placeMapper.createPlace(place);
 			} else {
 				placeMapper.updatePlace(place);
 			}

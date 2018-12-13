@@ -25,7 +25,7 @@ public interface DatapoolMapper {
     @Select("SELECT id, name, country_id, phone_code, plate_code FROM datapool.city WHERE country_id = #{countryId}")
     List<City> getCitiesByCountryId(int countryId);
     
-    @Select("SELECT id, name, code, city_id FROM datapool.region WHERE city_id = #{cityId}")
+    @Select("SELECT id, name, code, city_id FROM datapool.region WHERE type = 2 AND city_id = #{cityId}")
     @Results(value = {
 	    @Result(property = "city", column = "city_id", javaType = City.class, one = @One(select = "getCityById")) })
     List<Region> getRegionsByCityId(int cityId);

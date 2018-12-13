@@ -2,7 +2,6 @@ package com.project.api.test;
 
 import static java.util.Arrays.asList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -22,8 +21,6 @@ import org.springframework.security.oauth2.client.token.grant.client.ClientCrede
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.google.gson.Gson;
-import com.project.event.PlaceEvent;
-import com.project.event.listener.PlaceEventListener;
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient.AccessToken;
@@ -66,8 +63,8 @@ public class ApplicationTests {
 					    Parameter.with("distance", 400000),
 					    Parameter.with("fields", "about, name, category_list, checkins, rating_count, overall_star_rating, location, is_verified"));
 			List<Place> places=  publicSearch.getData();
-			PlaceEvent placeEvent = new PlaceEvent(this, places);
-			applicationEventPublisher.publishEvent(placeEvent);
+			//PlaceEvent placeEvent = new PlaceEvent(this, places);
+		//	applicationEventPublisher.publishEvent(placeEvent);
 			logger.warn(places.size() + " " + gson.toJson(places));
 
 		} catch (Exception e) {
