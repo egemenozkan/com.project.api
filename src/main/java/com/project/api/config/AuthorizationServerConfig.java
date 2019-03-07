@@ -67,41 +67,50 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
-		clients.inMemory().withClient("normal-app").authorizedGrantTypes("authorization_code", "implicit")
-
-				.authorities("ROLE_CLIENT").scopes("read", "write").resourceIds(resourceIds)
-
-				.accessTokenValiditySeconds(36000000)
-
-				.refreshTokenValiditySeconds(36000000).and().withClient("trusted-app")
-
-				.authorizedGrantTypes("client_credentials", "password", "refresh_token")
-
-				.authorities("ROLE_TRUSTED_CLIENT").scopes("read", "write")
-
-				// .resourceIds(resourceId)
-
-				.accessTokenValiditySeconds(36000000)
-
-				.refreshTokenValiditySeconds(36000000).secret(passwordEncoder.encode("secret")).and()
-
-				.withClient("register-app").authorizedGrantTypes("client_credentials").authorities("ROLE_REGISTER")
-
-				.scopes("read").resourceIds(resourceIds).secret("secret").and().withClient("client-redirect")
-
-				.secret(passwordEncoder.encode("secret")).authorizedGrantTypes("authorization_code")
-
-				.scopes("places", "transfer").accessTokenValiditySeconds(36000000)
-
-				.refreshTokenValiditySeconds(36000000)
-
-				// .authorities(TwoFactorAuthenticationFilter.ROLE_TWO_FACTOR_AUTHENTICATION_ENABLED)
-
-				.autoApprove(true);
-
-		// .resourceIds(resourceId)
-
-		// .redirectUris("https://authclient:8443/me");
+		clients.inMemory()
+		.withClient("normal-app")
+			.authorizedGrantTypes("authorization_code", "implicit")
+			.authorities("ROLE_CLIENT")
+			.scopes("places", "events", "users", "transfer")
+//			.resourceIds(resourceIds)
+			.accessTokenValiditySeconds(36000000)
+			.refreshTokenValiditySeconds(36000000)
+	.and()
+		.withClient("trusted-app")
+			.authorizedGrantTypes("client_credentials", "password", "refresh_token")
+			.authorities("ROLE_TRUSTED_CLIENT")
+			.scopes("places", "events", "users", "transfer")
+//			.resourceIds(resourceIds)
+			.accessTokenValiditySeconds(36000000)
+			.refreshTokenValiditySeconds(36000000)
+			.secret(passwordEncoder.encode("secret"))
+	.and()
+		.withClient("android-app")
+			.authorizedGrantTypes("password", "refresh_token")
+			.authorities("ROLE_TRUSTED_CLIENT", "ROLE_ANDROID")
+			.scopes("places", "events", "users", "transfer")
+//			.resourceIds(resourceIds)
+			.accessTokenValiditySeconds(36000000)
+			.refreshTokenValiditySeconds(36000000)
+			.secret(passwordEncoder.encode("secret"))
+	.and()
+		.withClient("register-app")
+			.authorizedGrantTypes("client_credentials")
+			.authorities("ROLE_REGISTER")
+			.scopes("read")
+//			.resourceIds(resourceIds)
+			.secret(passwordEncoder.encode("secret"))
+	.and()
+		.withClient("client-redirect")
+			.authorizedGrantTypes("authorization_code")
+			.secret(passwordEncoder.encode("secret"))
+			.scopes("places", "events", "transfer")
+//			.resourceIds(resourceIds)
+			.accessTokenValiditySeconds(36000000)
+			.refreshTokenValiditySeconds(36000000)
+			// .authorities(TwoFactorAuthenticationFilter.ROLE_TWO_FACTOR_AUTHENTICATION_ENABLED)
+			.autoApprove(true);
+	// .redirectUris("https://authclient:8443/me");
 
 	}
 	

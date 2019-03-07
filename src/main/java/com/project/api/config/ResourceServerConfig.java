@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -31,14 +30,22 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
 	public void configure(HttpSecurity http) throws Exception {
+    	// @formatter:off
 		http.requestMatcher(new OAuthRequestedMatcher()).anonymous().disable().authorizeRequests()
-				.antMatchers(HttpMethod.OPTIONS).permitAll()
-				.antMatchers("/api/test").permitAll()
-				.antMatchers("/api/datapool").permitAll()
+//		.antMatchers(HttpMethod.OPTIONS).permitAll()
+//		.antMatchers(HttpMethod.POST).permitAll()
+//		.antMatchers(HttpMethod.GET).permitAll()
+		.antMatchers("/api/test").permitAll()		
+		.antMatchers("/api/datapool").permitAll()
 				.antMatchers("/api/hello").access("hasAnyRole('USER')")
 				.antMatchers("/api/me").hasAnyRole("USER", "ADMIN")
+				//.access("#oauth2.hasScope('read') or (!#oauth2.isOAuth() and hasRole('ROLE_USER'))") 
+				.antMatchers("/api/v1/places/**").access("#oauth2.hasScope('places')") 
+				.antMatchers("/api/v1/events/**").access("#oauth2.hasScope('events')") 
+				.antMatchers("/api/v1/users/**").access("#oauth2.hasScope('users')") 
 				.antMatchers("/api/do").hasAuthority("ROLE_TRUSTED_CLIENT")
 				.antMatchers("/api/register").hasAuthority("ROLE_REGISTER");
+		// @formatter:on
 	}
 
 	private static class OAuthRequestedMatcher implements RequestMatcher {

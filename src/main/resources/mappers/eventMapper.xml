@@ -1,0 +1,49 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.api.data.mapper.EventMapper">
+
+    <insert id="insertContents" useGeneratedKeys="false">
+        INSERT INTO project.content (title, text, page_id) VALUES
+        <foreach item="content" collection="contents" separator=",">
+            (#{content.title}, #{content.text}, #{id})
+        </foreach>
+    </insert>
+    <update id="updateContents" parameterType="java.util.List">
+        <foreach collection="contents" item="content" index="index"
+            open="" close="" separator=";">
+            UPDATE project.content SET title
+            =#{content.title},text = #{content.text}
+            WHERE id=#{content.id}
+        </foreach>
+    </update>
+    
+    
+<!--     @Results(value = {@Result(property = "contents", column = "id", javaType = List.class, one = @One(select = "findAllContentByPageId")), -->
+<!-- //          @Result(property = "id", column = "id", javaType = Long.class), -->
+<!-- //          @Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)}) -->
+<resultMap id="landingPageResultMap" type="com.project.api.data.model.event.EventLandingPage">
+  <id property="id" column="id" />
+  <result property="language" column="language" javaType="com.project.api.data.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler"/>
+<association property="contents" column="id" javaType="List" select="findAllContentByPageId" />
+<association property="event" column="{id=event_id,language=language}" javaType="com.project.api.data.model.event.Event" select="findEventById" />
+
+<!--   <result property="password" column="hashed_password"/> -->
+</resultMap>    
+<select id="findAllLandingPageByFilter" resultMap="landingPageResultMap">
+    SELECT lv.id, lv.title, lv.description, lv.keywords, lv.language, lv.event_id, lv.slug
+    FROM project.event_landing_page_view lv
+    WHERE 
+        lv.event_id = IF(#{id} = 0, lv.event_id, #{id}) 
+    <if test="language != null">
+        AND lv.language = #{language.code}
+    </if>
+    <if test="startDate != null">
+        AND lv.start_date = #{startDate}
+    </if>
+    <if test="endDate != null">
+        AND lv.end_date = #{endDate}
+    </if>
+     AND type = 2
+</select>         
+</mapper>

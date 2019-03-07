@@ -1,0 +1,60 @@
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.api.data.mapper.PlaceMapper">
+	
+<!-- 	<select id="findAllPlaceByType" resultType="com.project.api.data.model.place.Place"> -->
+<!-- 		SELECT pv.id, pv.id AS localisation_id, pv.type, pv.slug, #{language} AS language, pv.address_id, -->
+<!--             CASE #{language} WHEN 'TR' THEN pv.tr_name WHEN 'EN' THEN pv.en_name WHEN 'RU' THEN pv.ru_name WHEN 'DE' THEN pv.de_name END AS name -->
+<!--         FROM project.place_view_v2 pv WHERE pv.type = #{typeId} -->
+<!-- 	</select> -->
+	
+	<insert id="insertContents" useGeneratedKeys="false"
+		keyProperty="id">
+		INSERT INTO project.content (title, text, page_id) VALUES
+		<foreach item="content" collection="contents" separator=",">
+			(#{content.title}, #{content.text}, #{id})
+		</foreach>
+	</insert>
+	<update id="updateContents" parameterType="java.util.List">
+		<foreach collection="contents" item="content" index="index"
+			open="" close="" separator=";">
+			UPDATE project.content SET title
+			=#{content.title},text = #{content.text}
+			WHERE id=#{content.id}
+		</foreach>
+	</update>
+	
+	
+	<resultMap id="landingPageResultMap" type="com.project.api.data.model.place.PlaceLandingPage">
+        <id property="id" column="id" />
+        <result property="language" column="language" javaType="com.project.api.data.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler"/>
+        <association property="contents" column="id" javaType="List" select="findAllContentByPageId" />        
+        <association property="place" column="{id=place_id,language=language}" javaType="com.project.api.data.model.place.Place" select="findPlaceById" />
+    </resultMap> 
+	<select id="findAllLandingPageByFilter" resultMap="landingPageResultMap" flushCache="true">
+	SELECT id, ifnull(title, name) AS title, slug, description, keywords, place_id, ifnull(language, #{language.code}) AS language, type
+    FROM (SELECT  lp.id, lp.title, CASE #{language.code} 
+             WHEN 'TR' THEN pv.tr_name WHEN 'EN' THEN pv.en_name WHEN 'RU' THEN pv.ru_name WHEN 'DE' THEN pv.de_name END AS name,
+            CASE #{language.code}
+            WHEN 'TR' THEN pv.tr_slug WHEN 'EN' THEN pv.en_slug WHEN 'RU' THEN pv.ru_slug WHEN 'DE' THEN pv.de_slug END AS slug,
+            pv.id AS place_id, lp.description, lp.keywords, lp.language, pv.type
+            FROM project.place_view_v2 pv 
+            LEFT JOIN project.landing_page lp ON (pv.id = lp.self_id AND lp.type = 1 AND lp.language = #{language.code})) tbl
+            WHERE place_id = IF(#{id} = 0, place_id, #{id}) 
+            AND slug IS NOT NULL
+             <if test="type != null">
+		        AND type = #{type.id}
+		    </if>
+		    <if test="random != null">
+		      ORDER BY RAND()
+		    </if>
+		    <if test="limit > 0">
+		      LIMIT #{limit}
+		    </if>
+<!--     <if test="language != null"> -->
+<!--         AND language= #{language.code} -->
+<!--     </if> -->
+	</select>
+</mapper>

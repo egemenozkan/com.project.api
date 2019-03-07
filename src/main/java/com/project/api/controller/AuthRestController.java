@@ -77,9 +77,10 @@ public class AuthRestController {
 		}
 
 		// Creating user's account
-		User user = new User(signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(),
-				signUpRequest.getPassword(), signUpRequest.getUserType());
-
+		// User user = new User(signUpRequest.getFirstName(),
+		// signUpRequest.getLastName(), signUpRequest.getEmail(),
+		// signUpRequest.getPassword(), signUpRequest.getUserType());
+		User user = new User();
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
 		// Role userRole = roleRepository.findByName(RoleName.ROLE_USER)

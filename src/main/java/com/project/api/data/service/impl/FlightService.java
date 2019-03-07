@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.api.data.mapper.AirportMapper;
 import com.project.api.data.model.flight.Airport;
 import com.project.api.data.service.IFlightService;
 import com.project.common.BaseService;
@@ -15,10 +17,13 @@ import com.project.common.BaseService;
 public class FlightService extends BaseService implements IFlightService {
 	private static final Logger LOG = LogManager.getLogger(FlightService.class);
 
+	@Autowired
+	private AirportMapper airportMapper;
+	
 	@Override
 	public List<Airport> getAirports() {
-	    // TODO Auto-generated method stub
-	    return null;
+	    
+	    return airportMapper.findAllAirports();
 	}
 
 	@Override

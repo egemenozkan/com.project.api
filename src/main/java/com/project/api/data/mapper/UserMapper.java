@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
+import com.project.api.data.model.user.UserSearchRequest;
 import com.project.common.model.User;
 
 /**
@@ -38,7 +39,13 @@ public interface UserMapper {
     @Select("SELECT r.name AS name FROM user_role ur LEFT JOIN project.role r ON ur.role_id = r.id WHERE  ur.user_id = #{userId}")
     List<String> getRolesByUserId(Long userId);
     
+    @Select("SELECT a.name AS name FROM user_authority ua LEFT JOIN project.authority a ON ua.authority_id = a.id WHERE  ua.user_id = #{userId}")
+    List<String> getAuthorityByUserId(Long userId);
+    
     @Select("SELECT id, username, first_name, last_name, email, password FROM project.user u WHERE email = #{emailOrUsername} or username = #{emailOrUsername}")
     @Results(value = {@Result(property = "roles", column = "user_id", javaType = List.class, many = @Many(select = "getRolesByUserId")) })
     User getUserByEmailOrUsername(String emailOrUsername);
+    
+//    @Select("SELECT u.id FROM project.user u")
+    List<User> findAllUsers(UserSearchRequest userSearchRequest);
 }
