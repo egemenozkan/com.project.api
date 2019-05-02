@@ -43,7 +43,7 @@ public interface PlaceMapper {
 			@Result(property = "address", column = "address_id", javaType = Address.class, one = @One(select = "findAddressById")),
 			@Result(property = "contact", column = "place_id", javaType = Contact.class, one = @One(select = "findContactByPlaceId")),
 			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
-	@Options(flushCache = Options.FlushCachePolicy.TRUE)
+//	@Options(flushCache = Options.FlushCachePolicy.TRUE)
 	Place findPlaceById(long id, String language);
 	
 	@Select(SELECT_PLACE + " ORDER BY pv.update_datetime DESC LIMIT 30")
@@ -110,7 +110,7 @@ public interface PlaceMapper {
 //	@Results(value = {@Result(property = "id", column = "id", javaType = Long.class),
 //			@Result(property = "contents", column = "id", javaType = List.class, one = @One(select = "findAllContentByPageId")),
 //			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
-	List<PlaceLandingPage> findAllLandingPageByFilter(PlaceRequest placeRequest);
+	List<PlaceLandingPage> findAllLandingPageByFilter(PlaceRequest placeRequest, @Param("types") List<Integer> typesByMainType);
 	
 	@Select("SELECT c.id, c.title, c.text, c.order FROM project.content c WHERE c.page_id = #{id}")
 	List<Content> findAllContentByPageId(long id);

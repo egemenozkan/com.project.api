@@ -2,7 +2,7 @@ package com.project.api.utils;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.github.slugify.Slugify;
+import com.project.slugify.Slugify;
 
 public class WebUtils {
 
@@ -27,7 +27,7 @@ public class WebUtils {
 		
 		String slug = null;
 		
-		if (name != null) {
+		if (name != null && !name.isBlank()) {
 			StringBuilder strBuilder = new StringBuilder(name);
 			strBuilder.append("-");
 			strBuilder.append(String.valueOf(id));

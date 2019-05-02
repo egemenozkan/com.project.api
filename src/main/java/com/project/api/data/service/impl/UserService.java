@@ -22,9 +22,15 @@ public class UserService implements IUserService {
 
 	@Override
 	public Long createUser(User user) {
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		userMapper.createUser(user);
-		return user.getId();
+		if (user != null && user.getPassword() != null && !user.getPassword().isBlank()) {
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+		}
+		if (user !=null) {
+			userMapper.createUser(user);
+			return user.getId();
+		}
+
+		return 0L;
 	}
 
 	@Override
@@ -32,7 +38,6 @@ public class UserService implements IUserService {
 		if (userMapper.updateUser(user) > 0) {
 			return getUserById(user.getId());
 		}
-		;
 		return null;
 	}
 
@@ -53,8 +58,18 @@ public class UserService implements IUserService {
 
 	@Override
 	public List<User> findAllUsers(UserSearchRequest userSearchRequest) {
-		List<User> users = userMapper.findAllUsers(userSearchRequest);
-		return users;
+		return userMapper.findAllUsers(userSearchRequest);
+	}
+
+	@Override
+	public boolean existsByEmailOrUsername(String emailOrUsername) {
+		return userMapper.existsByEmailOrUsername(emailOrUsername);
+	}
+
+	@Override
+	public int updateSocialUserByEmail(User user) {
+		userMapper.updateSocialUserByEmail(user);
+		return 0;
 	}
 
 }

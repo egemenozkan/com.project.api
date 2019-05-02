@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,7 +37,7 @@ public class PlaceCommentRestController {
 	@Autowired
 	private IPlaceService placeService;
 
-	@RequestMapping(value = "/{id}/comments", method = RequestMethod.GET)
+	@GetMapping(value = "/{id}/comments")
 	public ResponseEntity<PlaceCommentResponse> getPlaceCommentResponse(@PathVariable long id,
 			@RequestParam(defaultValue = "RU", required = false) String language) {
 
@@ -52,12 +51,12 @@ public class PlaceCommentRestController {
 		return responseEntity;
 	}
 
-	@RequestMapping(value = "/comments", method = RequestMethod.GET)
+	@GetMapping(value = "/comments")
 	public ResponseEntity<List<PlaceComment>> getPlaceComments(@RequestParam(defaultValue = "RU", required = false) String language) {
 
 		List<PlaceComment> placeComments = commentService.getPlaceComments(language);
 
-		ResponseEntity<List<PlaceComment>> responseEntity = new ResponseEntity<List<PlaceComment>>(placeComments, HttpStatus.OK);
+		ResponseEntity<List<PlaceComment>> responseEntity = new ResponseEntity<>(placeComments, HttpStatus.OK);
 
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("::getPlaceComments {}", gson.toJson(placeComments));
@@ -70,7 +69,7 @@ public class PlaceCommentRestController {
 
 		Comment comment = commentService.getCommentById(id);
 
-		ResponseEntity<Comment> responseEntity = new ResponseEntity<Comment>(comment, HttpStatus.OK);
+		ResponseEntity<Comment> responseEntity = new ResponseEntity<>(comment, HttpStatus.OK);
 
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("::getCommentById id: {} response: {}", id, gson.toJson(comment));

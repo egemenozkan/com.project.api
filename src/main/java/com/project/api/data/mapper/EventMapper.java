@@ -34,14 +34,14 @@ public interface EventMapper extends PlaceMapper{
 	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.EventType.class, typeHandler = com.project.api.data.mapper.handler.EventTypeTypeHandler.class),
 			@Result(property = "periodType", column = "period_type", javaType = com.project.api.data.enums.EventPeriodType.class, typeHandler = com.project.api.data.mapper.handler.EventPeriodTypeTypeHandler.class),
 			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class),
-	@Result(property = "place", column = "place_id", javaType = Place.class, one = @One(select = "findPlaceById"))})
+			@Result(property = "place.id", column = "place_id")})
 	List<Event> findAllEvent(EventRequest eventRequest);
 	
 	@Select(SELECT_EVENT + " WHERE ev.id = #{id}")
 	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.EventType.class, typeHandler = com.project.api.data.mapper.handler.EventTypeTypeHandler.class),
 			@Result(property = "periodType", column = "period_type", javaType = com.project.api.data.enums.EventPeriodType.class, typeHandler = com.project.api.data.mapper.handler.EventPeriodTypeTypeHandler.class),
 			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class),
-			@Result(property = "place", column = "place_id", javaType = Place.class, one = @One(select = "findPlaceById"))})
+			@Result(property = "place.id", column = "place_id")})
 	Event findEventById(long id, String language);
 	
 	@Insert("INSERT INTO project.event(type, period_type, start_date, start_time, show_start_time, end_date, end_time, show_end_time, place_id)"

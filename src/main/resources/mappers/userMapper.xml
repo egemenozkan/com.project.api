@@ -2,7 +2,19 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.api.data.mapper.UserMapper">
+    <insert id="createUser" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+       INSERT INTO `project`.`user`
+	(`username`,
+	`first_name`,
+	`last_name`,
+	`email`,
+	`password`,
+	`facebook_id`,
+	`google_id`,`vkontakte_id`, `picture_url`)
+	VALUES
+	(#{username}, #{firstName}, #{lastName}, #{email}, #{password}, #{facebookId}, #{googleId}, #{vkontakteId}, #{picture_url});
 
+    </insert>
 	<!-- <select id="findAllPlaceByType" resultType="com.project.api.data.model.place.Place"> -->
 	<!-- SELECT pv.id, pv.id AS localisation_id, pv.type, pv.slug, #{language} 
 		AS language, pv.address_id, -->

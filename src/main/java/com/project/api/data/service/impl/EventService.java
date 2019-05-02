@@ -15,12 +15,16 @@ import com.project.api.data.model.event.EventLandingPage;
 import com.project.api.data.model.event.EventRequest;
 import com.project.api.data.model.place.Localisation;
 import com.project.api.data.service.IEventService;
+import com.project.api.data.service.IPlaceService;
 import com.project.api.utils.WebUtils;
 
 @Service
 public class EventService implements IEventService {
 	@Autowired
 	private EventMapper eventMapper;
+
+	@Autowired
+	private IPlaceService placeService;
 
 	@Override
 	public Event getEventById(long id, Language language) {
@@ -88,13 +92,14 @@ public class EventService implements IEventService {
 	@Override
 	public EventLandingPage findLandingPageByEventId(EventRequest eventRequest) {
 		List<EventLandingPage> landingPages = eventMapper.findAllLandingPageByFilter(eventRequest);
-		
+
 		if (landingPages == null || landingPages.isEmpty()) {
 			return null;
 		}
 		EventLandingPage landingPage = landingPages.get(0);
-		landingPage.setEvent(getEventById(eventRequest.getId(), eventRequest.getLanguage()));		
-				
+		landingPage.setEvent(getEventById(eventRequest.getId(), eventRequest.getLanguage()));
+		landingPage.getEvent().setPlace(placeService.findPlaceById(landingPage.getEvent().getPlace().getId(),
+				landingPage.getEvent().getLanguage().toString()));
 		return landingPage;
 	}
 
@@ -116,11 +121,19 @@ public class EventService implements IEventService {
 	@Override
 	public List<EventLandingPage> findAllLandingPageByFilter(EventRequest eventRequest) {
 		List<EventLandingPage> landingPages = eventMapper.findAllLandingPageByFilter(eventRequest);
-		
+
 		if (landingPages == null || landingPages.isEmpty()) {
 			landingPages = Collections.emptyList();
+		} else {
+			for (EventLandingPage landingPage : landingPages) {
+				if (landingPage != null && landingPage.getEvent() != null && landingPage.getEvent().getPlace() != null
+						&& landingPage.getEvent().getPlace().getId() > 0) {
+					landingPage.getEvent().setPlace(placeService.findPlaceById(landingPage.getEvent().getPlace().getId(),
+							landingPage.getEvent().getLanguage().toString()));
+				}
+			}
 		}
-		
+
 		return landingPages;
 	}
 

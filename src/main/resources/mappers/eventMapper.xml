@@ -23,15 +23,13 @@
 <!-- //          @Result(property = "id", column = "id", javaType = Long.class), -->
 <!-- //          @Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)}) -->
 <resultMap id="landingPageResultMap" type="com.project.api.data.model.event.EventLandingPage">
-  <id property="id" column="id" />
-  <result property="language" column="language" javaType="com.project.api.data.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler"/>
-<association property="contents" column="id" javaType="List" select="findAllContentByPageId" />
-<association property="event" column="{id=event_id,language=language}" javaType="com.project.api.data.model.event.Event" select="findEventById" />
-
-<!--   <result property="password" column="hashed_password"/> -->
+    <id property="id" column="id" />
+    <result property="language" column="language" javaType="com.project.api.data.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler"/>
+    <association property="contents" column="id" javaType="List" select="findAllContentByPageId" />
+    <association property="event" column="{id=event_id,language=language}" javaType="com.project.api.data.model.event.Event" select="findEventById" />
 </resultMap>    
 <select id="findAllLandingPageByFilter" resultMap="landingPageResultMap">
-    SELECT lv.id, lv.title, lv.description, lv.keywords, lv.language, lv.event_id, lv.slug
+    SELECT lv.id, lv.title, lv.description, lv.keywords, lv.language, lv.event_id, lv.slug, lv.place_id
     FROM project.event_landing_page_view lv
     WHERE 
         lv.event_id = IF(#{id} = 0, lv.event_id, #{id}) 

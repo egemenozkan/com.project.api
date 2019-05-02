@@ -6,15 +6,20 @@ import com.project.api.data.model.user.UserSearchRequest;
 import com.project.common.model.User;
 
 public interface IUserService {
-    Long createUser(User user);
+	Long createUser(User user);
 
 	List<User> findAllUsers(UserSearchRequest userSearchRequest);
-    User updateUser(User user);
-        
-    User getUserById(Long id);
-    
-    User getUserByEmailOrUsername(String emailOrUsername);
-        
-    boolean existsByEmail(String email);
-    
+
+	User updateUser(User user);
+
+	User getUserById(Long id);
+
+	User getUserByEmailOrUsername(String emailOrUsername);
+
+	boolean existsByEmail(String email);
+
+	boolean existsByEmailOrUsername(String emailOrUsername);
+	
+	int updateSocialUserByEmail(User user);
+
 }

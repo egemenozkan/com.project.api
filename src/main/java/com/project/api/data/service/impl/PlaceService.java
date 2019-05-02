@@ -1,6 +1,7 @@
 package com.project.api.data.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.google.gson.Gson;
+import com.project.api.data.enums.LandingPageType;
 import com.project.api.data.enums.Language;
 import com.project.api.data.enums.MainType;
 import com.project.api.data.enums.PlaceType;
@@ -33,6 +35,7 @@ import com.project.api.data.model.place.PlaceAutocompleteData;
 import com.project.api.data.model.place.PlaceLandingPage;
 import com.project.api.data.model.place.PlaceRequest;
 import com.project.api.data.model.place.RestaurantCafe;
+import com.project.api.data.service.IFileService;
 import com.project.api.data.service.IPlaceService;
 import com.project.api.data.utils.MyBatisUtils;
 import com.project.api.utils.WebUtils;
@@ -67,6 +70,9 @@ public class PlaceService implements IPlaceService {
 
 	@Autowired
 	private AirportMapper airportMapper;
+	
+	@Autowired
+	private IFileService fileService;
 
 	@Override
 	public AutocompleteResponse autocompletePlace(String query) {
@@ -146,6 +152,8 @@ public class PlaceService implements IPlaceService {
 		for (Localisation name : names) {
 			localisation.put(name.getLanguage().toString(), name);
 		}
+		
+		place.setImages(fileService.getFilesByPageId(LandingPageType.PLACE.getId(), id));
 
 		place.setLocalisation(localisation);
 
@@ -299,12 +307,13 @@ public class PlaceService implements IPlaceService {
 		placeRequest.setId(id);
 		placeRequest.setLanguage(Language.getByCode(language));
 
-		List<PlaceLandingPage> landingPages = placeMapper.findAllLandingPageByFilter(placeRequest);
+		List<PlaceLandingPage> landingPages = placeMapper.findAllLandingPageByFilter(placeRequest, getTypesByMainType(placeRequest.getMainType()));
 		if (landingPages == null || landingPages.isEmpty()) {
 			return null;
 		}
 		PlaceLandingPage landingPage = landingPages.get(0);
 		landingPage.setPlace(findPlaceById(id, language));
+		
 
 		return landingPage;
 	}
@@ -348,15 +357,7 @@ public class PlaceService implements IPlaceService {
 
 	@Override
 	public List<Place> findAllPlaceByMainType(String language, MainType mainType) {
-		List<String> ids = new ArrayList<>();
-
-		for (PlaceType type : PlaceType.values()) {
-			if (type.getMainType() == mainType) {
-				ids.add(String.valueOf(type.getId()));
-			}
-		}
-
-		List<Place> places = placeMapper.findAllPlaceByMainType(language, MyBatisUtils.inStatement(ids));
+		List<Place> places = placeMapper.findAllPlaceByMainType(language, getTypesAsStringByMainType(mainType));
 
 		if (places != null && !places.isEmpty()) {
 			for (Place place : places) {
@@ -382,7 +383,39 @@ public class PlaceService implements IPlaceService {
 
 	@Override
 	public List<PlaceLandingPage> findAllLandingPageByFilter(PlaceRequest placeRequest) {
-		return placeMapper.findAllLandingPageByFilter(placeRequest);
+		return placeMapper.findAllLandingPageByFilter(placeRequest, getTypesByMainType(placeRequest.getMainType()));
+	}
+	
+	
+	private String getTypesAsStringByMainType(MainType mainType) {
+		List<String> ids = null;
+		if (mainType != null && mainType != MainType.NOTSET) {
+			ids =  new ArrayList<>();
+			for (PlaceType type : PlaceType.values()) {
+				if (type.getMainType() == mainType) {
+					ids.add(String.valueOf(type.getId()));
+				}
+			}			
+		}
+		
+		if (ids != null) {
+			return MyBatisUtils.inStatement(ids);
+		}
+		return null;
 	}
 
+	private List<Integer> getTypesByMainType(MainType mainType) {
+		List<Integer> ids = Collections.emptyList();
+		if (mainType != null && mainType != MainType.NOTSET) {
+			ids =  new ArrayList<>();
+			for (PlaceType type : PlaceType.values()) {
+				if (type.getMainType() == mainType) {
+					ids.add(type.getId());
+				}
+			}			
+		}
+		
+		
+		return ids;
+	}
 }

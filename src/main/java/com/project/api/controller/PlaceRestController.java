@@ -17,13 +17,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.project.api.data.enums.LandingPageType;
 import com.project.api.data.enums.Language;
 import com.project.api.data.enums.MainType;
 import com.project.api.data.enums.PlaceType;
 import com.project.api.data.model.common.Content;
+import com.project.api.data.model.file.LandingPageFile;
+import com.project.api.data.model.file.MyFile;
 import com.project.api.data.model.place.Place;
 import com.project.api.data.model.place.PlaceLandingPage;
 import com.project.api.data.model.place.PlaceRequest;
+import com.project.api.data.service.IFileService;
 import com.project.api.data.service.IPlaceService;
 
 @RestController
@@ -35,6 +39,9 @@ public class PlaceRestController {
 
 	@Autowired
 	IPlaceService placeService;
+	
+	@Autowired
+	IFileService fileService;
 
 	private static final Logger LOG = LogManager.getLogger(PlaceRestController.class);
 
@@ -145,5 +152,17 @@ public class PlaceRestController {
 
 		List<PlaceLandingPage> pages = placeService.findAllLandingPageByFilter(placeRequest);
 		return new ResponseEntity<>(pages, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/places/{id}/files")
+	public ResponseEntity<List> findPageByIdAndLanguage(@PathVariable long id) {
+		List<MyFile> images = fileService.getFilesByPageId(LandingPageType.PLACE.getId(), id);
+		return new ResponseEntity<>(images, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/places/files")
+	public ResponseEntity<List> findFiles() {
+		List<LandingPageFile> images = fileService.getFiles();
+		return new ResponseEntity<>(images, HttpStatus.OK);
 	}
 }

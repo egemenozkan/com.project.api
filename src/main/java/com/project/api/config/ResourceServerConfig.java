@@ -44,6 +44,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 				.antMatchers("/api/v1/events/**").access("#oauth2.hasScope('events')") 
 				.antMatchers("/api/v1/users/**").access("#oauth2.hasScope('users')") 
 				.antMatchers("/api/do").hasAuthority("ROLE_TRUSTED_CLIENT")
+				.antMatchers("/api/v1/files/**").access("#oauth2.hasScope('places')") 
 				.antMatchers("/api/register").hasAuthority("ROLE_REGISTER");
 		// @formatter:on
 	}
