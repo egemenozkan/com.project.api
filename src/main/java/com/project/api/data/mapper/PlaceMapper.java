@@ -3,6 +3,7 @@ package com.project.api.data.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Options;
@@ -17,6 +18,7 @@ import com.project.api.data.model.common.Address;
 import com.project.api.data.model.common.Contact;
 import com.project.api.data.model.common.Content;
 import com.project.api.data.model.common.MyPlace;
+import com.project.api.data.model.file.MyFile;
 import com.project.api.data.model.place.Localisation;
 import com.project.api.data.model.place.Place;
 import com.project.api.data.model.place.PlaceLandingPage;
@@ -26,7 +28,7 @@ import com.project.api.data.model.place.RestaurantCafe;
 @Mapper
 public interface PlaceMapper {
 
-	final String SELECT_PLACE = "SELECT pv.id, pv.id AS localisation_id,  pv.id AS place_id, pv.type, IF(#{language} IS NULL or #{language} = '', 'TR', #{language}) AS language, pv.address_id," + 
+	final String SELECT_PLACE = "SELECT pv.id, pv.id AS localisation_id, pv.main_image_id, pv.id AS place_id, pv.type, IF(#{language} IS NULL or #{language} = '', 'TR', #{language}) AS language, pv.address_id," + 
 			"CASE IF(#{language} IS NULL or #{language} = '', 'TR', #{language})" + 
 			" WHEN 'TR' THEN pv.tr_name WHEN 'EN' THEN pv.en_name WHEN 'RU' THEN pv.ru_name WHEN 'DE' THEN pv.de_name END AS name," + 
 			" CASE IF(#{language} IS NULL or #{language} = '', 'TR', #{language})" + 
@@ -42,6 +44,8 @@ public interface PlaceMapper {
 	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.PlaceType.class, typeHandler = com.project.api.data.mapper.handler.PlaceTypeTypeHandler.class),
 			@Result(property = "address", column = "address_id", javaType = Address.class, one = @One(select = "findAddressById")),
 			@Result(property = "contact", column = "place_id", javaType = Contact.class, one = @One(select = "findContactByPlaceId")),
+			@Result(property="images", column="place_id", javaType=List.class, many=@Many(select="findAllImagesByPlaceId")),
+			@Result(property="mainImage", column="main_image_id", javaType=MyFile.class, one = @One(select="findMainImage")),
 			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 //	@Options(flushCache = Options.FlushCachePolicy.TRUE)
 	Place findPlaceById(long id, String language);
@@ -50,6 +54,8 @@ public interface PlaceMapper {
 	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.PlaceType.class, typeHandler = com.project.api.data.mapper.handler.PlaceTypeTypeHandler.class),
 			@Result(property = "address", column = "address_id", javaType = Address.class, one = @One(select = "findAddressById")),
 			@Result(property = "contact", column = "place_id", javaType = Contact.class, one = @One(select = "findContactByPlaceId")),
+			@Result(property="images", column="place_id", javaType=List.class, many=@Many(select="findAllImagesByPlaceId")),
+			@Result(property="mainImage", column="main_image_id", javaType=MyFile.class, one = @One(select="findMainImage")),
 			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	List<Place> findAllPlace(String language);
 	
@@ -57,6 +63,8 @@ public interface PlaceMapper {
 	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.PlaceType.class, typeHandler = com.project.api.data.mapper.handler.PlaceTypeTypeHandler.class),
 			@Result(property = "address", column = "address_id", javaType = Address.class, one = @One(select = "findAddressById")),
 			@Result(property = "contact", column = "place_id", javaType = Contact.class, one = @One(select = "findContactByPlaceId")),
+			@Result(property="images", column="place_id", javaType=List.class, many=@Many(select="findAllImagesByPlaceId")),
+			@Result(property="mainImage", column="main_image_id", javaType=MyFile.class, one = @One(select="findMainImage")),
 			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	List<Place> findAllPlaceByType(String language, int typeId);
 	
@@ -64,6 +72,8 @@ public interface PlaceMapper {
 	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.PlaceType.class, typeHandler = com.project.api.data.mapper.handler.PlaceTypeTypeHandler.class),
 			@Result(property = "address", column = "address_id", javaType = Address.class, one = @One(select = "findAddressById")),
 			@Result(property = "contact", column = "place_id", javaType = Contact.class, one = @One(select = "findContactByPlaceId")),
+			@Result(property="images", column="place_id", javaType=List.class, many=@Many(select="findAllImagesByPlaceId")),
+			@Result(property="mainImage", column="main_image_id", javaType=MyFile.class, one = @One(select="findMainImage")),
 			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	List<Place> findAllPlaceByMainType(String language, String types);
 	
@@ -134,5 +144,18 @@ public interface PlaceMapper {
 			@Result(property = "contact", column = "place_id", javaType = Contact.class, one = @One(select = "findContactByPlaceId")),
 			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	List<Place> autocomplete(String name, String language);
-
+	
+	@Update("UPDATE project.place SET main_image_id = #{fileId} WHERE id = #{id} ")
+	void setMainImage(long id, long fileId);
+	
+	@Select("SELECT fs.id, fs.path, fs.page_id, fs.page_type, fs.create_datetime, fs.update_datetime, fs.user_id, fs.status FROM project.file_storage fs WHERE page_id = #{id} AND page_type = 1 ORDER BY fs.create_datetime DESC")
+	@Results(value = {@Result(property = "status", column = "status", javaType = com.project.api.data.enums.Status.class, typeHandler = com.project.api.data.mapper.handler.StatusTypeHandler.class),
+			@Result(property = "user.id", column = "user_id")})
+	List<MyFile> findAllImagesByPlaceId(long id);
+	
+	@Select("SELECT fs.id, fs.path, fs.page_id, fs.page_type, fs.create_datetime, fs.update_datetime, fs.user_id, fs.status FROM project.file_storage fs WHERE id = #{fileId}")
+	@Results(value = {@Result(property = "status", column = "status", javaType = com.project.api.data.enums.Status.class, typeHandler = com.project.api.data.mapper.handler.StatusTypeHandler.class),
+			@Result(property = "user.id", column = "user_id")})
+	MyFile findMainImage(long fileId);
+	
 }

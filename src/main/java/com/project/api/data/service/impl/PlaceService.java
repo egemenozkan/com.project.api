@@ -191,7 +191,8 @@ public class PlaceService implements IPlaceService {
 
 		if (place.getId() == 0 || (place.getAddress() != null && place.getAddress().getId() == 0)) {
 			placeMapper.createPlaceAddress(address);
-		} else if (place.getId() != 0 && (place.getAddress() != null && place.getAddress().getId() != 0)) {
+		}
+		if (place.getId() != 0 && (place.getAddress() != null && place.getAddress().getId() != 0)) {
 			placeMapper.updatePlaceAddress(address);
 		} else {
 			LOG.error("::savePlace PlaceId and AddressId are not defined!..");
@@ -202,6 +203,8 @@ public class PlaceService implements IPlaceService {
 
 		if (place.getId() != 0) {
 			place.setSlug(WebUtils.generateSlug(place.getName(), place.getId()));
+			LOG.info("::updatePlace place: {}", gson.toJson(place));
+			placeMapper.updatePlace(place);
 		}
 
 		if (place.getType() == PlaceType.HOTEL) {
@@ -218,9 +221,7 @@ public class PlaceService implements IPlaceService {
 				if (LOG.isDebugEnabled()) {
 					LOG.debug("Hotel (Place) has been created. hotel: {}", gson.toJson(hotel));
 				}
-			} else {
-				placeMapper.updatePlace(place);
-			}
+			} 
 		} else if (place.getType() == PlaceType.AIRPORT) {
 			if (place.getId() == 0) {
 				placeMapper.createPlace(place);
@@ -236,15 +237,10 @@ public class PlaceService implements IPlaceService {
 				if (LOG.isDebugEnabled()) {
 					LOG.debug("Airport (Place) has been created. airport: {}", gson.toJson(airport));
 				}
-			} else {
-				placeMapper.updatePlace(place);
 			}
-
 		} else if (place.getType().getMainType() == MainType.SHOPPING) {
 			if (place.getId() == 0) {
 				placeMapper.createPlace(place);
-			} else {
-				placeMapper.updatePlace(place);
 			}
 		} else if (place.getType().getMainType() == MainType.FOOD_AND_BEVERAGE) {
 			if (place.getId() == 0) {
@@ -261,14 +257,10 @@ public class PlaceService implements IPlaceService {
 				if (LOG.isDebugEnabled()) {
 					LOG.debug("Restaurant/Cafe (Place) has been created. restaurant/cafe: {}", gson.toJson(restaurantCafe));
 				}
-			} else {
-				placeMapper.updatePlace(place);
 			}
 		} else {
 			if (place.getId() == 0) {
 				placeMapper.createPlace(place);
-			} else {
-				placeMapper.updatePlace(place);
 			}
 		}
 
@@ -417,5 +409,11 @@ public class PlaceService implements IPlaceService {
 		
 		
 		return ids;
+	}
+
+	@Override
+	public boolean setMainImage(long id, long fileId) {
+		placeMapper.setMainImage(id, fileId);
+		return false;
 	}
 }

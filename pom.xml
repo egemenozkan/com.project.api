@@ -27,7 +27,7 @@
 		<maven.compiler.target>11</maven.compiler.target>
 		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
 		<!-- -->
-		<mybatis.version>2.0.0</mybatis.version>
+		<mybatis.version>2.0.1</mybatis.version>
 		<!-- Utils -->
 		<utils.apache-poi.version>3.17</utils.apache-poi.version>
 		<utils.jsoup.version>1.7.2</utils.jsoup.version>

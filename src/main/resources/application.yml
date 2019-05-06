@@ -3,7 +3,8 @@ spring:
     url: jdbc:mysql://mysqlserver:3306?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&allowMultiQueries=true&useLegacyDatetimeCode=false&serverTimezone=Europe/Istanbul
     username: dbuser
     password: Db*12345678
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
     
 logging:
   file: log/api-opetra.log

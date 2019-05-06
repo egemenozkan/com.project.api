@@ -21,5 +21,5 @@ public interface IPlaceService {
     PlaceLandingPage findLandingPageByPlaceIdAndLanguage(long id, String language);
     void saveLandingPage(PlaceLandingPage page);
     List<PlaceLandingPage> findAllLandingPageByFilter(PlaceRequest placeRequest);
-    
+    boolean setMainImage(long id, long fileId);
 }

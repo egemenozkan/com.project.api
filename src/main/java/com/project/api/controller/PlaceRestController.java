@@ -165,4 +165,12 @@ public class PlaceRestController {
 		List<LandingPageFile> images = fileService.getFiles();
 		return new ResponseEntity<>(images, HttpStatus.OK);
 	}
+	
+	@PostMapping(value = "/places/{id}/main-image")
+	public ResponseEntity<Boolean> setMainPage(@PathVariable long id, RequestEntity<Long> requestEntity) {
+		long fileId = requestEntity.getBody();
+		placeService.setMainImage(id, fileId);
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
+	
 }
