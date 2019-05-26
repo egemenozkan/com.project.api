@@ -1,6 +1,5 @@
 package com.project.api.controller;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -19,13 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.project.api.data.enums.EventType;
 import com.project.api.data.enums.Language;
-import com.project.api.data.enums.MainType;
-import com.project.api.data.enums.PlaceType;
 import com.project.api.data.model.event.Event;
 import com.project.api.data.model.event.EventLandingPage;
 import com.project.api.data.model.event.EventRequest;
-import com.project.api.data.model.place.PlaceLandingPage;
-import com.project.api.data.model.place.PlaceRequest;
 import com.project.api.data.service.IEventService;
 import com.project.api.data.service.IPlaceService;
 
@@ -44,9 +39,21 @@ public class EventRestController {
 	private static final Logger LOG = LogManager.getLogger(EventRestController.class);
 
 	@GetMapping(value = "/events")
-	public ResponseEntity<List<Event>> getEvents(RequestEntity<EventRequest> requestEntity) {
+	public ResponseEntity<List<Event>> getEvents(@RequestParam(defaultValue = "RU") String language,
+			@RequestParam(required = false, defaultValue = "1") int type, @RequestParam(required = false, defaultValue = "0") int limit,
+			@RequestParam(required = false, defaultValue = "false") boolean random) {
 		EventRequest eventRequest = new EventRequest();
-		eventRequest.setLanguage(Language.TURKISH);
+		if (type > 1) {
+			eventRequest.setType(EventType.getById(type));
+		}
+		if (limit > 0) {
+			eventRequest.setLimit(limit);
+		}
+		if (random) {
+			eventRequest.setRandom(Boolean.TRUE);
+		}
+		eventRequest.setLanguage(Language.getByCode(language));
+		
 		List<Event> events = eventService.getEvents(eventRequest);
 
 		return new ResponseEntity<>(events, HttpStatus.OK);

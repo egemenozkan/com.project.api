@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
@@ -17,7 +16,6 @@ import com.project.api.data.model.event.Event;
 import com.project.api.data.model.event.EventLandingPage;
 import com.project.api.data.model.event.EventRequest;
 import com.project.api.data.model.place.Localisation;
-import com.project.api.data.model.place.Place;
 
 @Mapper
 public interface EventMapper extends PlaceMapper{
@@ -30,12 +28,12 @@ public interface EventMapper extends PlaceMapper{
 			" WHEN 'TR' THEN ev.tr_slug WHEN 'EN' THEN ev.en_slug WHEN 'RU' THEN ev.ru_slug WHEN 'DE' THEN ev.de_slug END AS slug" + 
 			" ,ev.create_datetime, ev.update_datetime" +
 			" FROM project.event_view ev";	
-	@Select(SELECT_EVENT)
-	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.EventType.class, typeHandler = com.project.api.data.mapper.handler.EventTypeTypeHandler.class),
-			@Result(property = "periodType", column = "period_type", javaType = com.project.api.data.enums.EventPeriodType.class, typeHandler = com.project.api.data.mapper.handler.EventPeriodTypeTypeHandler.class),
-			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class),
-			@Result(property = "place.id", column = "place_id")})
-	List<Event> findAllEvent(EventRequest eventRequest);
+//	@Select(SELECT_EVENT)
+//	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.EventType.class, typeHandler = com.project.api.data.mapper.handler.EventTypeTypeHandler.class),
+//			@Result(property = "periodType", column = "period_type", javaType = com.project.api.data.enums.EventPeriodType.class, typeHandler = com.project.api.data.mapper.handler.EventPeriodTypeTypeHandler.class),
+//			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class),
+//			@Result(property = "place.id", column = "place_id")})
+//	List<Event> findAllEvent(EventRequest eventRequest);
 	
 	@Select(SELECT_EVENT + " WHERE ev.id = #{id}")
 	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.EventType.class, typeHandler = com.project.api.data.mapper.handler.EventTypeTypeHandler.class),
@@ -77,5 +75,8 @@ public interface EventMapper extends PlaceMapper{
 	void insertContents(@Param("id") long id, @Param("contents") List<Content> contents);
 	
 	void updateContents(@Param("contents") List<Content> contents);
+	
+	List<Event> findAllEventsByFilter(EventRequest eventRequest);
+	
 	
 }

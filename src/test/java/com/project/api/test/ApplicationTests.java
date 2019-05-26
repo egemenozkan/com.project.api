@@ -6,8 +6,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationEventPublisher;
@@ -18,7 +17,6 @@ import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import com.google.gson.Gson;
 import com.restfb.Connection;
@@ -28,7 +26,6 @@ import com.restfb.Parameter;
 import com.restfb.Version;
 import com.restfb.types.Place;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @ComponentScan(basePackages = "com.project")
 public class ApplicationTests {

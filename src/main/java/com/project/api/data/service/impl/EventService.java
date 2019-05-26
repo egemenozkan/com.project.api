@@ -44,7 +44,7 @@ public class EventService implements IEventService {
 
 	@Override
 	public List<Event> getEvents(EventRequest eventRequest) {
-		List<Event> events = eventMapper.findAllEvent(eventRequest);
+		List<Event> events = eventMapper.findAllEventsByFilter(eventRequest);
 		if (events != null && !events.isEmpty()) {
 			// events.removeIf(event -> event.getType() != eventRequest.g)
 		}

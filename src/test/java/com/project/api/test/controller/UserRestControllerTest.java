@@ -1,10 +1,9 @@
 package com.project.api.test.controller;
 
 import static java.util.Arrays.asList;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +16,11 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import com.google.gson.Gson;
 import com.project.api.test.TestConstants;
 import com.project.common.model.User;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserRestControllerTest {
 
