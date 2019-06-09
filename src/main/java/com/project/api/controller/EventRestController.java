@@ -1,10 +1,13 @@
 package com.project.api.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +44,7 @@ public class EventRestController {
 	@GetMapping(value = "/events")
 	public ResponseEntity<List<Event>> getEvents(@RequestParam(defaultValue = "RU") String language,
 			@RequestParam(required = false, defaultValue = "1") int type, @RequestParam(required = false, defaultValue = "0") int limit,
-			@RequestParam(required = false, defaultValue = "false") boolean random) {
+			@RequestParam(required = false, defaultValue = "false") boolean random,  @RequestParam(required = false)@DateTimeFormat(iso = ISO.DATE) LocalDate startDate, @RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate endDate) {
 		EventRequest eventRequest = new EventRequest();
 		if (type > 1) {
 			eventRequest.setType(EventType.getById(type));
@@ -52,11 +55,20 @@ public class EventRestController {
 		if (random) {
 			eventRequest.setRandom(Boolean.TRUE);
 		}
+		if (startDate != null) {
+			eventRequest.setStartDate(startDate);
+		}
+		
+		if (endDate != null) {
+			eventRequest.setEndDate(endDate);
+		}
+		
+		
 		eventRequest.setLanguage(Language.getByCode(language));
 		
 		List<Event> events = eventService.getEvents(eventRequest);
 
-		return new ResponseEntity<>(events, HttpStatus.OK);
+		return new ResponseEntity<List<Event>>(events, HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/events/{id}")

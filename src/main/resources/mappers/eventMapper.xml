@@ -37,15 +37,16 @@
 			AND lv.language = #{language.code}
         </if>
         <if test="startDate != null">
-			AND lv.start_date = #{startDate}
+			AND ev.start_date &gt;= #{startDate}
         </if>
         <if test="endDate != null">
-			AND lv.end_date = #{endDate}
+			AND ev.end_date &lt;= #{endDate}
         </if>
 		AND type = 2
     </select>
 <resultMap id="EventMap" type="com.project.api.data.model.event.Event">
     <id property="id" column="id" />
+            <result property="place.id" column="place_id" />
     <result property="language" column="language" javaType="com.project.api.data.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler" />
     <result property="type" column="type" javaType="com.project.api.data.enums.EventType" typeHandler="com.project.api.data.mapper.handler.EventTypeTypeHandler" />
         <result property="periodType" column="period_type" javaType="com.project.api.data.enums.EventPeriodType" typeHandler="com.project.api.data.mapper.handler.EventPeriodTypeTypeHandler" />
@@ -61,11 +62,12 @@
         WHERE
 		ev.id = IF(#{id} = 0, ev.id, #{id})
         <if test="startDate != null">
-			AND ev.start_date = #{startDate}
+			AND ev.start_date &lt;= #{endDate}
         </if>
         <if test="endDate != null">
-			AND ev.end_date = #{endDate}
+			AND ev.end_date &gt;= #{startDate}
         </if>
+        ORDER BY ev.start_time ASC
     </select>
 
 

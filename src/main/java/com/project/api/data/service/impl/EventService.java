@@ -57,7 +57,11 @@ public class EventService implements IEventService {
 						localisation.put(name.getLanguage().toString(), name);
 				}
 				event.setLocalisation(localisation);
-
+				
+				/** Place **/
+				if (event != null && event.getPlace() != null && event.getPlace().getId() > 0) {
+					event.setPlace(placeService.findPlaceById(event.getPlace().getId(), eventRequest.getLanguage().getCode()));
+				}
 			}
 		}
 

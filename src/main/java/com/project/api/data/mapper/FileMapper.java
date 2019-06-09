@@ -28,9 +28,9 @@ public interface FileMapper {
 			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	List<Comment> findAllCommentsByPlaceId(long id, String language);
 	
-	@Insert("INSERT INTO project.file_storage(page_type, page_id, user_id, path) VALUES(#{pageType}, #{pageId}, #{userId}, #{path})")
+	@Insert("INSERT INTO project.file_storage(page_type, page_id, user_id, upload_dir, name, extension) VALUES(#{pageType}, #{pageId}, #{userId}, #{uploadDir}, #{name}, #{extension})")
 	@SelectKey(statement = "SELECT last_insert_id() as id", keyProperty = "id", keyColumn = "Id", before = false, resultType = Long.class)
-	long saveFile(int pageType, long pageId, long userId, String path);
+	long saveFile(int pageType, long pageId, long userId, String uploadDir, String name, String extension);
 	
 	@Update("UPDATE project.place_comment SET status = ${status} WHERE id = ${id}")
 	long updateCommentStatus(long id, int status);
@@ -49,13 +49,13 @@ public interface FileMapper {
 			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	List<PlaceComment> findAllPlaceComments(String language);
 	
-	@Select("SELECT fs.id, fs.path, fs.page_id, fs.create_datetime, fs.update_datetime, fs.user_id, fs.status FROM project.file_storage fs WHERE fs.page_type = ${pageType} AND fs.page_id = ${pageId}")
+	@Select("SELECT fs.id, fs.upload_dir, fs.name, fs.extension, fs.page_id, fs.create_datetime, fs.update_datetime, fs.user_id, fs.status FROM project.file_storage fs WHERE fs.page_type = ${pageType} AND fs.page_id = ${pageId}")
 	@Results(value = {@Result(property = "status", column = "status", javaType = com.project.api.data.enums.Status.class, typeHandler = com.project.api.data.mapper.handler.StatusTypeHandler.class),
 			@Result(property = "place.id", column = "place_id"),
 			@Result(property = "user.id", column = "user_id")})
 	List<MyFile> findAllFilesByPageId(int pageType, long pageId);
 	
-	@Select("SELECT fs.id, fs.path, fs.page_id, fs.page_type, fs.create_datetime, fs.update_datetime, fs.user_id, fs.status FROM project.file_storage fs ORDER BY fs.create_datetime DESC")
+	@Select("SELECT fs.id, fs.upload_dir, fs.name, fs.extension, fs.page_id, fs.page_type, fs.create_datetime, fs.update_datetime, fs.user_id, fs.status FROM project.file_storage fs ORDER BY fs.create_datetime DESC")
 	@Results(value = {@Result(property = "status", column = "status", javaType = com.project.api.data.enums.Status.class, typeHandler = com.project.api.data.mapper.handler.StatusTypeHandler.class),
 			@Result(property = "pageType", column = "page_type", javaType = com.project.api.data.enums.LandingPageType.class, typeHandler = com.project.api.data.mapper.handler.LandingPageTypeTypeHandler.class),
 			@Result(property = "user.id", column = "user_id")})

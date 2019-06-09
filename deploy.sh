@@ -1,3 +1,3 @@
-mvn -f /Devel/workplace/com.project.contract/ clean install
-mvn clean package -DskipTests -Pprod
+mvn -f /Devel/workspace/com.project.contract/ clean install
+mvn clean install package -DskipTests -Pprod
 scp target/api-alfa.jar root@do.sevais.com:/opt/www/api

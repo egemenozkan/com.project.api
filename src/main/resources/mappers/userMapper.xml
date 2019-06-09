@@ -12,7 +12,7 @@
 	`facebook_id`,
 	`google_id`,`vkontakte_id`, `picture_url`)
 	VALUES
-	(#{username}, #{firstName}, #{lastName}, #{email}, #{password}, #{facebookId}, #{googleId}, #{vkontakteId}, #{picture_url});
+	(#{username}, #{firstName}, #{lastName}, #{email}, #{password}, #{facebookId}, #{googleId}, #{vkontakteId}, #{pictureUrl});
 
     </insert>
 	<!-- <select id="findAllPlaceByType" resultType="com.project.api.data.model.place.Place"> -->

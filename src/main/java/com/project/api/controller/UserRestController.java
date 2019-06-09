@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.api.data.model.user.UserSearchRequest;
@@ -79,16 +80,16 @@ public class UserRestController {
 //		return response;
 //	}
 	
-	@GetMapping(value = "/users/{usernameOrEmail}/")
-	public ResponseEntity<User> getUsetByUsernameOrEmail(@PathVariable String usernameOrEmail) {
-		User user = userService.getUserByEmailOrUsername(usernameOrEmail);
+	@GetMapping(value = "/users/email")
+	public ResponseEntity<User> getUsetByUsernameOrEmail(@RequestParam(required = true) String email) {
+		User user = userService.getUserByEmailOrUsername(email);
 		ResponseEntity<User> response = null;
-		response = new ResponseEntity<User>(user, HttpStatus.OK);
+		response = new ResponseEntity<>(user, HttpStatus.OK);
 
 		return response;
 	}
 
-	@GetMapping(value = "/users/available/{emailOrUsername}/")
+	@GetMapping(value = "/users/available/{emailOrUsername:.+}}/")
 	public ResponseEntity<Boolean> userAvailableByEmailOrUsername(@PathVariable String emailOrUsername) {
 		Boolean userExists = userService.existsByEmailOrUsername(emailOrUsername);
 		Boolean available = userExists != null;

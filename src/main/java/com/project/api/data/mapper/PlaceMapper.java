@@ -147,12 +147,12 @@ public interface PlaceMapper {
 	@Update("UPDATE project.place SET main_image_id = #{fileId} WHERE id = #{id} ")
 	void setMainImage(long id, long fileId);
 	
-	@Select("SELECT fs.id, fs.path, fs.page_id, fs.page_type, fs.create_datetime, fs.update_datetime, fs.user_id, fs.status FROM project.file_storage fs WHERE page_id = #{id} AND page_type = 1 ORDER BY fs.create_datetime DESC")
+	@Select("SELECT fs.id, fs.upload_dir, fs.name, fs.extension, fs.page_id, fs.page_type, fs.create_datetime, fs.update_datetime, fs.user_id, fs.status FROM project.file_storage fs WHERE page_id = #{id} AND page_type = 1 ORDER BY fs.create_datetime DESC")
 	@Results(value = {@Result(property = "status", column = "status", javaType = com.project.api.data.enums.Status.class, typeHandler = com.project.api.data.mapper.handler.StatusTypeHandler.class),
 			@Result(property = "user.id", column = "user_id")})
 	List<MyFile> findAllImagesByPlaceId(long id);
 	
-	@Select("SELECT fs.id, fs.path, fs.page_id, fs.page_type, fs.create_datetime, fs.update_datetime, fs.user_id, fs.status FROM project.file_storage fs WHERE id = #{fileId}")
+	@Select("SELECT fs.id, fs.upload_dir, fs.name, fs.extension, fs.page_id, fs.page_type, fs.create_datetime, fs.update_datetime, fs.user_id, fs.status FROM project.file_storage fs WHERE id = #{fileId}")
 	@Results(value = {@Result(property = "status", column = "status", javaType = com.project.api.data.enums.Status.class, typeHandler = com.project.api.data.mapper.handler.StatusTypeHandler.class),
 			@Result(property = "user.id", column = "user_id")})
 	MyFile findMainImage(long fileId);

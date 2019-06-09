@@ -17,11 +17,6 @@ public class FileService implements IFileService {
 	FileMapper fileMapper;
 	
 	@Override
-	public long saveFile(long userId, int pageType, long pageId, String path) {
-		return fileMapper.saveFile(pageType, pageId, userId, path);
-	}
-
-	@Override
 	public List<MyFile> getFilesByPageId(int pageType, long pageId) {
 		return fileMapper.findAllFilesByPageId(pageType, pageId);
 	}
@@ -29,6 +24,11 @@ public class FileService implements IFileService {
 	@Override
 	public List<LandingPageFile> getFiles() {
 		return fileMapper.findAllFiles();
+	}
+
+	@Override
+	public long saveFile(long userId, int pageType, long pageId, String uploadDir, String name, String extension) {
+		return fileMapper.saveFile(pageType, pageId, userId, uploadDir, name, extension);
 	}
 
 }
