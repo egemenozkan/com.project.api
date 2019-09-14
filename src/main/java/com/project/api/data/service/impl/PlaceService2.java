@@ -8,7 +8,10 @@ import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.locationtech.spatial4j.context.SpatialContext;
+import org.locationtech.spatial4j.shape.impl.PointImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -25,12 +28,14 @@ import com.project.api.data.mapper.TimeTableMapper;
 import com.project.api.data.model.common.Address;
 import com.project.api.data.model.common.Contact;
 import com.project.api.data.model.common.Content;
+import com.project.api.data.model.common.MyPlace;
 import com.project.api.data.model.event.TimeTable;
 import com.project.api.data.model.file.MyFile;
 import com.project.api.data.model.flight.Airport;
 import com.project.api.data.model.hotel.Hotel;
 import com.project.api.data.model.place.Localisation;
 import com.project.api.data.model.place.Place;
+import com.project.api.data.model.place.PlaceAutocompleteData;
 import com.project.api.data.model.place.PlaceLandingPage;
 import com.project.api.data.model.place.PlaceRequest;
 import com.project.api.data.model.place.RestaurantCafe;
@@ -38,14 +43,28 @@ import com.project.api.data.service.IFileService;
 import com.project.api.data.service.IPlaceService;
 import com.project.api.data.utils.MyBatisUtils;
 import com.project.api.utils.WebUtils;
+import com.project.common.model.AutocompleteResponse;
+import com.project.event.PlaceEvent;
+import com.restfb.Connection;
+import com.restfb.DefaultFacebookClient;
+import com.restfb.FacebookClient.AccessToken;
+import com.restfb.Parameter;
+import com.restfb.Version;
 
 @Service
-public class PlaceService implements IPlaceService {
+public class PlaceService2 implements IPlaceService {
 
-	private static final Logger LOG = LogManager.getLogger(PlaceService.class);
+	private static final String CC_CLIENT_ID = "748547722151955";
+	private static final String CLIENT_SECRET = "0906127b57b84d3e7e79ad609e33777c";
+	private static final String APP_TOKEN = "7b5498718e83abbb4fec8bba2e86073c";
+
+	private static final Logger LOG = LogManager.getLogger(PlaceService2.class);
 
 	@Autowired
 	private Gson gson;
+
+	@Autowired
+	private ApplicationEventPublisher applicationEventPublisher;
 
 	@Autowired
 	private PlaceMapper placeMapper;
@@ -62,6 +81,73 @@ public class PlaceService implements IPlaceService {
 	@Autowired
 	private IFileService fileService;
 
+//	@Override
+	public AutocompleteResponse autocompletePlace(String query) {
+		List<MyPlace> places = this.getFacebookPlaces(query);
+		AutocompleteResponse autocompleteResponse = new AutocompleteResponse();
+		autocompleteResponse.setSearchQuery(query);
+
+		if (CollectionUtils.isEmpty(places)) {
+			LOG.warn("::autocompletePlace places have not been found by query : {}", query);
+			autocompleteResponse.setSuccess(false);
+			return autocompleteResponse;
+		}
+
+		List<PlaceAutocompleteData> dataList = new ArrayList<PlaceAutocompleteData>();
+		autocompleteResponse.setData(dataList);
+		for (MyPlace _place : places) {
+			PlaceAutocompleteData data = new PlaceAutocompleteData();
+			dataList.add(data);
+
+			data.setFbPlaceId(_place.getFbPlaceId());
+			data.setLabel(_place.getName());
+			data.setValue(_place.getFbPlaceId());
+			// data.setCoordinate(_place.getCoordinate());
+		}
+
+		return autocompleteResponse;
+	}
+
+	private List<MyPlace> getFacebookPlaces(String query) {
+		AccessToken accessToken = new DefaultFacebookClient(Version.VERSION_3_1).obtainAppAccessToken(CC_CLIENT_ID, CLIENT_SECRET);
+		DefaultFacebookClient facebookClient = new DefaultFacebookClient(accessToken.getAccessToken(), Version.VERSION_3_1);
+		List<MyPlace> myPlaces = null;
+		List<com.restfb.types.Place> places = null;
+		try {
+			String categories[] = { "HOTEL_LODGING" };
+			Connection<com.restfb.types.Place> publicSearch = facebookClient.fetchConnection("search", com.restfb.types.Place.class,
+					Parameter.with("q", query), Parameter.with("type", "place"),
+					// Parameter.with("center", "30.559762,36.602792"),
+					// Parameter.with("distance", 4000000),
+					Parameter.with("categories", "[\"HOTEL_LODGING\"]"), Parameter.with("fields",
+							"about, name, category_list, checkins, rating_count, overall_star_rating, location, is_verified"));
+			places = publicSearch.getData();
+			myPlaces = new ArrayList<>();
+			for (com.restfb.types.Place _place : places) {
+				if (!(_place.getLocation().getCountry().contains("Turkey") || _place.getLocation().getCountry().contains("Türkiye")))
+					continue;
+				MyPlace place = new MyPlace();
+				place.setFbPlaceId(_place.getId());
+				place.setName(_place.getName());
+				PointImpl coordinate = new PointImpl(_place.getLocation().getLongitude(), _place.getLocation().getLatitude(),
+						SpatialContext.GEO);
+				// place.setCoordinate(coordinate);
+				myPlaces.add(place);
+				System.out.println("---");
+
+			}
+
+			PlaceEvent placeEvent = new PlaceEvent(this, myPlaces);
+			applicationEventPublisher.publishEvent(placeEvent);
+			LOG.warn(places.size() + " " + gson.toJson(places));
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		return myPlaces;
+
+	}
 
 	@Override
 	public Place findPlaceById(long id, String language) {
@@ -78,10 +164,6 @@ public class PlaceService implements IPlaceService {
 			
 			if (place.getAddress() != null && place.getAddress().getId() > 0) {
 				place.setAddress(placeMapper.findAddressById(place.getAddress().getId()));
-			}
-			
-			if (place.getContact() != null && place.getContact().getId() > 0) {
-				place.setContact(placeMapper.findContactByPlaceId(id));
 			}
 			
 			place.setImages(fileService.getFilesByPageId(LandingPageType.PLACE.getId(), id));
@@ -325,8 +407,6 @@ public class PlaceService implements IPlaceService {
 						if (address != null) {
 							place.setAddress(address);
 						}
-					} else {
-						place.setAddress(null);
 					}
 					
 					if (!placeRequest.isHideContent()) {
@@ -340,15 +420,11 @@ public class PlaceService implements IPlaceService {
 						Contact contact = placeMapper.findContactByPlaceId(place.getId());
 						place.setContact(contact);
 						
-					} else {
-						place.setContact(null);
 					}
 					
 					if (!placeRequest.isHideImages() && place.getId() >0) {
 						List<MyFile> images = placeMapper.findAllImagesByPlaceId(place.getId());
 						place.setImages(images);
-					} else {
-						place.setImages(Collections.emptyList());
 					}
 					
 					if (!placeRequest.isHideMainImage() && place.getMainImage() != null && place.getMainImage().getId() >0) {

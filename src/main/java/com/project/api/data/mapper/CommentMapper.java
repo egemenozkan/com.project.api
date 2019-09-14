@@ -24,7 +24,7 @@ public interface CommentMapper {
 			@Result(property = "user.lastName", column = "last_name"),
 			@Result(property = "user.email", column = "email"),
 			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
-	List<Comment> findAllCommentsByPlaceId(long id, String language);
+	List<Comment> findAllPlaceCommentsByPlaceId(long id, String language);
 	
 	@Insert("INSERT INTO project.place_comment(title, message, user_id, place_id) VALUES(#{comment.title}, #{comment.message}, #{comment.user.id}, #{placeId})")
 	@SelectKey(statement = "SELECT last_insert_id() as id", keyProperty = "id", keyColumn = "Id", before = false, resultType = Long.class)
@@ -48,5 +48,19 @@ public interface CommentMapper {
 	List<PlaceComment> findAllPlaceComments(String language);
 	
 	
+	@Select("SELECT c.id, c.title, c.message, c.rating, c.status, c.user_id, c.username, c.first_name, c.last_name, c.email, c.event_id, c.name, c.language, c.create_datetime, c.update_datetime"
+			+ " FROM project.event_comment_view c WHERE c.event_id = #{eventId}")
+	@Results(value = {@Result(property = "status", column = "status", javaType = com.project.api.data.enums.Status.class, typeHandler = com.project.api.data.mapper.handler.StatusTypeHandler.class),
+			@Result(property = "user.id", column = "user_id"),
+			@Result(property = "user.name", column = "username"),
+			@Result(property = "user.firstName", column = "first_name"),
+			@Result(property = "user.lastName", column = "last_name"),
+			@Result(property = "user.email", column = "email"),
+			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
+	List<Comment> findAllEventCommentsByEventId(long eventId, String language);
+	
+	@Insert("INSERT INTO project.event_comment(title, message, user_id, event_id) VALUES(#{comment.title}, #{comment.message}, #{comment.user.id}, #{eventId})")
+	@SelectKey(statement = "SELECT last_insert_id() as id", keyProperty = "id", keyColumn = "Id", before = false, resultType = Long.class)
+	void saveEventComment(Comment comment, long eventId);
 	
 }

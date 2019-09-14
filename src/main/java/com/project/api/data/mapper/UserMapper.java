@@ -42,14 +42,14 @@ public interface UserMapper {
     boolean existsByEmailOrUsername(String emailOrUsername);
 
 
-    @Select("SELECT r.name AS name FROM user_role ur LEFT JOIN project.role r ON ur.role_id = r.id WHERE  ur.user_id = #{userId}")
+    @Select("SELECT r.name AS name FROM project.user_role ur LEFT JOIN project.role r ON ur.role_id = r.id WHERE  ur.user_id = #{userId}")
     List<String> getRolesByUserId(Long userId);
     
     @Select("SELECT a.name AS name FROM user_authority ua LEFT JOIN project.authority a ON ua.authority_id = a.id WHERE  ua.user_id = #{userId}")
     List<String> getAuthorityByUserId(Long userId);
     
     @Select("SELECT id, username, first_name, last_name, email, password, facebook_id, google_id, vkontakte_id, picture_url FROM project.user u WHERE email = #{emailOrUsername} or username = #{emailOrUsername}")
-    @Results(value = {@Result(property = "roles", column = "user_id", javaType = List.class, many = @Many(select = "getRolesByUserId")) })
+    @Results(value = {@Result(property = "roles", column = "id", javaType = List.class, many = @Many(select = "getRolesByUserId")) })
     User getUserByEmailOrUsername(String emailOrUsername);
     
 //    @Select("SELECT u.id FROM project.user u")

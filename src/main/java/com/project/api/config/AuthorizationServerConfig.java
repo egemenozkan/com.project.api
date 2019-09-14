@@ -104,7 +104,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		.withClient("client-redirect")
 			.authorizedGrantTypes("authorization_code")
 			.secret(passwordEncoder.encode("secret"))
-			.scopes("places", "events", "transfer")
+			.scopes("places", "events", "transfer","users")
 //			.resourceIds(resourceIds)
 			.accessTokenValiditySeconds(36000000)
 			.refreshTokenValiditySeconds(36000000)

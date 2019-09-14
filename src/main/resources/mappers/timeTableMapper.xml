@@ -1,0 +1,70 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.api.data.mapper.TimeTableMapper">
+
+	<!-- Time Table -->
+	<resultMap id="TimeTableMap" type="com.project.api.data.model.event.TimeTable">
+	    <id property="id" column="id" />
+	   	<result property="pageType" column="page_type" javaType="com.project.api.data.enums.LandingPageType" typeHandler="com.project.api.data.mapper.handler.LandingPageTypeTypeHandler" />
+	    <result property="periodType" column="period_type" javaType="com.project.api.data.enums.PeriodType" typeHandler="com.project.api.data.mapper.handler.PeriodTypeTypeHandler" />
+	</resultMap>
+	<select id="findAllTimeTableByEventId" resultMap="TimeTableMap">
+			SELECT tt.`id`,
+		    tt.`page_type`,
+		    tt.`page_id`,
+		    tt.`period_type`,
+		    tt.`start_date`,
+		    tt.`end_date`,
+		    tt.`show_start_date`,
+		    tt.`show_end_date`,
+		    tt.`start_time`,
+		    tt.`end_time`,
+		    tt.`show_start_time`,
+		    tt.`show_end_time`,
+		    tt.`status`
+		FROM `project`.`time_table` tt WHERE tt.page_type = 2 and tt.page_id = #{eventId} AND tt.closed = 0
+	</select>
+	
+	<select id="findAllTimeTableByPlaceId" resultMap="TimeTableMap">
+			SELECT tt.`id`,
+		    tt.`page_type`,
+		    tt.`page_id`,
+		    tt.`period_type`,
+		    tt.`start_date`,
+		    tt.`end_date`,
+		    tt.`show_start_date`,
+		    tt.`show_end_date`,
+		    tt.`start_time`,
+		    tt.`end_time`,
+		    tt.`show_start_time`,
+		    tt.`show_end_time`,
+		    tt.`status`
+		FROM `project`.`time_table` tt WHERE tt.page_type = 1 and tt.page_id = #{placeId} AND tt.closed = 0 LIMIT 1;
+	</select>
+	
+	<insert id="saveTimeTable">
+	    	REPLACE INTO `project`.`time_table`
+	(`id`,
+	`page_type`,
+	`page_id`,
+	`period_type`,
+	`start_date`,
+	`end_date`,
+	`show_start_date`,
+	`show_end_date`,
+	`start_time`,
+	`end_time`,
+	`show_start_time`,
+	`show_end_time`)
+	VALUES
+	(#{id}, #{pageType.id}, #{pageId}, #{periodType.id}, #{startDate}, #{endDate},
+	 #{showStartDate}, #{showEndDate}, #{startTime}, #{endTime}, #{showStartTime}, #{showEndTime});
+  	</insert>
+  	
+  	<update id="deleteTimeTableById">
+  		UPDATE `project`.`time_table` SET closed = 1 WHERE id = #{id}
+  	</update>
+
+
+</mapper>
