@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.Gson;
-import com.project.api.data.enums.EventPeriodType;
+import com.project.api.data.enums.PeriodType;
 
 public class EventPeriods {
 	@Autowired
@@ -18,7 +18,7 @@ public class EventPeriods {
 
 	@Test
 	public void test() {
-		EventPeriodType periodType = EventPeriodType.MONDAYS;
+		PeriodType periodType = PeriodType.MONDAYS;
 		LocalDate startDate = LocalDate.of(2019, 02, 17);
 		LocalDate endDate = LocalDate.of(2019, 03, 25);
 		Stream<LocalDate> sessions = startDate.datesUntil(endDate)
@@ -27,7 +27,7 @@ public class EventPeriods {
 		System.out.println(gson.toJson(sessions.collect(Collectors.toList())));
 	}
 
-	private boolean isEventBetweenPeriods(LocalDate date, EventPeriodType periodType) {
+	private boolean isEventBetweenPeriods(LocalDate date, PeriodType periodType) {
 		boolean result = false;
 		switch (periodType) {
 		case MONDAYS:

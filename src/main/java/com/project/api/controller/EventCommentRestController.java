@@ -24,29 +24,28 @@ import com.project.api.data.service.ICommentService;
 import com.project.api.data.service.IPlaceService;
 
 @RestController
-@RequestMapping(value = "/api/v1/places")
-public class PlaceCommentRestController {
+@RequestMapping(value = "/api/v1/events")
+public class EventCommentRestController {
 
-	private static final Logger LOG = LogManager.getLogger(PlaceCommentRestController.class);
+	private static final Logger LOG = LogManager.getLogger(EventCommentRestController.class);
 
 	@Autowired
 	private Gson gson;
 
 	@Autowired
 	private ICommentService commentService;
-	@Autowired
-	private IPlaceService placeService;
+
 
 	@GetMapping(value = "/{id}/comments")
 	public ResponseEntity<CommentResponse> getCommentResponse(@PathVariable long id,
 			@RequestParam(defaultValue = "RU", required = false) String language) {
 
-		CommentResponse placeCommentResponse = commentService.getPlaceCommentsByPlaceId(id, language);
+		CommentResponse commentResponse = commentService.getEventCommentsByEventId(id, language);
 
-		ResponseEntity<CommentResponse> responseEntity = new ResponseEntity<>(placeCommentResponse, HttpStatus.OK);
+		ResponseEntity<CommentResponse> responseEntity = new ResponseEntity<>(commentResponse, HttpStatus.OK);
 
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("::getCommentResponse {}", gson.toJson(placeCommentResponse));
+			LOG.debug("::getCommentResponse {}", gson.toJson(commentResponse));
 		}
 		return responseEntity;
 	}
@@ -82,7 +81,7 @@ public class PlaceCommentRestController {
 
 		Comment comment = requestEntity.getBody();
 		if (id > 0) {
-			commentService.savePlaceComment(comment, id);
+			commentService.saveEventComment(comment, id);
 		}
 		ResponseEntity<Long> responseEntity = new ResponseEntity<>(comment.getId(), HttpStatus.OK);
 

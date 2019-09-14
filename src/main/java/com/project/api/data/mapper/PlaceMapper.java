@@ -32,7 +32,7 @@ public interface PlaceMapper {
 			" WHEN 'TR' THEN pv.tr_name WHEN 'EN' THEN pv.en_name WHEN 'RU' THEN pv.ru_name WHEN 'DE' THEN pv.de_name END AS name," + 
 			" CASE IF(#{language} IS NULL or #{language} = '', 'TR', #{language})" + 
 			" WHEN 'TR' THEN pv.tr_slug WHEN 'EN' THEN pv.en_slug WHEN 'RU' THEN pv.ru_slug WHEN 'DE' THEN pv.de_slug END AS slug" + 
-			" ,pv.create_datetime, pv.update_datetime" +
+			" ,pv.create_datetime, pv.update_datetime, pv.opening_time, pv.closing_time, pv.twenty_four_seven" +
 			" FROM project.place_view_v2 pv";
 		
 	@Insert("INSERT INTO datapool.place(name, longitude, latitude, fb_place_id) VALUES(#{name}, #{coordinate.x}, #{coordinate.y}, #{fbPlaceId}) "
@@ -41,10 +41,11 @@ public interface PlaceMapper {
 
 	@Select(SELECT_PLACE + " WHERE pv.id = #{id}")
 	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.PlaceType.class, typeHandler = com.project.api.data.mapper.handler.PlaceTypeTypeHandler.class),
-			@Result(property = "address", column = "address_id", javaType = Address.class, one = @One(select = "findAddressById")),
-			@Result(property = "contact", column = "place_id", javaType = Contact.class, one = @One(select = "findContactByPlaceId")),
-			@Result(property="images", column="place_id", javaType=List.class, many=@Many(select="findAllImagesByPlaceId")),
-			@Result(property="mainImage", column="main_image_id", javaType=MyFile.class, one = @One(select="findMainImage")),
+			@Result(property = "address.id", column = "address_id"),
+//			@Result(property = "address", column = "address_id", javaType = Address.class, one = @One(select = "findAddressById")),
+//			@Result(property = "contact", column = "place_id", javaType = Contact.class, one = @One(select = "findContactByPlaceId")),
+//			@Result(property="images", column="place_id", javaType=List.class, many=@Many(select="findAllImagesByPlaceId")),
+			@Result(property="mainImage.id", column="main_image_id"),
 			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 //	@Options(flushCache = Options.FlushCachePolicy.TRUE)
 	Place findPlaceById(long id, String language);

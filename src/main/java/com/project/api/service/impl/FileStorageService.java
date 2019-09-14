@@ -15,6 +15,8 @@ import java.time.format.DateTimeFormatter;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
 import org.imgscalr.Scalr.Mode;
@@ -45,6 +47,7 @@ public class FileStorageService implements IFileStorageService {
 //	private String storageLocation;
 	@Autowired
 	IFileService fileService;
+	private static final Logger LOG = LogManager.getLogger(FileStorageService.class);
 
 	@Autowired
 	public FileStorageService(FileStorageProperties fileStorageProperties) {
@@ -63,7 +66,7 @@ public class FileStorageService implements IFileStorageService {
 		try {
 			String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 			String extension = FilenameUtils.getExtension(fileName);
-			String fileDirectory = createFileDirectory(fileName, userId, pageType, pageId, false);
+			String fileDirectory = createFileDirectory(fileName, userId, pageType, pageId, false, true);
 			// Files.copy(file.getInputStream(), storagePath,
 			// StandardCopyOption.REPLACE_EXISTING);
 			// Copy file to the target location (Replacing existing file with the same name)
@@ -80,11 +83,11 @@ public class FileStorageService implements IFileStorageService {
 						StandardCopyOption.REPLACE_EXISTING);
 			}
 
-			fileService.saveFile(userId, pageType, pageId,  createFileDirectory(fileName, userId, pageType, pageId, true),
+			fileService.saveFile(userId, pageType, pageId,  createFileDirectory(fileName, userId, pageType, pageId, true, false),
 					createFileName(creationDateTime, userId, pageType, pageId, null, null), extension);
 
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			LOG.error("::storeFile {}", e);
 		}
 
 		return createFileName(creationDateTime, userId, pageType, pageId, null, null);
@@ -142,7 +145,7 @@ public class FileStorageService implements IFileStorageService {
 	}
 
 	private String createFileDirectory(String fileName, long userId, int pageType, long pageId,
-			boolean excludeDirectory) {
+			boolean excludeDirectory, boolean createDirectory) {
 
 //		try {
 
@@ -160,11 +163,13 @@ public class FileStorageService implements IFileStorageService {
 		uploadDirBuilder.append(subfolderStrBuilder);
 
 		Path uploadDir = Paths.get(uploadDirBuilder.toString());
-		try {
-			Files.createDirectories(uploadDir);
-		} catch (Exception ex) {
-			throw new FileStorageException("Could not create the directory where the uploaded files will be stored.",
-					ex);
+		if (createDirectory) {
+			try {
+				Files.createDirectories(uploadDir);
+			} catch (Exception ex) {
+				throw new FileStorageException("Could not create the directory where the uploaded files will be stored.",
+						ex);
+			}
 		}
 		// Check if the file's name contains invalid characters
 		if (fileName.contains("..")) {

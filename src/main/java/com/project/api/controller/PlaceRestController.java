@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,9 @@ import com.project.api.data.enums.LandingPageType;
 import com.project.api.data.enums.Language;
 import com.project.api.data.enums.MainType;
 import com.project.api.data.enums.PlaceType;
+import com.project.api.data.mapper.PlaceMapper;
 import com.project.api.data.model.common.Content;
+import com.project.api.data.model.event.TimeTable;
 import com.project.api.data.model.file.LandingPageFile;
 import com.project.api.data.model.file.MyFile;
 import com.project.api.data.model.place.Place;
@@ -55,6 +58,7 @@ public class PlaceRestController {
 	public ResponseEntity<Place> findPlaceById(@PathVariable long id,
 			@RequestParam(defaultValue = "RU", required = false) String language) {
 		Place place = placeService.findPlaceById(id, language);
+	
 		ResponseEntity<Place> responseEntity = new ResponseEntity<>(place, HttpStatus.OK);
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("::findPlaceById {}", gson.toJson(place));
@@ -131,7 +135,12 @@ public class PlaceRestController {
 			@RequestParam(required = false, defaultValue = "1") int type,
 			@RequestParam(required = false, defaultValue = "1") int mainType,
 			@RequestParam(required = false, defaultValue = "0") int limit,
-			@RequestParam(required = false, defaultValue = "false") boolean random) {
+			@RequestParam(required = false, defaultValue = "false") boolean random,
+			@RequestParam(required = false, defaultValue = "false") boolean hideAddress,
+			@RequestParam(required = false, defaultValue = "false") boolean hideContact,
+			@RequestParam(required = false, defaultValue = "false") boolean hideContent,
+			@RequestParam(required = false, defaultValue = "false") boolean hideImages,
+			@RequestParam(required = false, defaultValue = "false") boolean hideMainImage) {
 		PlaceRequest placeRequest = new PlaceRequest();
 
 		if (type > 1) {
@@ -145,6 +154,21 @@ public class PlaceRestController {
 		}
 		if (random) {
 			placeRequest.setRandom(Boolean.TRUE);
+		}
+		if (hideAddress) {
+			placeRequest.setHideAddress(Boolean.TRUE);
+		}
+		if (hideContact) {
+			placeRequest.setHideContact(Boolean.TRUE);
+		}
+		if (hideContent) {
+			placeRequest.setHideContent(Boolean.TRUE);
+		}
+		if (hideImages) {
+			placeRequest.setHideImages(Boolean.TRUE);
+		}
+		if (hideMainImage) {
+			placeRequest.setHideMainImage(Boolean.TRUE);
 		}
 		//
 
@@ -172,5 +196,25 @@ public class PlaceRestController {
 		placeService.setMainImage(id, fileId);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/places/{id}/time-table")
+	public ResponseEntity<List> getTimeTableByEventId(@PathVariable long id) {
+		List<TimeTable> timetable = placeService.getTimeTableByPlaceId(id);
+		return new ResponseEntity<>(timetable, HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/places/time-table")
+	public ResponseEntity<Integer> saveTimeTable(RequestEntity<TimeTable> requestEntity) {
+		int result = placeService.saveTimeTable(requestEntity.getBody());
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	
+	@DeleteMapping(value = "/places/time-table/{id}")
+	public ResponseEntity<Integer> deleteTimeTableById(@PathVariable long id) {
+		int result = placeService.deleteTimeTableById(id);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
 	
 }

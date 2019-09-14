@@ -15,6 +15,7 @@ import com.project.api.data.model.common.Content;
 import com.project.api.data.model.event.Event;
 import com.project.api.data.model.event.EventLandingPage;
 import com.project.api.data.model.event.EventRequest;
+import com.project.api.data.model.event.TimeTable;
 import com.project.api.data.model.place.Localisation;
 
 @Mapper
@@ -26,31 +27,27 @@ public interface EventMapper extends PlaceMapper{
 			" WHEN 'TR' THEN ev.tr_name WHEN 'EN' THEN ev.en_name WHEN 'RU' THEN ev.ru_name WHEN 'DE' THEN ev.de_name END AS name," + 
 			" CASE #{language}" + 
 			" WHEN 'TR' THEN ev.tr_slug WHEN 'EN' THEN ev.en_slug WHEN 'RU' THEN ev.ru_slug WHEN 'DE' THEN ev.de_slug END AS slug" + 
-			" ,ev.create_datetime, ev.update_datetime" +
+			" ,ev.create_datetime, ev.update_datetime, ev.twenty_four_seven, ev.fee_type, ev.master_id, ev.duration, ev.time_table_id" +
 			" FROM project.event_view ev";	
-//	@Select(SELECT_EVENT)
-//	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.EventType.class, typeHandler = com.project.api.data.mapper.handler.EventTypeTypeHandler.class),
-//			@Result(property = "periodType", column = "period_type", javaType = com.project.api.data.enums.EventPeriodType.class, typeHandler = com.project.api.data.mapper.handler.EventPeriodTypeTypeHandler.class),
-//			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class),
-//			@Result(property = "place.id", column = "place_id")})
-//	List<Event> findAllEvent(EventRequest eventRequest);
 	
-	@Select(SELECT_EVENT + " WHERE ev.id = #{id}")
+	@Select(SELECT_EVENT + " WHERE ev.id = #{id} AND ifnull(ev.time_table_id, 0) = IF(#{timeTableId} = 0, ifnull(ev.time_table_id, 0), #{timeTableId}) LIMIT 1")
 	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.EventType.class, typeHandler = com.project.api.data.mapper.handler.EventTypeTypeHandler.class),
-			@Result(property = "periodType", column = "period_type", javaType = com.project.api.data.enums.EventPeriodType.class, typeHandler = com.project.api.data.mapper.handler.EventPeriodTypeTypeHandler.class),
+			@Result(property = "periodType", column = "period_type", javaType = com.project.api.data.enums.PeriodType.class, typeHandler = com.project.api.data.mapper.handler.PeriodTypeTypeHandler.class),
 			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class),
-			@Result(property = "place.id", column = "place_id")})
-	Event findEventById(long id, String language);
+			@Result(property = "place.id", column = "place_id"),
+			@Result(property = "feeType", column = "fee_type", javaType = com.project.api.data.enums.FeeType.class, typeHandler = com.project.api.data.mapper.handler.FeeTypeTypeHandler.class),
+			@Result(property = "master.id", column = "master_id")})
+	Event findEventById(long id, String language, long timeTableId);
 	
-	@Insert("INSERT INTO project.event(type, period_type, start_date, start_time, show_start_time, end_date, end_time, show_end_time, place_id)"
+	@Insert("INSERT INTO project.event(type, period_type, start_date, start_time, show_start_time, end_date, end_time, show_end_time, place_id, fee_type, master_id, duration)"
 			+ " VALUES(#{type.id}, #{periodType.id}, #{startDate}, #{startTime}, #{showStartTime}"
-			+ ", #{endDate} , #{endTime}, #{showEndTime}, #{place.id}) ")
+			+ ", #{endDate} , #{endTime}, #{showEndTime}, #{place.id}, #{feeType.id}, #{master.id}, #{duration})")
     @SelectKey(statement = "SELECT last_insert_id() as id", keyProperty = "id", keyColumn = "Id", before = false, resultType = Long.class)
 	void createEvent(Event event);
 	
 	@Update("UPDATE project.event SET update_count = update_count + 1, place_id = #{place.id}, type = #{type.id}, period_type = #{periodType.id},"
 			+ " start_date = #{startDate}, start_time = #{startTime}, show_start_time = #{showStartTime} ,"
-			+ " end_date = #{endDate}, end_time = #{endTime}, show_end_time = #{showEndTime}"
+			+ " end_date = #{endDate}, end_time = #{endTime}, show_end_time = #{showEndTime}, fee_type = #{feeType.id}, master_id = #{master.id}, duration = #{duration}"
 			+ " WHERE id= #{id}")
 	void updateEvent(Event event);
 	
@@ -77,6 +74,5 @@ public interface EventMapper extends PlaceMapper{
 	void updateContents(@Param("contents") List<Content> contents);
 	
 	List<Event> findAllEventsByFilter(EventRequest eventRequest);
-	
 	
 }
