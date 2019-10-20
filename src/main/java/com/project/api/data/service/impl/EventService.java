@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.api.data.enums.LandingPageType;
 import com.project.api.data.enums.Language;
 import com.project.api.data.mapper.EventMapper;
 import com.project.api.data.mapper.TimeTableMapper;
@@ -97,6 +98,18 @@ public class EventService implements IEventService {
 							WebUtils.generateSlug(e.getValue().getName(), event.getId())));
 		}
 		
+		if (event != null && event.getBiletixId() != null) {
+			TimeTable timeTable = new TimeTable();
+			timeTable.setStartDate(event.getStartDate());
+			timeTable.setStartTime(event.getStartTime());
+			timeTable.setEndDate(event.getStartDate());
+			timeTable.setEndTime(event.getStartTime().plusMinutes(event.getDuration()));
+			timeTable.setPeriodType(event.getPeriodType());
+			timeTable.setPageId(event.getId());
+			timeTable.setPageType(LandingPageType.EVENT);
+			saveTimeTable(timeTable);
+		}
+		
 		return null;
 	}
 
@@ -161,6 +174,11 @@ public class EventService implements IEventService {
 	@Override
 	public int deleteTimeTableById(long id) {
 		return timeTableMapper.deleteTimeTableById(id);
+	}
+
+	@Override
+	public Event findByBiletixId(String biletixId) {
+		return eventMapper.findEventByBiletixKey(biletixId);
 	}
 
 }

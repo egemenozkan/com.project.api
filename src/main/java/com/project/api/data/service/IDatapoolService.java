@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.project.api.data.model.common.DestinationAutocomplete;
 import com.project.api.data.model.common.IdValue;
-import com.project.common.model.City;
-import com.project.common.model.Country;
+import com.project.api.data.model.gis.City;
+import com.project.api.data.model.gis.Country;
+import com.project.api.data.model.gis.Region;
+import com.project.api.data.model.gis.Subregion;
 import com.project.common.model.Nationality;
-import com.project.common.model.Region;
-import com.project.common.model.Subregion;
 
 public interface IDatapoolService {
 	List<Nationality> getNationalities();

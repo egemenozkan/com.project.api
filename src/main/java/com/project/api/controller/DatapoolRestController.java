@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.api.data.model.common.DestinationAutocomplete;
 import com.project.api.data.model.common.IdValue;
+import com.project.api.data.model.gis.City;
+import com.project.api.data.model.gis.Country;
+import com.project.api.data.model.gis.Region;
+import com.project.api.data.model.gis.Subregion;
 import com.project.api.data.service.IDatapoolService;
-import com.project.common.model.City;
-import com.project.common.model.Country;
 import com.project.common.model.Nationality;
-import com.project.common.model.Region;
-import com.project.common.model.Subregion;
 @CrossOrigin(origins = "http://localhost:8086")
 @RestController
 @RequestMapping(value = "/api/v1/datapool/")
@@ -49,7 +49,7 @@ public class DatapoolRestController {
 
 	@RequestMapping(value = "/countries", method = RequestMethod.GET)
 	public ResponseEntity<List<Country>> getCountries() {
-		List<Country> countries = datapoolService.getCountries();
+		List<Country> countries = null; // datapoolService.getCountries();
 		ResponseEntity<List<Country>> response = new ResponseEntity<List<Country>>(countries, HttpStatus.OK);
 
 		return response;
@@ -57,7 +57,7 @@ public class DatapoolRestController {
 
 	@RequestMapping(value = "/countries/{countryId}/cities", method = RequestMethod.GET)
 	public ResponseEntity<List<City>> getCitiesByCountryId(@PathVariable int countryId) {
-		List<City> cities = datapoolService.getCitiesByCountryId(countryId);
+		List<City> cities = null; //datapoolService.getCitiesByCountryId(countryId);
 		ResponseEntity<List<City>> response = new ResponseEntity<List<City>>(cities, HttpStatus.OK);
 
 		return response;
@@ -65,7 +65,7 @@ public class DatapoolRestController {
 
 	@RequestMapping(value = "/cities/{cityId}/regions", method = RequestMethod.GET)
 	public ResponseEntity<List<Region>> getRegionsByCityId(@PathVariable int cityId) {
-		List<Region> regions = datapoolService.getRegionsByCityId(cityId);
+		List<Region> regions = null; //datapoolService.getRegionsByCityId(cityId);
 		ResponseEntity<List<Region>> response = new ResponseEntity<List<Region>>(regions, HttpStatus.OK);
 
 		return response;
@@ -73,7 +73,7 @@ public class DatapoolRestController {
 
 	@RequestMapping(value = "/regions/{regionId}/subregions", method = RequestMethod.GET)
 	public ResponseEntity<List<Subregion>> getCompanies(@PathVariable int regionId) {
-		List<Subregion> subregions = datapoolService.getSubregionsByRegionId(regionId);
+		List<Subregion> subregions = null; //datapoolService.getSubregionsByRegionId(regionId);
 		ResponseEntity<List<Subregion>> response = new ResponseEntity<List<Subregion>>(subregions, HttpStatus.OK);
 
 		return response;

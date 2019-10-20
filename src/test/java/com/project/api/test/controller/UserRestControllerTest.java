@@ -84,7 +84,7 @@ public class UserRestControllerTest {
 	restTemplate.setMessageConverters(asList(new MappingJackson2HttpMessageConverter()));
 	
 	User user = new User();
-	user.setId(8L);
+	user.setId(8);
 	user.setFirstName("EgemenT2");
 	user.setLastName("ÖZKAN");
 	user.setEmail("egemenozkan@gmail.com");

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 
-import com.project.api.data.enums.EventType;
+import com.project.api.data.model.event.EventType;
 
 public class EventTypeTypeHandler implements TypeHandler<EventType> {
 

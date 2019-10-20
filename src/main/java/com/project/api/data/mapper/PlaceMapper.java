@@ -84,16 +84,16 @@ public interface PlaceMapper {
 	@Update("UPDATE project.place SET update_count = update_count + 1, type = #{type.id} WHERE id= #{id}")
 	void updatePlace(Place place);
 	
-	@Select("SELECT av.id, av.address_title, av.address, av.post_code, av.lat, av.lng, av.subregion_id, av.subregion, av.region_id, av.region, av.city_id, av.city FROM project.address_view av WHERE av.id = #{id}")
+	@Select("SELECT av.id, av.address_title, av.address, av.post_code, av.lat, av.lng, av.region_id, av.district_id, av.city_id FROM project.address_view_v2 av WHERE av.id = #{id}")
 	Address findAddressById(long id);
 	
-	@Insert("INSERT INTO project.address(lat, lng, address_title, address, region_id, city_id, post_code, description) "
-			+ "VALUES(#{lat}, #{lng}, #{addressTitle}, #{address}, #{regionId}, #{cityId}, #{postCode}, #{description})")
+	@Insert("INSERT INTO project.address(lat, lng, address_title, address, region_id, district_id, city_id, post_code, description) "
+			+ "VALUES(#{lat}, #{lng}, #{addressTitle}, #{address}, #{regionId},  #{districtId}, #{cityId}, #{postCode}, #{description})")
     @SelectKey(statement = "SELECT last_insert_id() as id", keyProperty = "id", keyColumn = "Id", before = false, resultType = Long.class)
 	void createPlaceAddress(Address address);
 	
 	@Update("UPDATE project.address SET lat = #{lat}, lng = #{lng}, address_title = #{addressTitle}, address = #{address}, "
-			+ "region_id = #{regionId}, city_id = #{cityId}, post_code = #{postCode}, description = #{description} WHERE id = #{id}")
+			+ "region_id = #{regionId}, district_id = #{districtId}, city_id = #{cityId}, post_code = #{postCode}, description = #{description} WHERE id = #{id}")
 	void updatePlaceAddress(Address address);
 	
 	@Insert("INSERT INTO project.place_contact (place_id, phone, whatsapp, call_center, web, email) "
@@ -157,5 +157,9 @@ public interface PlaceMapper {
 	@Results(value = {@Result(property = "status", column = "status", javaType = com.project.api.data.enums.Status.class, typeHandler = com.project.api.data.mapper.handler.StatusTypeHandler.class),
 			@Result(property = "user.id", column = "user_id")})
 	MyFile findMainImage(long fileId);
+	
+	
+	List<Place> findAllPlaceByFilter(PlaceRequest placeRequest, @Param("types") List<Integer> typesByMainType);
+
 	
 }

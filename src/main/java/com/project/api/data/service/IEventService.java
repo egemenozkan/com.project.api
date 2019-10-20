@@ -26,5 +26,7 @@ public interface IEventService {
 	public int saveTimeTable(TimeTable timeTable);
 	
 	public int deleteTimeTableById(long id);
+	
+	public Event findByBiletixId(String biletixId);
 
 }

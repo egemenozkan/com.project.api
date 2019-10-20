@@ -28,6 +28,9 @@ import com.project.api.data.model.common.Content;
 import com.project.api.data.model.event.TimeTable;
 import com.project.api.data.model.file.MyFile;
 import com.project.api.data.model.flight.Airport;
+import com.project.api.data.model.gis.enums.CityEnum;
+import com.project.api.data.model.gis.enums.DistrictEnum;
+import com.project.api.data.model.gis.enums.RegionEnum;
 import com.project.api.data.model.hotel.Hotel;
 import com.project.api.data.model.place.Localisation;
 import com.project.api.data.model.place.Place;
@@ -77,12 +80,13 @@ public class PlaceService implements IPlaceService {
 			}
 			
 			if (place.getAddress() != null && place.getAddress().getId() > 0) {
-				place.setAddress(placeMapper.findAddressById(place.getAddress().getId()));
+				Address address = placeMapper.findAddressById(place.getAddress().getId());
+				if (address != null) {
+					place.setAddress(fillDataWithEnums(address, Language.getByCode(language)));
+				}
 			}
 			
-			if (place.getContact() != null && place.getContact().getId() > 0) {
-				place.setContact(placeMapper.findContactByPlaceId(id));
-			}
+			place.setContact(placeMapper.findContactByPlaceId(id));
 			
 			place.setImages(fileService.getFilesByPageId(LandingPageType.PLACE.getId(), id));
 
@@ -314,7 +318,6 @@ public class PlaceService implements IPlaceService {
 			 for (int i = 0; i < pages.size(); i++) {
 				 
 				if (pages.get(i) != null && pages.get(i).getPlace() != null && pages.get(i).getPlace().getId() > 0) {
-				//	Place place = placeMapper.findPlaceById(pages.get(i).getPlace().getId(), pages.get(i).getLanguage().getCode());
 					Place place = this.findPlaceById(pages.get(i).getPlace().getId(), pages.get(i).getLanguage().getCode());
 					if (place == null) {
 						continue;
@@ -323,7 +326,7 @@ public class PlaceService implements IPlaceService {
 							&& place.getAddress().getId() > 0) {
 						Address address = placeMapper.findAddressById(place.getAddress().getId());
 						if (address != null) {
-							place.setAddress(address);
+							place.setAddress(fillDataWithEnums(address, placeRequest.getLanguage()));
 						}
 					} else {
 						place.setAddress(null);
@@ -369,6 +372,35 @@ public class PlaceService implements IPlaceService {
 		 
 		 return pages;
 	
+	}
+
+	private Address fillDataWithEnums(Address address, Language language) {
+		if (address.getRegionId() > 0 && RegionEnum.getById(address.getRegionId()) != null) {
+			RegionEnum regionEnum = RegionEnum.getById(address.getRegionId());
+			address.setRegionId(regionEnum.getId());
+			if (language.getCode().equalsIgnoreCase(Language.TURKISH.getCode())) {
+				address.setRegion(regionEnum.getName());
+			} else {
+				address.setRegion(regionEnum.getEnName());
+			}
+			address.setDistrictId(regionEnum.getDistrictEnum().getId());
+			address.setDistrict(regionEnum.getDistrictEnum().getName());
+			address.setCityId(regionEnum.getDistrictEnum().getCityEnum().getId());
+			address.setCity(regionEnum.getDistrictEnum().getCityEnum().getName());
+		} else if (address.getDistrictId() > 0 && DistrictEnum.getById(address.getDistrictId()) != null) {
+			DistrictEnum districtEnum = DistrictEnum.getById(address.getDistrictId());
+			address.setDistrictId(districtEnum.getId());
+			address.setDistrict(districtEnum.getName());
+			address.setCityId(districtEnum.getCityEnum().getId());
+			address.setCity(districtEnum.getCityEnum().getName());
+		} else if (address.getCityId() > 0 && CityEnum.getById(address.getCityId()) != null) {
+			CityEnum cityEnum = CityEnum.getById(address.getCityId());
+			address.setCityId(cityEnum.getId());
+			address.setCity(cityEnum.getName());
+		} else {
+			LOG.warn("::findAddressById({}) incomplete data", address.getId());
+		}
+		return address;
 	}
 	
 	
@@ -422,5 +454,26 @@ public class PlaceService implements IPlaceService {
 	@Override
 	public List<TimeTable> getTimeTableByPlaceId(long id) {
 		return timeTableMapper.findAllTimeTableByPlaceId(id);
+	}
+
+	@Override
+	public List<Place> findAllPlaceByFilter(PlaceRequest placeRequest) {
+		List<Place> places = placeMapper.findAllPlaceByFilter(placeRequest, getTypesByMainType(placeRequest.getMainType()));
+		
+		if (places != null && !places.isEmpty()) {
+			for (Place place : places) {
+				List<Localisation> names = placeMapper.findAllPlaceNameByPlaceId(place.getId());
+				Map<String, Localisation> localisation = new HashMap<>();
+				for (Localisation name : names) {
+					if (name != null && name.getLanguage() != null)
+						localisation.put(name.getLanguage().toString(), name);
+				}
+				place.setLocalisation(localisation);
+
+			}
+		}
+
+		
+		return places;
 	}
 }

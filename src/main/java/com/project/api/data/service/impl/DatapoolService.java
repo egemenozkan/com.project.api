@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 import com.project.api.data.mapper.DatapoolMapper;
 import com.project.api.data.model.common.DestinationAutocomplete;
 import com.project.api.data.model.common.IdValue;
+import com.project.api.data.model.gis.City;
+import com.project.api.data.model.gis.Country;
+import com.project.api.data.model.gis.Region;
+import com.project.api.data.model.gis.Subregion;
 import com.project.api.data.service.IDatapoolService;
 import com.project.common.BaseService;
-import com.project.common.model.City;
-import com.project.common.model.Country;
 import com.project.common.model.Nationality;
-import com.project.common.model.Region;
-import com.project.common.model.Subregion;
 
 @SuppressWarnings("unchecked")
 @Service
@@ -30,7 +30,7 @@ public class DatapoolService extends BaseService implements IDatapoolService {
 
 	@Override
 	public List<Country> getCountries() {
-		return datapoolMapper.getCountries();
+		return null; //datapoolMapper.getCountries();
 	}
 
 	@Override
@@ -41,17 +41,17 @@ public class DatapoolService extends BaseService implements IDatapoolService {
 
 	@Override
 	public List<City> getCitiesByCountryId(int countryId) {
-		return datapoolMapper.getCitiesByCountryId(countryId);
+		return null; //datapoolMapper.getCitiesByCountryId(countryId);
 	}
 
 	@Override
 	public List<Region> getRegionsByCityId(int cityId) {
-		return datapoolMapper.getRegionsByCityId(cityId);
+		return null; // datapoolMapper.getRegionsByCityId(cityId);
 	}
 
 	@Override
 	public List<Subregion> getSubregionsByRegionId(int regionId) {
-		return datapoolMapper.getSubregionsByRegionId(regionId);
+		return null; // datapoolMapper.getSubregionsByRegionId(regionId);
 	}
 
 	@Override
