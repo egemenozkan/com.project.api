@@ -17,12 +17,12 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
 
 import com.google.gson.Gson;
+import com.project.api.data.model.gis.City;
+import com.project.api.data.model.gis.Country;
+import com.project.api.data.model.gis.Region;
+import com.project.api.data.model.gis.Subregion;
 import com.project.api.test.TestConstants;
-import com.project.common.model.City;
-import com.project.common.model.Country;
 import com.project.common.model.Nationality;
-import com.project.common.model.Region;
-import com.project.common.model.Subregion;
 
 @SpringBootTest
 public class DatapoolRestControllerTest {

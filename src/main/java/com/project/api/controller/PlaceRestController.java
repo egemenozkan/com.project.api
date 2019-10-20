@@ -22,7 +22,6 @@ import com.project.api.data.enums.LandingPageType;
 import com.project.api.data.enums.Language;
 import com.project.api.data.enums.MainType;
 import com.project.api.data.enums.PlaceType;
-import com.project.api.data.mapper.PlaceMapper;
 import com.project.api.data.model.common.Content;
 import com.project.api.data.model.event.TimeTable;
 import com.project.api.data.model.file.LandingPageFile;
@@ -49,7 +48,7 @@ public class PlaceRestController {
 	private static final Logger LOG = LogManager.getLogger(PlaceRestController.class);
 
 	@GetMapping(value = "/places/autocomplete")
-	public ResponseEntity<List> placeAutocomplete(@RequestParam String query) {
+	public ResponseEntity<List<Place>> placeAutocomplete(@RequestParam String query) {
 		List<Place> places = placeService.autocomplete(query, Language.TURKISH);
 		return new ResponseEntity<>(places, HttpStatus.OK);
 	}
@@ -67,20 +66,61 @@ public class PlaceRestController {
 	}
 
 	@GetMapping(value = "/places")
-	public ResponseEntity<List<Place>> findAllPlace(@RequestParam(defaultValue = "RU", required = false) String language,
-			@RequestParam(required = false) String mainType, @RequestParam(required = false) String type) {
+	public ResponseEntity<List<Place>> findAllPlace(@RequestParam(defaultValue = "RU") String language,
+			@RequestParam(required = false, defaultValue = "1") int type,
+			@RequestParam(required = false, defaultValue = "") String types,
+			@RequestParam(required = false, defaultValue = "1") int mainType,
+			@RequestParam(required = false, defaultValue = "") String mainTypes,
+			@RequestParam(required = false, defaultValue = "0") int limit,
+			@RequestParam(required = false, defaultValue = "0") int city,
+			@RequestParam(required = false, defaultValue = "0") int district,
+			@RequestParam(required = false, defaultValue = "false") boolean random,
+			@RequestParam(required = false, defaultValue = "false") boolean hideAddress,
+			@RequestParam(required = false, defaultValue = "false") boolean hideContact,
+			@RequestParam(required = false, defaultValue = "false") boolean hideContent,
+			@RequestParam(required = false, defaultValue = "false") boolean hideImages,
+			@RequestParam(required = false, defaultValue = "false") boolean hideMainImage) {
 		List<Place> places = null;
-		if (mainType == null && type == null) {
-			places = placeService.findAllPlace(language);
+	
+		PlaceRequest placeRequest = new PlaceRequest();
+		if (type > 1) {
+			placeRequest.setType(PlaceType.getById(type));
 		}
-		if (mainType != null && type == null) {
-			mainType = mainType.toUpperCase();
-			places = placeService.findAllPlaceByMainType(language, MainType.valueOf(mainType));
+		if (mainType > 1) {
+			placeRequest.setMainType(MainType.getById(mainType));
 		}
-		if (mainType == null && type != null) {
-			type = type.toUpperCase();
-			places = placeService.findAllPlaceByType(language, PlaceType.valueOf(type));
+		if (limit > 0) {
+			placeRequest.setLimit(limit);
 		}
+		if (random) {
+			placeRequest.setRandom(random);
+		}
+		if (city > 0) {
+			placeRequest.setCityId(city);
+		}
+		if (district > 0) {
+			placeRequest.setDistrictId(district);
+		}
+		if (hideAddress) {
+			placeRequest.setHideAddress(Boolean.TRUE);
+		}
+		if (hideContact) {
+			placeRequest.setHideContact(Boolean.TRUE);
+		}
+		if (hideContent) {
+			placeRequest.setHideContent(Boolean.TRUE);
+		}
+		if (hideImages) {
+			placeRequest.setHideImages(Boolean.TRUE);
+		}
+		if (hideMainImage) {
+			placeRequest.setHideMainImage(Boolean.TRUE);
+		}
+		
+		placeRequest.setLanguage(Language.getByCode(language));
+		
+		places = placeService.findAllPlaceByFilter(placeRequest);
+		
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("::findAllPlace {}", gson.toJson(places));
 		}

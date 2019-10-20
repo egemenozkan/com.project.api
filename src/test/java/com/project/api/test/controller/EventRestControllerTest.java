@@ -1,7 +1,6 @@
 package com.project.api.test.controller;
 
 import static java.util.Arrays.asList;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
 
@@ -9,19 +8,15 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
 
 import com.google.gson.Gson;
-import com.project.api.data.enums.EventType;
 import com.project.api.data.enums.Language;
-import com.project.api.data.model.event.Event;
 import com.project.api.data.model.event.EventRequest;
+import com.project.api.data.model.event.EventType;
 import com.project.api.test.TestConstants;
 
 public class EventRestControllerTest {

@@ -31,11 +31,12 @@
         <id property="id" column="id" />
         <result property="place.id" column="place_id" />
         <result property="language" column="language" javaType="com.project.api.data.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler"/>
+        
 <!--         <association property="contents" column="id" javaType="List" select="findAllContentByPageId" />         -->
 <!--         <association property="place" column="{id=place_id,language=language}" javaType="com.project.api.data.model.place.Place" select="findPlaceById" /> -->
     </resultMap> 
 	<select id="findAllLandingPageByFilter" resultMap="landingPageResultMap" flushCache="true">
-	SELECT id, ifnull(title, name) AS title, slug, description, keywords, place_id, ifnull(language, #{placeRequest.language.code}) AS language, type
+	SELECT id, ifnull(title, name) AS title, slug, description, keywords, place_id, ifnull(language, #{placeRequest.language.code}) AS language
     FROM (SELECT  lp.id, lp.title, CASE #{placeRequest.language.code} 
              WHEN 'TR' THEN pv.tr_name WHEN 'EN' THEN pv.en_name WHEN 'RU' THEN pv.ru_name WHEN 'DE' THEN pv.de_name END AS name,
             CASE #{placeRequest.language.code}
@@ -63,5 +64,55 @@
 <!--     <if test="language != null"> -->
 <!--         AND language= #{language.code} -->
 <!--     </if> -->
+	</select>
+		<resultMap id="placeResultMap" type="com.project.api.data.model.place.Place">
+        <id property="id" column="id" />
+        <result property="language" column="language" javaType="com.project.api.data.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler"/>
+                        <result property="type" column="type" javaType="com.project.api.data.enums.PlaceType" typeHandler="com.project.api.data.mapper.handler.PlaceTypeTypeHandler"/>
+        
+<!--         <association property="contents" column="id" javaType="List" select="findAllContentByPageId" />         -->
+<!--         <association property="place" column="{id=place_id,language=language}" javaType="com.project.api.data.model.place.Place" select="findPlaceById" /> -->
+    </resultMap>
+	<select id="findAllPlaceByFilter"  resultMap="placeResultMap" flushCache="true">
+			SELECT pv.id, pv.id AS localisation_id, pv.main_image_id, pv.id AS
+			place_id, pv.type, IF(#{placeRequest.language.code} IS NULL or
+			#{placeRequest.language.code} = '', 'TR',
+			#{placeRequest.language.code}) AS language, pv.address_id,
+			CASE IF(#{placeRequest.language.code} IS NULL or
+			#{placeRequest.language.code} = '', 'TR',
+			#{placeRequest.language.code})
+			WHEN 'TR' THEN pv.tr_name WHEN 'EN' THEN pv.en_name WHEN 'RU' THEN
+			pv.ru_name WHEN 'DE' THEN pv.de_name END AS name,
+			CASE IF(#{placeRequest.language.code} IS NULL or
+			#{placeRequest.language.code} = '', 'TR',
+			#{placeRequest.language.code})
+			WHEN 'TR' THEN pv.tr_slug WHEN 'EN' THEN pv.en_slug WHEN 'RU' THEN
+			pv.ru_slug WHEN 'DE' THEN pv.de_slug END AS slug
+			,pv.create_datetime, pv.update_datetime, pv.opening_time, pv.closing_time,
+			pv.twenty_four_seven
+			FROM project.place_view_v2 pv
+			WHERE id = IF(#{placeRequest.id} = 0, id, #{placeRequest.id})
+			<if test="placeRequest.type != null">
+				AND pv.type = #{placeRequest.type.id}
+			</if>
+			<if test="!types.isEmpty()">
+				AND pv.type IN
+				<foreach item="item" index="index" collection="types" open="("
+					separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="placeRequest.districtId > 0">
+				AND pv.district_id = #{placeRequest.districtId}
+			</if>
+			<if test="placeRequest.cityId > 0">
+				AND pv.city_id = #{placeRequest.cityId}
+			</if>
+			<if test="placeRequest.random != null">
+				ORDER BY RAND()
+			</if>
+			<if test="placeRequest.limit > 0">
+				LIMIT #{placeRequest.limit}
+			</if>
 	</select>
 </mapper>

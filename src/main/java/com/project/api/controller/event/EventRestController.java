@@ -1,7 +1,6 @@
-package com.project.api.controller;
+package com.project.api.controller.event;
 
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,12 +22,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
-import com.project.api.data.enums.EventType;
 import com.project.api.data.enums.LandingPageType;
 import com.project.api.data.enums.Language;
 import com.project.api.data.model.event.Event;
 import com.project.api.data.model.event.EventLandingPage;
 import com.project.api.data.model.event.EventRequest;
+import com.project.api.data.model.event.EventStatus;
+import com.project.api.data.model.event.EventType;
 import com.project.api.data.model.event.TimeTable;
 import com.project.api.data.model.file.LandingPageFile;
 import com.project.api.data.model.file.MyFile;
@@ -58,10 +58,13 @@ public class EventRestController {
 			@RequestParam(required = false, defaultValue = "") String types,
 			@RequestParam(required = false, defaultValue = "0") int limit,
 			@RequestParam(required = false, defaultValue = "false") boolean random,
-			@RequestParam(required = false)@DateTimeFormat(iso = ISO.DATE) LocalDate startDate,
+			@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate startDate,
 			@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate endDate,
 			@RequestParam(required = false, defaultValue = "false") boolean distinct,
-			@RequestParam(required = false, defaultValue = "0") int timeTableId) {
+			@RequestParam(required = false, defaultValue = "0") int timeTableId,
+			@RequestParam(required = false, defaultValue = "1") int status) {
+		
+		
 		EventRequest eventRequest = new EventRequest();
 		if (type > 1) {
 			eventRequest.setType(EventType.getById(type));
@@ -86,12 +89,12 @@ public class EventRestController {
 			eventRequest.setTimeTableId(timeTableId);
 		}
 		
+		eventRequest.setStatus(EventStatus.getById(status));
+		
 		eventRequest.setLanguage(Language.getByCode(language));
 		
 		List<Event> events = eventService.getEvents(eventRequest);
-		
-//		LOG.debug("{}", gson.toJson(events));
-		
+				
 		if (distinct && !CollectionUtils.isEmpty(events)) {
 			Iterator<Event> itr = events.iterator();
 		    Event previous = itr.next();

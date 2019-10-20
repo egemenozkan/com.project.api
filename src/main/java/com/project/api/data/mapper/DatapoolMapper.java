@@ -8,11 +8,11 @@ import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
-import com.project.common.model.City;
-import com.project.common.model.Country;
+import com.project.api.data.model.gis.City;
+import com.project.api.data.model.gis.Country;
+import com.project.api.data.model.gis.Region;
+import com.project.api.data.model.gis.Subregion;
 import com.project.common.model.Nationality;
-import com.project.common.model.Region;
-import com.project.common.model.Subregion;
 
 @Mapper
 public interface DatapoolMapper {

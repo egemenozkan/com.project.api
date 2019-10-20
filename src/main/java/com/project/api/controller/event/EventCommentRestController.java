@@ -1,4 +1,4 @@
-package com.project.api.controller;
+package com.project.api.controller.event;
 
 import java.util.List;
 
@@ -21,7 +21,6 @@ import com.project.api.data.model.comment.Comment;
 import com.project.api.data.model.comment.CommentResponse;
 import com.project.api.data.model.comment.PlaceComment;
 import com.project.api.data.service.ICommentService;
-import com.project.api.data.service.IPlaceService;
 
 @RestController
 @RequestMapping(value = "/api/v1/events")

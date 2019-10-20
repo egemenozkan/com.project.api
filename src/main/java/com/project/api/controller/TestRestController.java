@@ -1,9 +1,13 @@
 package com.project.api.controller;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.project.enginee.event.service.IEventTrackingService;
 
 @SuppressWarnings("rawtypes")
 @RestController
@@ -22,6 +27,8 @@ public class TestRestController {
     private ApplicationEventPublisher applicationEventPublisher;
     @Autowired
     private Gson gson;
+    @Autowired
+    private IEventTrackingService eventTrackingService;
     
 //    private static final String AUTH_SERVER_URL = "http://authserver:8090";
 //    private static final String TOKEN_PATH = "/oauth/token";
@@ -33,12 +40,33 @@ public class TestRestController {
 
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public ResponseEntity<List> getTest(@RequestParam String q) {
+    public ResponseEntity<List> getTest(@RequestParam(required = false) String q) {
 	
 
-
+    	try {
+			eventTrackingService.collectBiletixData();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 //	ResponseEntity<List> response = new ResponseEntity<List>(new , HttpStatus.OK);
 
 	return null;
     }
+
+
+	public IEventTrackingService getEventTrackingService() {
+		return eventTrackingService;
+	}
+
+
+	public void setEventTrackingService(IEventTrackingService eventTrackingService) {
+		this.eventTrackingService = eventTrackingService;
+	}
 }

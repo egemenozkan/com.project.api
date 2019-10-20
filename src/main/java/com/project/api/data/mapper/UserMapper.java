@@ -33,7 +33,7 @@ public interface UserMapper {
 
     @Select("SELECT id, username, first_name, last_name, email, password, facebook_id, google_id, vkontakte_id, picture_url FROM project.user u WHERE id = #{id}")
     @Results(value = {@Result(property = "roles", column = "user_id", javaType = List.class, many = @Many(select = "getRolesByUserId")) })
-    User getUserById(Long id);
+    User getUserById(int id);
 
     @Select("SELECT COUNT(*) FROM project.user WHERE email = #{email}")
     boolean existsByEmail(String email);
@@ -48,8 +48,8 @@ public interface UserMapper {
     @Select("SELECT a.name AS name FROM user_authority ua LEFT JOIN project.authority a ON ua.authority_id = a.id WHERE  ua.user_id = #{userId}")
     List<String> getAuthorityByUserId(Long userId);
     
-    @Select("SELECT id, username, first_name, last_name, email, password, facebook_id, google_id, vkontakte_id, picture_url FROM project.user u WHERE email = #{emailOrUsername} or username = #{emailOrUsername}")
-    @Results(value = {@Result(property = "roles", column = "id", javaType = List.class, many = @Many(select = "getRolesByUserId")) })
+    @Select("SELECT id, id AS p_role_id, username, first_name, last_name, email, password, facebook_id, google_id, vkontakte_id, picture_url FROM project.user u WHERE email = #{emailOrUsername} or username = #{emailOrUsername}")
+    @Results(value = {@Result(property = "roles", column = "p_role_id", javaType = List.class, many = @Many(select = "getRolesByUserId")) })
     User getUserByEmailOrUsername(String emailOrUsername);
     
 //    @Select("SELECT u.id FROM project.user u")
