@@ -1,6 +1,8 @@
 package com.project.api.controller.event;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,6 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.project.api.data.enums.LandingPageType;
 import com.project.api.data.enums.Language;
+import com.project.api.data.enums.ProductType;
+import com.project.api.data.model.autocomplete.AutocompleteResponse;
+import com.project.api.data.model.autocomplete.Item;
 import com.project.api.data.model.event.Event;
 import com.project.api.data.model.event.EventLandingPage;
 import com.project.api.data.model.event.EventRequest;
@@ -52,6 +57,8 @@ public class EventRestController {
 
 	private static final Logger LOG = LogManager.getLogger(EventRestController.class);
 
+	private static final int AUTOCOMPLETE_MIN_CHAR = 3;
+
 	@GetMapping(value = "/events")
 	public ResponseEntity<List<Event>> getEvents(@RequestParam(defaultValue = "RU") String language,
 			@RequestParam(required = false, defaultValue = "1") int type,
@@ -62,14 +69,15 @@ public class EventRestController {
 			@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate endDate,
 			@RequestParam(required = false, defaultValue = "false") boolean distinct,
 			@RequestParam(required = false, defaultValue = "0") int timeTableId,
-			@RequestParam(required = false, defaultValue = "1") int status) {
-		
-		
+			@RequestParam(required = false, defaultValue = "1") int status,
+			@RequestParam(required = false, defaultValue = "false") boolean hidePlace,
+			@RequestParam(required = false) String name) {
+
 		EventRequest eventRequest = new EventRequest();
 		if (type > 1) {
 			eventRequest.setType(EventType.getById(type));
 		}
-		
+
 		if (types != null && !types.isBlank()) {
 			eventRequest.setTypes(types.split(","));
 		}
@@ -88,28 +96,30 @@ public class EventRestController {
 		if (timeTableId > 0) {
 			eventRequest.setTimeTableId(timeTableId);
 		}
-		
+		if (hidePlace) {
+			eventRequest.setHidePlace(hidePlace);
+		}
+		if (name != null && !name.isBlank() && name.length() >= 3) {
+			eventRequest.setName(name);
+		}
 		eventRequest.setStatus(EventStatus.getById(status));
-		
+
 		eventRequest.setLanguage(Language.getByCode(language));
-		
+
 		List<Event> events = eventService.getEvents(eventRequest);
-				
+
 		if (distinct && !CollectionUtils.isEmpty(events)) {
 			Iterator<Event> itr = events.iterator();
-		    Event previous = itr.next();
-		    while(itr.hasNext())
-		    {
-		        Event next = itr.next();
+			Event previous = itr.next();
+			while (itr.hasNext()) {
+				Event next = itr.next();
 
-		        if(previous.getId() == next.getId())
-		        {
-		            itr.remove();
-		        }
-		        previous = next;
-		    }
+				if (previous.getId() == next.getId()) {
+					itr.remove();
+				}
+				previous = next;
+			}
 		}
-		
 
 		return new ResponseEntity<>(events, HttpStatus.OK);
 	}
@@ -118,8 +128,7 @@ public class EventRestController {
 	public ResponseEntity<Event> getEventById(@PathVariable long id,
 			@RequestParam(defaultValue = "RU", required = false) String language,
 			@RequestParam(required = false, defaultValue = "0") int timeTableId) {
-	
-		
+
 		Event event = eventService.getEventById(id, Language.getByCode(language), timeTableId);
 
 		if (event != null && event.getPlace() != null && event.getPlace().getId() > 0) {
@@ -129,8 +138,53 @@ public class EventRestController {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("::getEventById {}", gson.toJson(event));
 		}
-		
+
 		return new ResponseEntity<>(event, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/events/autocomplete")
+	public ResponseEntity<AutocompleteResponse> autocompleteEvents(@RequestParam(defaultValue = "RU") String language,
+			@RequestParam(required = false, name = "query") String name, @RequestParam(required = false, name = "status", defaultValue = "1") int status) {
+		List<Event> events = null;
+
+		if (name != null && !name.isBlank() && name.length() >= AUTOCOMPLETE_MIN_CHAR) {
+			EventRequest eventRequest = new EventRequest();
+			eventRequest.setHidePlace(Boolean.TRUE);
+			eventRequest.setLanguage(Language.getByCode(language));
+			eventRequest.setStatus(EventStatus.getById(status));
+			eventRequest.setName(name);
+			events = eventService.getEvents(eventRequest);
+		}
+
+		if (!CollectionUtils.isEmpty(events)) {
+			Iterator<Event> itr = events.iterator();
+			Event previous = itr.next();
+			while (itr.hasNext()) {
+				Event next = itr.next();
+
+				if (previous.getId() == next.getId()) {
+					itr.remove();
+				}
+				previous = next;
+			}
+		}
+
+		AutocompleteResponse autocompleteResponse = new AutocompleteResponse();
+		
+		if (!CollectionUtils.isEmpty(events)) {
+			autocompleteResponse.setSuccess(Boolean.TRUE);
+			List<Item> items = new ArrayList<>();
+			for (Event event : events) {
+				items.add(new Item(event.getId(), event.getName(), event.getSlug(), ProductType.EVENT));
+			}
+			autocompleteResponse.setItems(items);
+
+		} else {
+			autocompleteResponse.setSuccess(Boolean.FALSE);
+			autocompleteResponse.setItems(Collections.emptyList());
+		}
+
+		return new ResponseEntity<>(autocompleteResponse, HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/events")
@@ -152,11 +206,11 @@ public class EventRestController {
 		EventRequest eventRequest = new EventRequest();
 		eventRequest.setId(id);
 		eventRequest.setLanguage(Language.getByCode(language));
-		
+
 		if (timeTableId > 0) {
 			eventRequest.setTimeTableId(timeTableId);
 		}
-		
+
 		EventLandingPage landingPage = eventService.findLandingPageByEventId(eventRequest);
 		if (landingPage == null) {
 			LOG.warn("::findLandingPageByEventId IsNULL eventId: {}, language: {}", id, language);
@@ -217,22 +271,20 @@ public class EventRestController {
 		eventRequest.setLanguage(Language.getByCode(language));
 
 		List<EventLandingPage> pages = eventService.findAllLandingPageByFilter(eventRequest);
-		
+
 		if (distinct && !CollectionUtils.isEmpty(pages)) {
 			Iterator<EventLandingPage> itr = pages.iterator();
 			EventLandingPage previous = itr.next();
-		    while(itr.hasNext())
-		    {
-		    	EventLandingPage next = itr.next();
+			while (itr.hasNext()) {
+				EventLandingPage next = itr.next();
 
-		        if(previous.getId() == next.getId())
-		        {
-		            itr.remove();
-		        }
-		        previous = next;
-		    }
+				if (previous.getId() == next.getId()) {
+					itr.remove();
+				}
+				previous = next;
+			}
 		}
-		
+
 		return new ResponseEntity<>(pages, HttpStatus.OK);
 	}
 
@@ -244,19 +296,19 @@ public class EventRestController {
 		return new ResponseEntity<>(page, HttpStatus.OK);
 
 	}
-	
+
 	@GetMapping(value = "/events/{id}/files")
 	public ResponseEntity<List> findPageByIdAndLanguage(@PathVariable long id) {
 		List<MyFile> images = fileService.getFilesByPageId(LandingPageType.EVENT.getId(), id);
 		return new ResponseEntity<>(images, HttpStatus.OK);
 	}
-	
+
 	@GetMapping(value = "/events/files")
 	public ResponseEntity<List> findFiles() {
 		List<LandingPageFile> images = fileService.getFiles();
 		return new ResponseEntity<>(images, HttpStatus.OK);
 	}
-	
+
 	@PostMapping(value = "/events/{id}/main-image")
 	public ResponseEntity<Boolean> setMainPage(@PathVariable long id, RequestEntity<Long> requestEntity) {
 		long fileId = requestEntity.getBody();
@@ -269,19 +321,17 @@ public class EventRestController {
 		List<TimeTable> timetable = eventService.getTimeTableByEventId(id);
 		return new ResponseEntity<>(timetable, HttpStatus.OK);
 	}
-	
+
 	@PostMapping(value = "/events/time-table")
 	public ResponseEntity<Integer> saveTimeTable(RequestEntity<TimeTable> requestEntity) {
 		int result = eventService.saveTimeTable(requestEntity.getBody());
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
-	
+
 	@DeleteMapping(value = "/events/time-table/{id}")
 	public ResponseEntity<Integer> deleteTimeTableById(@PathVariable long id) {
 		int result = eventService.deleteTimeTableById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
-	
+
 }

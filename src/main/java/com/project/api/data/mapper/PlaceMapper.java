@@ -140,8 +140,6 @@ public interface PlaceMapper {
 	
 	@Select(SELECT_PLACE + " WHERE pv.tr_name LIKE '%${name}%' OR pv.ru_name LIKE '%${name}%' OR pv.en_name LIKE '%${name}%'")
 	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.PlaceType.class, typeHandler = com.project.api.data.mapper.handler.PlaceTypeTypeHandler.class),
-			@Result(property = "address", column = "address_id", javaType = Address.class, one = @One(select = "findAddressById")),
-			@Result(property = "contact", column = "place_id", javaType = Contact.class, one = @One(select = "findContactByPlaceId")),
 			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	List<Place> autocomplete(String name, String language);
 	

@@ -70,12 +70,16 @@
         <if test="types != null">
         	AND ev.type IN <foreach item="type" collection="types" separator="," open="(" close=")">#{type}</foreach>
         </if>
-        <if test="status.id != 1">
+        <if test="status !=null and status.id != 1">
         	AND ev.status = #{status.id}
         </if>
         <if test="type and type.id != 1">
         	AND ev.type = #{type.id}
         </if>
-        ORDER BY ev.start_time ASC
+        <if test="name != null">
+        	<bind name="namePattern" value="'%' + name + '%'" />
+        	AND LOWER(CASE #{language.code} WHEN 'TR' THEN ev.tr_name WHEN 'EN' THEN ev.en_name WHEN 'RU' THEN ev.ru_name WHEN 'DE' THEN ev.de_name END) LIKE LOWER(#{namePattern})
+        </if>
+        ORDER BY ev.id, ev.start_time ASC
     </select>
 </mapper>
