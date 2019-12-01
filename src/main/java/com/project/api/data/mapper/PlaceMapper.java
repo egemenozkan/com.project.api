@@ -158,6 +158,11 @@ public interface PlaceMapper {
 	
 	
 	List<Place> findAllPlaceByFilter(PlaceRequest placeRequest, @Param("types") List<Integer> typesByMainType);
-
+	
+	@Insert("INSERT INTO project.place_facility(place_id, facilities) VALUES(#{placeId}, #{facilitiesJson})")
+	void savePlaceFacilities(long placeId, String facilitiesJson);
+	
+	@Select("SELECT pf.facilities FROM project.place_facility pf WHERE pf.place_id = #{placeId}")
+	String findPlaceFacilities(long placeId);
 	
 }

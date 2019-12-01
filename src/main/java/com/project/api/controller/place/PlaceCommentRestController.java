@@ -1,4 +1,4 @@
-package com.project.api.controller;
+package com.project.api.controller.place;
 
 import java.util.List;
 
