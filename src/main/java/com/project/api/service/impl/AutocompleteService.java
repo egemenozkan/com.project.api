@@ -38,7 +38,7 @@ public class AutocompleteService implements IAutocompleteService {
 
 		PlaceRequest placeRequest = new PlaceRequest();
 		placeRequest.setLanguage(autocompleteRequest.getLanguage());
-		placeRequest.setMainType(MainType.FOOD_AND_BEVERAGE);
+//		placeRequest.setMainType(MainType.FOOD_AND_BEVERAGE);
 		placeRequest.setName(autocompleteRequest.getQuery());
 		List<Place> places = placeService.findAllPlaceByFilter(placeRequest);
 

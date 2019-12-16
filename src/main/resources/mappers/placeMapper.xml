@@ -111,6 +111,10 @@
 			<if test="placeRequest.random != null">
 				ORDER BY RAND()
 			</if>
+			  <if test="placeRequest.name != null">
+	        	<bind name="namePattern" value="'%' + placeRequest.name + '%'" />
+	        	AND LOWER(CASE #{placeRequest.language.code} WHEN 'TR' THEN pv.tr_name WHEN 'EN' THEN pv.en_name WHEN 'RU' THEN pv.ru_name WHEN 'DE' THEN pv.de_name END) LIKE LOWER(#{namePattern})
+	        </if>
 			<if test="placeRequest.limit > 0">
 				LIMIT #{placeRequest.limit}
 			</if>
