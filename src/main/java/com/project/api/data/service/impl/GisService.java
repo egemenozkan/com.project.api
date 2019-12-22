@@ -2,6 +2,7 @@ package com.project.api.data.service.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ import com.project.api.data.service.IGisService;
 public class GisService implements IGisService {
 
 	@Override
-	public List<District> getDistrictsByCity(CityEnum cityEnum, Language language) {
+	public List<District> getDistrictsByCity(CityEnum cityEnum, Language language, boolean order) {
 		List<District> districts = new ArrayList<>();
 		for (DistrictEnum districtEnum : DistrictEnum.values()) {
 			if (districtEnum.getCityEnum() == cityEnum) {
@@ -30,8 +31,12 @@ public class GisService implements IGisService {
 				district.setId(districtEnum.getId());
 				district.setName(districtEnum.getName());
 				district.setCity(convertCityEnum(cityEnum));
+				district.setOrder(districtEnum.getOrder());
 				districts.add(district);
 			}
+		}
+		if (order) {
+			districts.sort(Comparator.comparingInt(District::getOrder));
 		}
 		return districts;
 	}
@@ -42,12 +47,15 @@ public class GisService implements IGisService {
 	}
 
 	@Override
-	public List<Region> getRegionsByDistrict(DistrictEnum districtEnum, Language language) {
+	public List<Region> getRegionsByDistrict(DistrictEnum districtEnum, Language language, boolean order) {
 		List<Region> regions = new ArrayList<>();
 		for (RegionEnum regionEnum : RegionEnum.values()) {
 			if (regionEnum.getDistrictEnum() == districtEnum) {
 				regions.add(convertRegionEnum(regionEnum, language));
 			}
+		}
+		if (order) {
+			regions.sort(Comparator.comparingInt(Region::getOrder));
 		}
 		return regions;
 
@@ -95,7 +103,7 @@ public class GisService implements IGisService {
 	}
 
 	@Override
-	public List<City> getCitiesByCountry(CountryEnum country, Language language) {
+	public List<City> getCitiesByCountry(CountryEnum country, Language language, boolean order) {
 		List<City> cities = new ArrayList<>();
 		for (CityEnum cityEnum : CityEnum.values()) {
 			if (cityEnum.getCountry() == country) {

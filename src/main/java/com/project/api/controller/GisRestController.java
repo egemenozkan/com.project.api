@@ -28,25 +28,25 @@ public class GisRestController {
 	IGisService gisService;
 	
 	@GetMapping("/gis/countries/{id}/cities")
-	public @ResponseBody List<City> getCitiesByCountry(@PathVariable int id, @RequestParam(defaultValue = "ru") String language) {
+	public @ResponseBody List<City> getCitiesByCountry(@PathVariable int id, @RequestParam(defaultValue = "ru") String language, @RequestParam(required = false) boolean order) {
 		if (CityEnum.getById(id) != null) {
-			return gisService.getCitiesByCountry(CountryEnum.getById(id), Language.getByCode(language));
+			return gisService.getCitiesByCountry(CountryEnum.getById(id), Language.getByCode(language), order);
 		}
 		return Collections.emptyList();
 	}
 	
 	@GetMapping("/gis/cities/{id}/districts")
-	public @ResponseBody List<District> getDistrictsByCity(@PathVariable int id, @RequestParam(defaultValue = "ru") String language) {
+	public @ResponseBody List<District> getDistrictsByCity(@PathVariable int id, @RequestParam(defaultValue = "ru") String language, @RequestParam(required = false) boolean order) {
 		if (CityEnum.getById(id) != null) {
-			return gisService.getDistrictsByCity(CityEnum.getById(id), Language.getByCode(language));
+			return gisService.getDistrictsByCity(CityEnum.getById(id), Language.getByCode(language), order);
 		}
 		return Collections.emptyList();
 	}
 	
 	@GetMapping("/gis/districts/{id}/regions")
-	public @ResponseBody List<Region> getRegionsByDistrict(@PathVariable int id, @RequestParam(defaultValue = "ru") String language) {
+	public @ResponseBody List<Region> getRegionsByDistrict(@PathVariable int id, @RequestParam(defaultValue = "ru") String language, @RequestParam(required = false) boolean order) {
 		if (DistrictEnum.getById(id) != null) {
-			return gisService.getRegionsByDistrict(DistrictEnum.getById(id), Language.getByCode(language));
+			return gisService.getRegionsByDistrict(DistrictEnum.getById(id), Language.getByCode(language), order);
 		}
 		return Collections.emptyList();
 	}

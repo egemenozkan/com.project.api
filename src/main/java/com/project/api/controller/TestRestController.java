@@ -70,7 +70,7 @@ public class TestRestController {
     	Facility facility = new Facility();
     	facility.setCode("A");
     	facility.setIcon("b");
-    	facility.setName("testFacility");
+//    	facility.setName("testFacility");
     	facilities.add(facility);
     	facilities.add(facility);
     	facilities.add(facility);
@@ -84,7 +84,7 @@ public class TestRestController {
     	Facility facility = new Facility();
     	facility.setCode("A");
     	facility.setIcon("b");
-    	facility.setName("testFacility");
+//    	facility.setName("testFacility");
     	facilities.add(facility);
     	facilities.add(facility);
     	facilities.add(facility);
