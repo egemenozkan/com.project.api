@@ -140,8 +140,6 @@ public interface PlaceMapper {
 	
 	@Select(SELECT_PLACE + " WHERE pv.tr_name LIKE '%${name}%' OR pv.ru_name LIKE '%${name}%' OR pv.en_name LIKE '%${name}%'")
 	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.PlaceType.class, typeHandler = com.project.api.data.mapper.handler.PlaceTypeTypeHandler.class),
-			@Result(property = "address", column = "address_id", javaType = Address.class, one = @One(select = "findAddressById")),
-			@Result(property = "contact", column = "place_id", javaType = Contact.class, one = @One(select = "findContactByPlaceId")),
 			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	List<Place> autocomplete(String name, String language);
 	
@@ -160,6 +158,11 @@ public interface PlaceMapper {
 	
 	
 	List<Place> findAllPlaceByFilter(PlaceRequest placeRequest, @Param("types") List<Integer> typesByMainType);
-
+	
+	@Insert("INSERT INTO project.place_facility(place_id, facilities) VALUES(#{placeId}, #{facilitiesJson})")
+	void savePlaceFacilities(long placeId, String facilitiesJson);
+	
+	@Select("SELECT pf.facilities FROM project.place_facility pf WHERE pf.place_id = #{placeId}")
+	String findPlaceFacilities(long placeId);
 	
 }

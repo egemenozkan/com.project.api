@@ -1,6 +1,7 @@
 package com.project.api.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.project.api.data.model.Facility;
+import com.project.api.data.service.IPlaceService;
 import com.project.enginee.event.service.IEventTrackingService;
 
 @SuppressWarnings("rawtypes")
@@ -29,6 +32,8 @@ public class TestRestController {
     private Gson gson;
     @Autowired
     private IEventTrackingService eventTrackingService;
+    @Autowired
+    private IPlaceService placeService;
     
 //    private static final String AUTH_SERVER_URL = "http://authserver:8090";
 //    private static final String TOKEN_PATH = "/oauth/token";
@@ -39,7 +44,7 @@ public class TestRestController {
     private static final Logger logger = LogManager.getLogger(TestRestController.class);
 
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    @RequestMapping(value = "/test/biletix", method = RequestMethod.GET)
     public ResponseEntity<List> getTest(@RequestParam(required = false) String q) {
 	
 
@@ -59,7 +64,33 @@ public class TestRestController {
 
 	return null;
     }
-
+    @RequestMapping(value = "/tes2t", method = RequestMethod.GET)
+    public ResponseEntity<List> getTestFacilietes() {
+    	List<Facility> facilities = new ArrayList<>();
+    	Facility facility = new Facility();
+    	facility.setCode("A");
+    	facility.setIcon("b");
+//    	facility.setName("testFacility");
+    	facilities.add(facility);
+    	facilities.add(facility);
+    	facilities.add(facility);
+    	placeService.savePlaceFacilities(1, gson.toJson(facilities));
+    	return null;
+    }
+    
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public ResponseEntity<List> getTestFacilities() {
+    	List<Facility> facilities = new ArrayList<>();
+    	Facility facility = new Facility();
+    	facility.setCode("A");
+    	facility.setIcon("b");
+//    	facility.setName("testFacility");
+    	facilities.add(facility);
+    	facilities.add(facility);
+    	facilities.add(facility);
+    	placeService.getPlaceFacilitiesByPlaceId(1);
+    	return null;
+    }
 
 	public IEventTrackingService getEventTrackingService() {
 		return eventTrackingService;

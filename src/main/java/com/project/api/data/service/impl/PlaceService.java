@@ -22,6 +22,7 @@ import com.project.api.data.mapper.AirportMapper;
 import com.project.api.data.mapper.HotelMapper;
 import com.project.api.data.mapper.PlaceMapper;
 import com.project.api.data.mapper.TimeTableMapper;
+import com.project.api.data.model.Facility;
 import com.project.api.data.model.common.Address;
 import com.project.api.data.model.common.Contact;
 import com.project.api.data.model.common.Content;
@@ -55,16 +56,15 @@ public class PlaceService implements IPlaceService {
 
 	@Autowired
 	private HotelMapper hotelMapper;
-	
+
 	@Autowired
 	private TimeTableMapper timeTableMapper;
 
 	@Autowired
 	private AirportMapper airportMapper;
-	
+
 	@Autowired
 	private IFileService fileService;
-
 
 	@Override
 	public Place findPlaceById(long id, String language) {
@@ -78,23 +78,22 @@ public class PlaceService implements IPlaceService {
 			for (Localisation name : names) {
 				localisation.put(name.getLanguage().toString(), name);
 			}
-			
+
 			if (place.getAddress() != null && place.getAddress().getId() > 0) {
 				Address address = placeMapper.findAddressById(place.getAddress().getId());
 				if (address != null) {
 					place.setAddress(fillDataWithEnums(address, Language.getByCode(language)));
 				}
 			}
-			
+
 			place.setContact(placeMapper.findContactByPlaceId(id));
-			
+
 			place.setImages(fileService.getFilesByPageId(LandingPageType.PLACE.getId(), id));
 
 			place.setLocalisation(localisation);
 		} catch (Exception e) {
 			LOG.error("::findPlaceById({}) - {}", id, e);
 		}
-		
 
 		return place;
 	}
@@ -162,7 +161,7 @@ public class PlaceService implements IPlaceService {
 				if (LOG.isDebugEnabled()) {
 					LOG.debug("Hotel (Place) has been created. hotel: {}", gson.toJson(hotel));
 				}
-			} 
+			}
 		} else if (place.getType() == PlaceType.AIRPORT) {
 			if (place.getId() == 0) {
 				placeMapper.createPlace(place);
@@ -196,7 +195,8 @@ public class PlaceService implements IPlaceService {
 				placeMapper.createRestaurantCafe(restaurantCafe);
 
 				if (LOG.isDebugEnabled()) {
-					LOG.debug("Restaurant/Cafe (Place) has been created. restaurant/cafe: {}", gson.toJson(restaurantCafe));
+					LOG.debug("Restaurant/Cafe (Place) has been created. restaurant/cafe: {}",
+							gson.toJson(restaurantCafe));
 				}
 			}
 		} else {
@@ -211,9 +211,10 @@ public class PlaceService implements IPlaceService {
 					WebUtils.generateSlug(place.getName(), place.getId()));
 		}
 		if (place.getLocalisation() != null) {
-			place.getLocalisation().entrySet().stream()
-					.filter(l -> (l.getValue() != null && l.getValue().getName() != null && !l.getValue().getName().isEmpty()))
-					.forEach(e -> placeMapper.savePlaceName(e.getValue().getName(), Language.valueOf(e.getKey()).getCode(), place.getId(),
+			place.getLocalisation().entrySet().stream().filter(
+					l -> (l.getValue() != null && l.getValue().getName() != null && !l.getValue().getName().isEmpty()))
+					.forEach(e -> placeMapper.savePlaceName(e.getValue().getName(),
+							Language.valueOf(e.getKey()).getCode(), place.getId(),
 							WebUtils.generateSlug(e.getValue().getName(), place.getId())));
 			// placeMapper.savePlaceName(e.getValue().getName(),
 			// e.getValue().getLanguage().getCode(), place.getId())
@@ -224,9 +225,9 @@ public class PlaceService implements IPlaceService {
 		/** Contact **/
 		Contact contact = place.getContact();
 
-		if (place.getId() == 0
-				|| (contact != null && (contact.getId() == 0 || !contact.getPhone().isBlank() || !contact.getCallCenter().isBlank()
-						|| !contact.getWeb().isBlank() || !contact.getEmail().isBlank() || !contact.getWhatsapp().isBlank()))) {
+		if (place.getId() == 0 || (contact != null && (contact.getId() == 0 || !contact.getPhone().isBlank()
+				|| !contact.getCallCenter().isBlank() || !contact.getWeb().isBlank() || !contact.getEmail().isBlank()
+				|| !contact.getWhatsapp().isBlank()))) {
 			placeMapper.savePlaceContact(contact, place.getId());
 		} else {
 			LOG.error("::savePlaceContact PlaceId and ContactId are not defined!..");
@@ -241,7 +242,7 @@ public class PlaceService implements IPlaceService {
 		placeRequest.setLanguage(Language.getByCode(language));
 
 		List<PlaceLandingPage> landingPages = this.findAllLandingPageByFilter(placeRequest);
-		
+
 		if (landingPages == null || landingPages.isEmpty()) {
 			return null;
 		}
@@ -313,17 +314,18 @@ public class PlaceService implements IPlaceService {
 
 	@Override
 	public List<PlaceLandingPage> findAllLandingPageByFilter(PlaceRequest placeRequest) {
-		 List<PlaceLandingPage> pages = placeMapper.findAllLandingPageByFilter(placeRequest, getTypesByMainType(placeRequest.getMainType()));
-		 if (!CollectionUtils.isEmpty(pages)) {
-			 for (int i = 0; i < pages.size(); i++) {
-				 
+		List<PlaceLandingPage> pages = placeMapper.findAllLandingPageByFilter(placeRequest,
+				getTypesByMainType(placeRequest.getMainType()));
+		if (!CollectionUtils.isEmpty(pages)) {
+			for (int i = 0; i < pages.size(); i++) {
+
 				if (pages.get(i) != null && pages.get(i).getPlace() != null && pages.get(i).getPlace().getId() > 0) {
-					Place place = this.findPlaceById(pages.get(i).getPlace().getId(), pages.get(i).getLanguage().getCode());
+					Place place = this.findPlaceById(pages.get(i).getPlace().getId(),
+							pages.get(i).getLanguage().getCode());
 					if (place == null) {
 						continue;
 					}
-					if (!placeRequest.isHideAddress() && place.getAddress() != null 
-							&& place.getAddress().getId() > 0) {
+					if (!placeRequest.isHideAddress() && place.getAddress() != null && place.getAddress().getId() > 0) {
 						Address address = placeMapper.findAddressById(place.getAddress().getId());
 						if (address != null) {
 							place.setAddress(fillDataWithEnums(address, placeRequest.getLanguage()));
@@ -331,47 +333,47 @@ public class PlaceService implements IPlaceService {
 					} else {
 						place.setAddress(null);
 					}
-					
+
 					if (!placeRequest.isHideContent()) {
 						List<Content> contents = placeMapper.findAllContentByPageId(place.getId());
 						if (contents != null) {
 							pages.get(i).setContents(contents);
 						}
 					}
-					
+
 					if (!placeRequest.isHideContact() && place.getId() > 0) {
 						Contact contact = placeMapper.findContactByPlaceId(place.getId());
 						place.setContact(contact);
-						
+
 					} else {
 						place.setContact(null);
 					}
-					
-					if (!placeRequest.isHideImages() && place.getId() >0) {
+
+					if (!placeRequest.isHideImages() && place.getId() > 0) {
 						List<MyFile> images = placeMapper.findAllImagesByPlaceId(place.getId());
 						place.setImages(images);
 					} else {
 						place.setImages(Collections.emptyList());
 					}
-					
-					if (!placeRequest.isHideMainImage() && place.getMainImage() != null && place.getMainImage().getId() >0) {
+
+					if (!placeRequest.isHideMainImage() && place.getMainImage() != null
+							&& place.getMainImage().getId() > 0) {
 						MyFile mainImage = placeMapper.findMainImage(place.getMainImage().getId());
 						place.setMainImage(mainImage);
 					}
-					
+
 					pages.get(i).setPlace(place);
-					
+
 //					List<TimeTable> timeTable = timeTableMapper.findAllTimeTableByPlaceId(place.getId());
 //					
 //					if (timeTable != null && !timeTable.isEmpty()) {}
-					
-					
+
 				}
 			}
-		 }
-		 
-		 return pages;
-	
+		}
+
+		return pages;
+
 	}
 
 	private Address fillDataWithEnums(Address address, Language language) {
@@ -402,19 +404,18 @@ public class PlaceService implements IPlaceService {
 		}
 		return address;
 	}
-	
-	
+
 	private String getTypesAsStringByMainType(MainType mainType) {
 		List<String> ids = null;
 		if (mainType != null && mainType != MainType.NOTSET) {
-			ids =  new ArrayList<>();
+			ids = new ArrayList<>();
 			for (PlaceType type : PlaceType.values()) {
 				if (type.getMainType() == mainType) {
 					ids.add(String.valueOf(type.getId()));
 				}
-			}			
+			}
 		}
-		
+
 		if (ids != null) {
 			return MyBatisUtils.inStatement(ids);
 		}
@@ -424,14 +425,14 @@ public class PlaceService implements IPlaceService {
 	private List<Integer> getTypesByMainType(MainType mainType) {
 		List<Integer> ids = Collections.emptyList();
 		if (mainType != null && mainType != MainType.NOTSET) {
-			ids =  new ArrayList<>();
+			ids = new ArrayList<>();
 			for (PlaceType type : PlaceType.values()) {
 				if (type.getMainType() == mainType) {
 					ids.add(type.getId());
 				}
-			}			
+			}
 		}
-		
+
 		return ids;
 	}
 
@@ -458,8 +459,9 @@ public class PlaceService implements IPlaceService {
 
 	@Override
 	public List<Place> findAllPlaceByFilter(PlaceRequest placeRequest) {
-		List<Place> places = placeMapper.findAllPlaceByFilter(placeRequest, getTypesByMainType(placeRequest.getMainType()));
-		
+		List<Place> places = placeMapper.findAllPlaceByFilter(placeRequest,
+				getTypesByMainType(placeRequest.getMainType()));
+
 		if (places != null && !places.isEmpty()) {
 			for (Place place : places) {
 				List<Localisation> names = placeMapper.findAllPlaceNameByPlaceId(place.getId());
@@ -473,7 +475,31 @@ public class PlaceService implements IPlaceService {
 			}
 		}
 
-		
 		return places;
+	}
+
+	@Override
+	public int savePlaceFacilities(long id, String facilitiesJson) {
+		placeMapper.savePlaceFacilities(id, facilitiesJson);
+		return 0;
+	}
+
+	@Override
+	public List<Facility> getPlaceFacilitiesByPlaceId(long id) {
+		String facilitiesJson = placeMapper.findPlaceFacilities(id);
+		if (facilitiesJson != null) {
+			return gson.fromJson(facilitiesJson, List.class);
+		}
+		return null;
+	}
+
+	@Override
+	public PlaceLandingPage findLandingPageByFilter(PlaceRequest placeRequest) {
+		List<PlaceLandingPage> pages = this.findAllLandingPageByFilter(placeRequest);
+		if (!CollectionUtils.isEmpty(pages) && pages.size() == 1) {
+			return pages.get(0);
+		}
+
+		return null;
 	}
 }

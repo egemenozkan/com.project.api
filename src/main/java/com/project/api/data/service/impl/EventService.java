@@ -41,14 +41,20 @@ public class EventService implements IEventService {
 			event = eventMapper.findEventById(id, language.getCode(), 0);
 		}
 		
+
+		
 		if (event != null) {
+			if (event.getMaster() != null && event.getMaster().getId() > 0) {
+				event.setMaster(eventMapper.findEventById(event.getMaster().getId(), language.getCode(), 0));
+			}
+
 			List<Localisation> names = eventMapper.findAllEventNameByEventId(event.getId());
 			Map<String, Localisation> localisation = new HashMap<>();
 			for (Localisation name : names) {
 				if (name != null && name.getLanguage() != null)
 					localisation.put(name.getLanguage().toString(), name);
 			}
-			event.setLocalisation(localisation);	
+			event.setLocalisation(localisation);
 		}
 		
 		return event;
@@ -69,7 +75,7 @@ public class EventService implements IEventService {
 				event.setLocalisation(localisation);
 				
 				/** Place **/
-				if (event != null && event.getPlace() != null && event.getPlace().getId() > 0) {
+				if (!eventRequest.isHidePlace() && event != null && event.getPlace() != null && event.getPlace().getId() > 0) {
 					event.setPlace(placeService.findPlaceById(event.getPlace().getId(), eventRequest.getLanguage().getCode()));
 				}
 			}

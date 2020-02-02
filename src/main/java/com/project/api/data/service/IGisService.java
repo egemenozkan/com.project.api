@@ -14,11 +14,11 @@ import com.project.api.data.model.gis.enums.DistrictEnum;
 public interface IGisService {
 
 	/* İlçe */
-	List<District> getDistrictsByCity(CityEnum city, Language language);
+	List<District> getDistrictsByCity(CityEnum city, Language language, boolean order);
 	/* Bölge */
-	List<Region> getRegionsByDistrict(DistrictEnum district, Language language);
+	List<Region> getRegionsByDistrict(DistrictEnum district, Language language, boolean order);
 	/* Şehir */
-	List<City> getCitiesByCountry(CountryEnum country, Language language);
+	List<City> getCitiesByCountry(CountryEnum country, Language language, boolean order);
 	
 	List<TransferRegion> getTransferRegions();
 }
