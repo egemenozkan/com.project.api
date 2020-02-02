@@ -144,17 +144,24 @@ public class EventRestController {
 
 	@GetMapping(value = "/events/autocomplete")
 	public ResponseEntity<AutocompleteResponse> autocompleteEvents(@RequestParam(defaultValue = "RU") String language,
-			@RequestParam(required = false, name = "query") String name, @RequestParam(required = false, name = "status", defaultValue = "1") int status) {
+			@RequestParam(required = false, name = "query") String name,
+			@RequestParam(required = false, name = "status", defaultValue = "1") int status) {
 		List<Event> events = null;
 
-		if (name != null && !name.isBlank() && name.length() >= AUTOCOMPLETE_MIN_CHAR) {
-			EventRequest eventRequest = new EventRequest();
-			eventRequest.setHidePlace(Boolean.TRUE);
-			eventRequest.setLanguage(Language.getByCode(language));
-			eventRequest.setStatus(EventStatus.getById(status));
-			eventRequest.setName(name);
-			events = eventService.getEvents(eventRequest);
+		AutocompleteResponse autocompleteResponse = new AutocompleteResponse();
+		if (name == null || name.isBlank() || name.length() < AUTOCOMPLETE_MIN_CHAR) {
+			autocompleteResponse.setSuccess(Boolean.FALSE);
+			autocompleteResponse.setItems(Collections.emptyList());
+			autocompleteResponse.setErrorMessage("MinChars");
+			return new ResponseEntity<>(autocompleteResponse, HttpStatus.NOT_ACCEPTABLE);
 		}
+		
+		EventRequest eventRequest = new EventRequest();
+		eventRequest.setHidePlace(Boolean.TRUE);
+		eventRequest.setLanguage(Language.getByCode(language));
+		eventRequest.setStatus(EventStatus.getById(status));
+		eventRequest.setName(name);
+		events = eventService.getEvents(eventRequest);
 
 		if (!CollectionUtils.isEmpty(events)) {
 			Iterator<Event> itr = events.iterator();
@@ -169,13 +176,19 @@ public class EventRestController {
 			}
 		}
 
-		AutocompleteResponse autocompleteResponse = new AutocompleteResponse();
-		
 		if (!CollectionUtils.isEmpty(events)) {
 			autocompleteResponse.setSuccess(Boolean.TRUE);
 			List<Item> items = new ArrayList<>();
 			for (Event event : events) {
-				items.add(new Item(event.getId(), event.getName(), event.getSlug(), ProductType.EVENT));
+				StringBuilder strBuilder = new StringBuilder("/");
+				String prefix = "events/";
+
+				if (eventRequest.getLanguage() != Language.RUSSIAN) {
+					strBuilder.append(eventRequest.getLanguage().toString().toLowerCase()).append("/");
+				}
+
+				strBuilder.append(prefix).append(event.getSlug());
+				items.add(new Item(event.getId(), event.getName(), strBuilder.toString(), ProductType.EVENT));
 			}
 			autocompleteResponse.setItems(items);
 
@@ -254,7 +267,9 @@ public class EventRestController {
 			@RequestParam(required = false, defaultValue = "1") int type,
 			@RequestParam(required = false, defaultValue = "0") int limit,
 			@RequestParam(required = false, defaultValue = "false") boolean random,
-			@RequestParam(required = false, defaultValue = "false") boolean distinct) {
+			@RequestParam(required = false, defaultValue = "false") boolean distinct,
+			@RequestParam(required = false, defaultValue = "") String districts,
+			@RequestParam(required = false, defaultValue = "") String regions) {
 		EventRequest eventRequest = new EventRequest();
 
 		if (type > 1) {
@@ -266,7 +281,12 @@ public class EventRestController {
 		if (random) {
 			eventRequest.setRandom(Boolean.TRUE);
 		}
-		//
+		if (!districts.isBlank()) {
+			eventRequest.setDistricts(districts.split(","));
+		}
+		if (!regions.isBlank()) {
+			eventRequest.setRegions(regions.split(","));
+		}
 
 		eventRequest.setLanguage(Language.getByCode(language));
 

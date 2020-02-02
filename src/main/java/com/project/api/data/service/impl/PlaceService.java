@@ -462,7 +462,7 @@ public class PlaceService implements IPlaceService {
 		List<Place> places = placeMapper.findAllPlaceByFilter(placeRequest,
 				getTypesByMainType(placeRequest.getMainType()));
 
-		if (places != null && !places.isEmpty() && placeRequest.getLanguage() == null) {
+		if (places != null && !places.isEmpty()) {
 			for (Place place : places) {
 				List<Localisation> names = placeMapper.findAllPlaceNameByPlaceId(place.getId());
 				Map<String, Localisation> localisation = new HashMap<>();
@@ -499,7 +499,7 @@ public class PlaceService implements IPlaceService {
 		if (!CollectionUtils.isEmpty(pages) && pages.size() == 1) {
 			return pages.get(0);
 		}
-		
+
 		return null;
 	}
 }

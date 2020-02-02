@@ -23,35 +23,45 @@
         <association property="event" column="{id=event_id,language=language}" javaType="com.project.api.data.model.event.Event" select="findEventById" />
     </resultMap>
     <select id="findAllLandingPageByFilter" resultMap="landingPageResultMap">
-		SELECT lv.id, lv.title, lv.description, lv.keywords, lv.language,
-		lv.event_id, lv.slug, lv.place_id
-		FROM project.event_landing_page_view lv
+		SELECT e.*
+		FROM (SELECT lv.id, lv.title, lv.description, lv.keywords, lv.language, pv.region_id, pv.district_id,
+				lv.event_id, lv.slug, lv.place_id, lv.start_date, lv.end_date
+				FROM project.event_landing_page_view lv
+				LEFT JOIN  project.place_view_v2 pv ON (pv.id = lv.place_id)) e
 		WHERE
-		lv.event_id = IF(#{id} = 0, lv.event_id, #{id})
+			e.event_id = IF(#{id} = 0, e.event_id, #{id})
         <if test="language != null">
-			AND lv.language = #{language.code}
+			AND e.language = #{language.code}
         </if>
         <if test="startDate != null">
-			AND ev.start_date &gt;= #{startDate}
+			AND e.start_date &gt;= #{startDate}
         </if>
         <if test="endDate != null">
-			AND ev.end_date &lt;= #{endDate}
+			AND e.end_date &lt;= #{endDate}
         </if>
-         <if test="types != null">
-         AND ev.type IN (#{types})
+        <!-- GEO filter -->
+        <if test="regions != null">
+        	AND e.region_id IN <foreach item="region" collection="regions" separator="," open="(" close=")">#{region}</foreach>
+        </if>
+        <if test="districts != null">
+        	AND e.district_id IN <foreach item="district" collection="districts" separator="," open="(" close=")">#{district}</foreach>
+        </if>
+        <!-- #END OF GEO filter -->
+        <if test="types != null">
+        	AND e.type IN (#{types})
         </if>
     </select>
-    
-	<resultMap id="EventMap" type="com.project.api.data.model.event.Event">
-	    <id property="id" column="id" />
-	    <result property="place.id" column="place_id" />
-	    <result property="language" column="language" javaType="com.project.api.data.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler" />
-	    <result property="type" column="type" javaType="com.project.api.data.model.event.EventType" typeHandler="com.project.api.data.mapper.handler.EventTypeTypeHandler" />
-	    <result property="periodType" column="period_type" javaType="com.project.api.data.enums.PeriodType" typeHandler="com.project.api.data.mapper.handler.PeriodTypeTypeHandler" />
-	    <result property="feeType" column="fee_type" javaType="com.project.api.data.enums.FeeType" typeHandler="com.project.api.data.mapper.handler.FeeTypeTypeHandler" />
-	    <result property="master.id" column="master_id" />
-	    <result property="status" column="status" javaType="com.project.api.data.model.event.EventStatus" typeHandler="com.project.api.data.mapper.handler.EventStatusTypeHandler" />
-	</resultMap>
+
+    <resultMap id="EventMap" type="com.project.api.data.model.event.Event">
+        <id property="id" column="id" />
+        <result property="place.id" column="place_id" />
+        <result property="language" column="language" javaType="com.project.api.data.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler" />
+        <result property="type" column="type" javaType="com.project.api.data.model.event.EventType" typeHandler="com.project.api.data.mapper.handler.EventTypeTypeHandler" />
+        <result property="periodType" column="period_type" javaType="com.project.api.data.enums.PeriodType" typeHandler="com.project.api.data.mapper.handler.PeriodTypeTypeHandler" />
+        <result property="feeType" column="fee_type" javaType="com.project.api.data.enums.FeeType" typeHandler="com.project.api.data.mapper.handler.FeeTypeTypeHandler" />
+        <result property="master.id" column="master_id" />
+        <result property="status" column="status" javaType="com.project.api.data.model.event.EventStatus" typeHandler="com.project.api.data.mapper.handler.EventStatusTypeHandler" />
+    </resultMap>
     <select id="findAllEventsByFilter" resultMap="EventMap">
 		SELECT  ev.id, ev.place_id,  ev.id AS event_id, ev.type, ev.period_type, #{language.code} AS language,
         ev.start_date, ev.start_time, ev.end_date, ev.end_time, ev.show_start_time, ev.show_end_time,
@@ -77,7 +87,7 @@
         	AND ev.type = #{type.id}
         </if>
         <if test="name != null">
-        	<bind name="namePattern" value="'%' + name + '%'" />
+            <bind name="namePattern" value="'%' + name + '%'" />
         	AND LOWER(CASE #{language.code} WHEN 'TR' THEN ev.tr_name WHEN 'EN' THEN ev.en_name WHEN 'RU' THEN ev.ru_name WHEN 'DE' THEN ev.de_name END) LIKE LOWER(#{namePattern})
         </if>
         ORDER BY ev.id, ev.start_time ASC

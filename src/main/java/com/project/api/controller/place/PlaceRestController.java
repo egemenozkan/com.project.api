@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -75,7 +74,8 @@ public class PlaceRestController {
 			@RequestParam(required = false, defaultValue = "") String mainTypes,
 			@RequestParam(required = false, defaultValue = "0") int limit,
 			@RequestParam(required = false, defaultValue = "0") int city,
-			@RequestParam(required = false, defaultValue = "0") int district,
+			@RequestParam(required = false, defaultValue = "") String districts,
+			@RequestParam(required = false, defaultValue = "") String regions,
 			@RequestParam(required = false, defaultValue = "false") boolean random,
 			@RequestParam(required = false, defaultValue = "false") boolean hideAddress,
 			@RequestParam(required = false, defaultValue = "false") boolean hideContact,
@@ -84,8 +84,8 @@ public class PlaceRestController {
 			@RequestParam(required = false, defaultValue = "false") boolean hideMainImage) {
 		List<Place> places = null;
 
-		places = placeService.findAllPlaceByFilter(placeRequest(language, id, type, mainType, limit, random,
-				hideAddress, hideContact, hideContent, hideImages, hideMainImage));
+		places = placeService.findAllPlaceByFilter(placeRequest(language, id, type, mainType, limit, random, districts,
+				regions, hideAddress, hideContact, hideContent, hideImages, hideMainImage));
 
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("::findAllPlace {}", gson.toJson(places));
@@ -110,6 +110,8 @@ public class PlaceRestController {
 			@RequestParam(required = false, defaultValue = "1") int type,
 			@RequestParam(required = false, defaultValue = "1") int mainType,
 			@RequestParam(required = false, defaultValue = "0") int limit,
+			@RequestParam(required = false, defaultValue = "") String districts,
+			@RequestParam(required = false, defaultValue = "") String regions,
 			@RequestParam(required = false, defaultValue = "false") boolean random,
 			@RequestParam(required = false, defaultValue = "false") boolean hideAddress,
 			@RequestParam(required = false, defaultValue = "false") boolean hideContact,
@@ -117,7 +119,7 @@ public class PlaceRestController {
 			@RequestParam(required = false, defaultValue = "false") boolean hideImages,
 			@RequestParam(required = false, defaultValue = "false") boolean hideMainImage) {
 		PlaceLandingPage page = placeService.findLandingPageByFilter(placeRequest(language, id, type, mainType, limit,
-				random, hideAddress, hideContact, hideContent, hideImages, hideMainImage));
+				random, districts, regions, hideAddress, hideContact, hideContent, hideImages, hideMainImage));
 
 		if (page == null) {
 			page = new PlaceLandingPage();
@@ -152,6 +154,8 @@ public class PlaceRestController {
 			@RequestParam(required = false, defaultValue = "1") int type,
 			@RequestParam(required = false, defaultValue = "1") int mainType,
 			@RequestParam(required = false, defaultValue = "0") int limit,
+			@RequestParam(required = false, defaultValue = "") String districts,
+			@RequestParam(required = false, defaultValue = "") String regions,
 			@RequestParam(required = false, defaultValue = "false") boolean random,
 			@RequestParam(required = false, defaultValue = "false") boolean hideAddress,
 			@RequestParam(required = false, defaultValue = "false") boolean hideContact,
@@ -159,13 +163,15 @@ public class PlaceRestController {
 			@RequestParam(required = false, defaultValue = "false") boolean hideImages,
 			@RequestParam(required = false, defaultValue = "false") boolean hideMainImage) {
 
-		List<PlaceLandingPage> pages = placeService.findAllLandingPageByFilter(placeRequest(language, id, type,
-				mainType, limit, random, hideAddress, hideContact, hideContent, hideImages, hideMainImage));
+		List<PlaceLandingPage> pages = placeService
+				.findAllLandingPageByFilter(placeRequest(language, id, type, mainType, limit, random, districts, regions,
+						hideAddress, hideContact, hideContent, hideImages, hideMainImage));
 		return new ResponseEntity<>(pages, HttpStatus.OK);
 	}
 
 	private PlaceRequest placeRequest(String language, long id, int type, int mainType, int limit, boolean random,
-			boolean hideAddress, boolean hideContact, boolean hideContent, boolean hideImages, boolean hideMainImage) {
+			String districts, String regions, boolean hideAddress, boolean hideContact, boolean hideContent,
+			boolean hideImages, boolean hideMainImage) {
 		PlaceRequest placeRequest = new PlaceRequest();
 
 		placeRequest.setId(id);
@@ -178,6 +184,12 @@ public class PlaceRestController {
 		}
 		if (limit > 0) {
 			placeRequest.setLimit(limit);
+		}
+		if (!districts.isBlank()) {
+			placeRequest.setDistricts(districts.split(","));
+		}
+		if (!regions.isBlank()) {
+			placeRequest.setRegions(regions.split(","));
 		}
 		if (random) {
 			placeRequest.setRandom(Boolean.TRUE);
