@@ -1,5 +1,5 @@
-mvn -f /Users/Egemen/Devel/workspace/com.project.contract/ clean install
-mvn -f /Users/Egemen/Devel/workspace/com.project.slugify/ clean install
+mvn -f ~/Devel/workspace/com.project.contract/ clean install
+mvn -f ~/Devel/workspace/com.project.slugify/ clean install
 
 mvn clean install package -DskipTests -Pprod
 
