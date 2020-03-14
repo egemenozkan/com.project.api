@@ -69,9 +69,11 @@ public class EventRestController {
 			@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate endDate,
 			@RequestParam(required = false, defaultValue = "false") boolean distinct,
 			@RequestParam(required = false, defaultValue = "0") int timeTableId,
-			@RequestParam(required = false, defaultValue = "1") int status,
 			@RequestParam(required = false, defaultValue = "false") boolean hidePlace,
-			@RequestParam(required = false) String name) {
+			@RequestParam(required = false) String name,
+			@RequestParam(required = false, defaultValue = "") String districts,
+			@RequestParam(required = false, defaultValue = "") String regions,
+			@RequestParam(required = false, defaultValue = "1") int status) {
 
 		EventRequest eventRequest = new EventRequest();
 		if (type > 1) {
@@ -107,6 +109,8 @@ public class EventRestController {
 		eventRequest.setLanguage(Language.getByCode(language));
 
 		List<Event> events = eventService.getEvents(eventRequest);
+		
+		
 
 		if (distinct && !CollectionUtils.isEmpty(events)) {
 			Iterator<Event> itr = events.iterator();
@@ -269,7 +273,8 @@ public class EventRestController {
 			@RequestParam(required = false, defaultValue = "false") boolean random,
 			@RequestParam(required = false, defaultValue = "false") boolean distinct,
 			@RequestParam(required = false, defaultValue = "") String districts,
-			@RequestParam(required = false, defaultValue = "") String regions) {
+			@RequestParam(required = false, defaultValue = "") String regions,
+			@RequestParam(required = false, defaultValue = "0") int status) {
 		EventRequest eventRequest = new EventRequest();
 
 		if (type > 1) {
@@ -289,21 +294,12 @@ public class EventRestController {
 		}
 
 		eventRequest.setLanguage(Language.getByCode(language));
+		
+		eventRequest.setStatus(EventStatus.getById(status));
 
 		List<EventLandingPage> pages = eventService.findAllLandingPageByFilter(eventRequest);
 
-		if (distinct && !CollectionUtils.isEmpty(pages)) {
-			Iterator<EventLandingPage> itr = pages.iterator();
-			EventLandingPage previous = itr.next();
-			while (itr.hasNext()) {
-				EventLandingPage next = itr.next();
-
-				if (previous.getId() == next.getId()) {
-					itr.remove();
-				}
-				previous = next;
-			}
-		}
+		
 
 		return new ResponseEntity<>(pages, HttpStatus.OK);
 	}

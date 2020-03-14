@@ -19,13 +19,11 @@
     <resultMap id="landingPageResultMap" type="com.project.api.data.model.event.EventLandingPage">
         <id property="id" column="id" />
         <result property="language" column="language" javaType="com.project.api.data.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler" />
-        <association property="contents" column="id" javaType="List" select="findAllContentByPageId" />
-        <association property="event" column="{id=event_id,language=language}" javaType="com.project.api.data.model.event.Event" select="findEventById" />
     </resultMap>
     <select id="findAllLandingPageByFilter" resultMap="landingPageResultMap">
 		SELECT e.*
 		FROM (SELECT lv.id, lv.title, lv.description, lv.keywords, lv.language, pv.region_id, pv.district_id,
-				lv.event_id, lv.slug, lv.place_id, lv.start_date, lv.end_date
+				lv.event_id, lv.slug, lv.place_id, lv.start_date, lv.end_date, lv.status
 				FROM project.event_landing_page_view lv
 				LEFT JOIN  project.place_view_v2 pv ON (pv.id = lv.place_id)) e
 		WHERE
@@ -40,15 +38,18 @@
 			AND e.end_date &lt;= #{endDate}
         </if>
         <!-- GEO filter -->
-        <if test="regions != null">
+        <if test="regions.length > 0">
         	AND e.region_id IN <foreach item="region" collection="regions" separator="," open="(" close=")">#{region}</foreach>
         </if>
-        <if test="districts != null">
+        <if test="districts.length > 0">
         	AND e.district_id IN <foreach item="district" collection="districts" separator="," open="(" close=")">#{district}</foreach>
         </if>
-        <!-- #END OF GEO filter -->
-        <if test="types != null">
+<!--         #END OF GEO filter -->
+        <if test="types.length > 0">
         	AND e.type IN (#{types})
+        </if>
+         <if test="status != null">
+        	AND e.status =#{status.id}
         </if>
     </select>
 
@@ -77,7 +78,7 @@
         <if test="endDate != null">
 			AND ev.end_date &gt;= #{startDate}
         </if>
-        <if test="types != null">
+        <if test="types.length > 0">
         	AND ev.type IN <foreach item="type" collection="types" separator="," open="(" close=")">#{type}</foreach>
         </if>
         <if test="status !=null and status.id != 1">

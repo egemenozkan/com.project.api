@@ -2,11 +2,13 @@ package com.project.api.data.service.impl;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.project.api.data.enums.LandingPageType;
 import com.project.api.data.enums.Language;
@@ -154,12 +156,32 @@ public class EventService implements IEventService {
 		if (landingPages == null || landingPages.isEmpty()) {
 			landingPages = Collections.emptyList();
 		} else {
+			if (eventRequest.getDistinct() != null && eventRequest.getDistinct() && !CollectionUtils.isEmpty(landingPages)) {
+				Iterator<EventLandingPage> itr = landingPages.iterator();
+				EventLandingPage previous = itr.next();
+				while (itr.hasNext()) {
+					EventLandingPage next = itr.next();
+
+					if (previous.getId() == next.getId()) {
+						itr.remove();
+					}
+					previous = next;
+				}
+			}
+			
+			
 			for (EventLandingPage landingPage : landingPages) {
-				if (landingPage != null && landingPage.getEvent() != null && landingPage.getEvent().getPlace() != null
-						&& landingPage.getEvent().getPlace().getId() > 0) {
-					landingPage.getEvent()
-							.setPlace(placeService.findPlaceById(landingPage.getEvent().getPlace().getId(),
-									landingPage.getEvent().getLanguage().toString()));
+				if (landingPage != null) {
+					EventRequest eventRequest2 = new EventRequest();
+					eventRequest2.setId(landingPage.getId());
+					eventRequest2.setLanguage(eventRequest.getLanguage());
+					landingPage.setEvent(eventMapper.findAllEventsByFilter(eventRequest2).get(0));
+					if (landingPage.getEvent() != null && landingPage.getEvent().getPlace() != null
+							&& landingPage.getEvent().getPlace().getId() > 0) {
+						landingPage.getEvent()
+								.setPlace(placeService.findPlaceById(landingPage.getEvent().getPlace().getId(),
+										landingPage.getEvent().getLanguage().toString()));
+					}
 				}
 			}
 		}
