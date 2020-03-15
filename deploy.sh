@@ -1,6 +1,6 @@
-mvn -f ~/Devel/workspace/com.project.contract/ clean install
-mvn -f ~/Devel/workspace/com.project.slugify/ clean install
+mvn -f $HOME/devel/workspace/projects/com.project.contract/ clean install
+mvn -f $HOME/devel/workspace/projects/com.project.slugify/ clean install
 
 mvn clean install package -DskipTests -Pprod
 
-scp target/api-alfa.jar root@do.sevais.com:/opt/www/api
+scp target/api-alfa.jar root@178.62.32.47:/opt/www/api
