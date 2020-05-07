@@ -41,7 +41,7 @@ import com.project.api.data.model.place.RestaurantCafe;
 import com.project.api.data.service.IFileService;
 import com.project.api.data.service.IPlaceService;
 import com.project.api.data.utils.MyBatisUtils;
-import com.project.api.utils.WebUtils;
+import com.project.api.utils.ApiUtils;
 
 @Service
 public class PlaceService implements IPlaceService {
@@ -140,7 +140,7 @@ public class PlaceService implements IPlaceService {
 		/** **/
 
 		if (place.getId() != 0) {
-			place.setSlug(WebUtils.generateSlug(place.getName(), place.getId()));
+			place.setSlug(ApiUtils.generateSlug(place.getName(), place.getId()));
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("::updatePlace place: {}", gson.toJson(place));
 			}
@@ -208,14 +208,14 @@ public class PlaceService implements IPlaceService {
 		/** PlaceName/Slug SAVE--UPDATE **/
 		if (place.getLanguage() != null) {
 			placeMapper.savePlaceName(place.getName(), place.getLanguage().getCode(), place.getId(),
-					WebUtils.generateSlug(place.getName(), place.getId()));
+					ApiUtils.generateSlug(place.getName(), place.getId()));
 		}
 		if (place.getLocalisation() != null) {
 			place.getLocalisation().entrySet().stream().filter(
 					l -> (l.getValue() != null && l.getValue().getName() != null && !l.getValue().getName().isEmpty()))
 					.forEach(e -> placeMapper.savePlaceName(e.getValue().getName(),
 							Language.valueOf(e.getKey()).getCode(), place.getId(),
-							WebUtils.generateSlug(e.getValue().getName(), place.getId())));
+							ApiUtils.generateSlug(e.getValue().getName(), place.getId())));
 			// placeMapper.savePlaceName(e.getValue().getName(),
 			// e.getValue().getLanguage().getCode(), place.getId())
 

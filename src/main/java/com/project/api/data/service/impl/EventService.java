@@ -21,7 +21,7 @@ import com.project.api.data.model.event.TimeTable;
 import com.project.api.data.model.place.Localisation;
 import com.project.api.data.service.IEventService;
 import com.project.api.data.service.IPlaceService;
-import com.project.api.utils.WebUtils;
+import com.project.api.utils.ApiUtils;
 
 @Service
 public class EventService implements IEventService {
@@ -97,13 +97,13 @@ public class EventService implements IEventService {
 		/** PlaceName/Slug SAVE--UPDATE **/
 		if (event != null && event.getLanguage() != null) {
 			eventMapper.saveEventName(event.getName(), event.getLanguage().getCode(), event.getId(),
-					WebUtils.generateSlug(event.getName(), event.getId()));
+					ApiUtils.generateSlug(event.getName(), event.getId()));
 		}
 		if (event != null && event.getLocalisation() != null) {
 			event.getLocalisation().entrySet().stream()
 					.filter(l -> (l.getValue() != null && l.getValue().getName() != null && !l.getValue().getName().isEmpty()))
 					.forEach(e -> eventMapper.saveEventName(e.getValue().getName(), Language.valueOf(e.getKey()).getCode(), event.getId(),
-							WebUtils.generateSlug(e.getValue().getName(), event.getId())));
+							ApiUtils.generateSlug(e.getValue().getName(), event.getId())));
 		}
 		
 		if (event != null && event.getBiletixId() != null) {

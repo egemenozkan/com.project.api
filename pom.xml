@@ -43,7 +43,7 @@
 		</profile>
 		<profile>
 			<id>prod</id>
-					<activation>
+			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
@@ -199,6 +199,11 @@
 			<groupId>com.project</groupId>
 			<artifactId>contract</artifactId>
 			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.project</groupId>
+			<artifactId>common</artifactId>
+			<version>1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

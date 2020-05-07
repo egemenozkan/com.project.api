@@ -9,7 +9,7 @@ import com.project.api.data.mapper.PlaceMapper;
 import com.project.api.data.model.place.Localisation;
 import com.project.api.data.model.place.Place;
 import com.project.api.data.service.ISiteMapService;
-import com.project.api.utils.WebUtils;
+import com.project.api.utils.ApiUtils;
 
 @Service
 public class SiteMapService implements ISiteMapService {
@@ -26,7 +26,7 @@ public class SiteMapService implements ISiteMapService {
 				List<Localisation> names = placeMapper.findAllPlaceNameByPlaceId(place.getId());
 				for (Localisation name : names) {
 					placeMapper.savePlaceName(name.getName(), name.getLanguage().getCode(), place.getId(),
-							WebUtils.generateSlug(name.getName(), place.getId()));
+							ApiUtils.generateSlug(name.getName(), place.getId()));
 				}
 			}
 		}
