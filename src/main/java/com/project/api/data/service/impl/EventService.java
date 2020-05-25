@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.project.api.data.enums.LandingPageType;
-import com.project.api.data.enums.Language;
 import com.project.api.data.mapper.EventMapper;
 import com.project.api.data.mapper.TimeTableMapper;
 import com.project.api.data.model.event.Event;
@@ -22,6 +21,7 @@ import com.project.api.data.model.place.Localisation;
 import com.project.api.data.service.IEventService;
 import com.project.api.data.service.IPlaceService;
 import com.project.api.utils.ApiUtils;
+import com.project.common.enums.Language;
 
 @Service
 public class EventService implements IEventService {

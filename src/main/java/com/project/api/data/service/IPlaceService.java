@@ -2,7 +2,7 @@ package com.project.api.data.service;
 
 import java.util.List;
 
-import com.project.api.data.enums.Language;
+import com.project.common.enums.Language;
 import com.project.api.data.enums.MainType;
 import com.project.api.data.enums.PlaceType;
 import com.project.api.data.model.Facility;

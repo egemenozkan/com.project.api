@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.project.api.data.enums.LandingPageType;
-import com.project.api.data.enums.Language;
 import com.project.api.data.enums.MainType;
 import com.project.api.data.enums.PlaceType;
 import com.project.api.data.model.common.Content;
@@ -31,6 +30,7 @@ import com.project.api.data.model.place.PlaceLandingPage;
 import com.project.api.data.model.place.PlaceRequest;
 import com.project.api.data.service.IFileService;
 import com.project.api.data.service.IPlaceService;
+import com.project.common.enums.Language;
 
 @RestController
 @RequestMapping(value = "/api/v1/")

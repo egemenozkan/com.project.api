@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.project.api.data.enums.Language;
 import com.project.api.data.model.gis.City;
 import com.project.api.data.model.gis.Country;
 import com.project.api.data.model.gis.District;
@@ -18,6 +17,7 @@ import com.project.api.data.model.gis.enums.CountryEnum;
 import com.project.api.data.model.gis.enums.DistrictEnum;
 import com.project.api.data.model.gis.enums.RegionEnum;
 import com.project.api.data.service.IGisService;
+import com.project.common.enums.Language;
 
 @Service
 public class GisService implements IGisService {

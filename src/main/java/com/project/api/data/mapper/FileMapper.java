@@ -25,7 +25,7 @@ public interface FileMapper {
 			@Result(property = "user.firstName", column = "first_name"),
 			@Result(property = "user.lastName", column = "last_name"),
 			@Result(property = "user.email", column = "email"),
-			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
+			@Result(property = "language", column = "language", javaType = com.project.common.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	List<Comment> findAllCommentsByPlaceId(long id, String language);
 	
 	@Insert("INSERT INTO project.file_storage(page_type, page_id, user_id, upload_dir, name, extension) VALUES(#{pageType}, #{pageId}, #{userId}, #{uploadDir}, #{name}, #{extension})")
@@ -46,7 +46,7 @@ public interface FileMapper {
 //			@Result(property = "user.firstName", column = "first_name"),
 //			@Result(property = "user.lastName", column = "last_name"),
 			@Result(property = "user.email", column = "email"),
-			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
+			@Result(property = "language", column = "language", javaType = com.project.common.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	List<PlaceComment> findAllPlaceComments(String language);
 	
 	@Select("SELECT fs.id, fs.upload_dir, fs.name, fs.extension, fs.page_id, fs.create_datetime, fs.update_datetime, fs.user_id, fs.status FROM project.file_storage fs WHERE fs.page_type = ${pageType} AND fs.page_id = ${pageId}")

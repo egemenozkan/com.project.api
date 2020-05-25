@@ -32,7 +32,7 @@ public interface EventMapper extends PlaceMapper{
 	@Select(SELECT_EVENT + " WHERE ev.id = #{id} AND ifnull(ev.time_table_id, 0) = IF(#{timeTableId} = 0, ifnull(ev.time_table_id, 0), #{timeTableId}) LIMIT 1")
 	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.model.event.EventType.class, typeHandler = com.project.api.data.mapper.handler.EventTypeTypeHandler.class),
 			@Result(property = "periodType", column = "period_type", javaType = com.project.api.data.enums.PeriodType.class, typeHandler = com.project.api.data.mapper.handler.PeriodTypeTypeHandler.class),
-			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class),
+			@Result(property = "language", column = "language", javaType = com.project.common.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class),
 			@Result(property = "place.id", column = "place_id"),
 			@Result(property = "feeType", column = "fee_type", javaType = com.project.api.data.enums.FeeType.class, typeHandler = com.project.api.data.mapper.handler.FeeTypeTypeHandler.class),
 			@Result(property = "status", column = "status", javaType = com.project.api.data.model.event.EventStatus.class, typeHandler = com.project.api.data.mapper.handler.EventStatusTypeHandler.class),
@@ -59,7 +59,7 @@ public interface EventMapper extends PlaceMapper{
 	void saveEventName(String name, String language, long placeId, String slug);
 	
 	@Select("SELECT en.name, en.language, en.slug FROM project.event_name en WHERE en.event_id = #{id}")
-	@Results(value = {@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
+	@Results(value = {@Result(property = "language", column = "language", javaType = com.project.common.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	List<Localisation> findAllEventNameByEventId(long id);
 		
 	List<EventLandingPage> findAllLandingPageByFilter(EventRequest eventRequest);
@@ -81,7 +81,7 @@ public interface EventMapper extends PlaceMapper{
 	@Select(SELECT_EVENT + " WHERE ev.biletix_id = #{biletixKey} AND ifnull(ev.time_table_id, 0) = IF(#{timeTableId} = 0, ifnull(ev.time_table_id, 0), #{timeTableId}) LIMIT 1")
 	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.model.event.EventType.class, typeHandler = com.project.api.data.mapper.handler.EventTypeTypeHandler.class),
 			@Result(property = "periodType", column = "period_type", javaType = com.project.api.data.enums.PeriodType.class, typeHandler = com.project.api.data.mapper.handler.PeriodTypeTypeHandler.class),
-			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class),
+			@Result(property = "language", column = "language", javaType = com.project.common.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class),
 			@Result(property = "place.id", column = "place_id"),
 			@Result(property = "feeType", column = "fee_type", javaType = com.project.api.data.enums.FeeType.class, typeHandler = com.project.api.data.mapper.handler.FeeTypeTypeHandler.class),
 			@Result(property = "status", column = "status", javaType = com.project.api.data.model.event.EventStatus.class, typeHandler = com.project.api.data.mapper.handler.EventStatusTypeHandler.class),

@@ -46,7 +46,7 @@ public interface PlaceMapper {
 //			@Result(property = "contact", column = "place_id", javaType = Contact.class, one = @One(select = "findContactByPlaceId")),
 //			@Result(property="images", column="place_id", javaType=List.class, many=@Many(select="findAllImagesByPlaceId")),
 			@Result(property="mainImage.id", column="main_image_id"),
-			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
+			@Result(property = "language", column = "language", javaType = com.project.common.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 //	@Options(flushCache = Options.FlushCachePolicy.TRUE)
 	Place findPlaceById(long id, String language);
 	
@@ -56,7 +56,7 @@ public interface PlaceMapper {
 			@Result(property = "contact", column = "place_id", javaType = Contact.class, one = @One(select = "findContactByPlaceId")),
 			@Result(property="images", column="place_id", javaType=List.class, many=@Many(select="findAllImagesByPlaceId")),
 			@Result(property="mainImage", column="main_image_id", javaType=MyFile.class, one = @One(select="findMainImage")),
-			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
+			@Result(property = "language", column = "language", javaType = com.project.common.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	List<Place> findAllPlace(String language);
 	
 	@Select(SELECT_PLACE + " WHERE pv.type = #{typeId}")
@@ -65,7 +65,7 @@ public interface PlaceMapper {
 			@Result(property = "contact", column = "place_id", javaType = Contact.class, one = @One(select = "findContactByPlaceId")),
 			@Result(property="images", column="place_id", javaType=List.class, many=@Many(select="findAllImagesByPlaceId")),
 			@Result(property="mainImage", column="main_image_id", javaType=MyFile.class, one = @One(select="findMainImage")),
-			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
+			@Result(property = "language", column = "language", javaType = com.project.common.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	List<Place> findAllPlaceByType(String language, int typeId);
 	
 	@Select(SELECT_PLACE + " WHERE type ${types}")
@@ -74,7 +74,7 @@ public interface PlaceMapper {
 			@Result(property = "contact", column = "place_id", javaType = Contact.class, one = @One(select = "findContactByPlaceId")),
 			@Result(property="images", column="place_id", javaType=List.class, many=@Many(select="findAllImagesByPlaceId")),
 			@Result(property="mainImage", column="main_image_id", javaType=MyFile.class, one = @One(select="findMainImage")),
-			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
+			@Result(property = "language", column = "language", javaType = com.project.common.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	List<Place> findAllPlaceByMainType(String language, String types);
 	
 	@Insert("INSERT INTO project.place(type, address_id) VALUES(#{type.id}, #{address.id}) ")
@@ -119,7 +119,7 @@ public interface PlaceMapper {
 //	@Select("SELECT lp.id, lp.title, lp.description, lp.keywords, lp.language  FROM project.landing_page lp WHERE lp.self_id = #{id} AND lp.language = #{language} AND lp.type = 1")
 //	@Results(value = {@Result(property = "id", column = "id", javaType = Long.class),
 //			@Result(property = "contents", column = "id", javaType = List.class, one = @One(select = "findAllContentByPageId")),
-//			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
+//			@Result(property = "language", column = "language", javaType = com.project.common.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	List<PlaceLandingPage> findAllLandingPageByFilter(PlaceRequest placeRequest, @Param("types") List<Integer> typesByMainType);
 	
 	@Select("SELECT c.id, c.title, c.text, c.order FROM project.content c WHERE c.page_id = #{id}")
@@ -135,12 +135,12 @@ public interface PlaceMapper {
 	void updateContents(@Param("contents") List<Content> contents);
 	
 	@Select("SELECT pn.name, pn.language, pn.slug FROM project.place_name pn WHERE pn.place_id = #{id}")
-	@Results(value = {@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
+	@Results(value = {@Result(property = "language", column = "language", javaType = com.project.common.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	List<Localisation> findAllPlaceNameByPlaceId(long id);
 	
 	@Select(SELECT_PLACE + " WHERE pv.tr_name LIKE '%${name}%' OR pv.ru_name LIKE '%${name}%' OR pv.en_name LIKE '%${name}%'")
 	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.PlaceType.class, typeHandler = com.project.api.data.mapper.handler.PlaceTypeTypeHandler.class),
-			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
+			@Result(property = "language", column = "language", javaType = com.project.common.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	List<Place> autocomplete(String name, String language);
 	
 	@Update("UPDATE project.place SET main_image_id = #{fileId} WHERE id = #{id} ")

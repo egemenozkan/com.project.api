@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.project.api.data.enums.LandingPageType;
-import com.project.api.data.enums.Language;
 import com.project.api.data.enums.ProductType;
 import com.project.api.data.model.autocomplete.AutocompleteResponse;
 import com.project.api.data.model.autocomplete.Item;
@@ -40,6 +39,7 @@ import com.project.api.data.model.file.MyFile;
 import com.project.api.data.service.IEventService;
 import com.project.api.data.service.IFileService;
 import com.project.api.data.service.IPlaceService;
+import com.project.common.enums.Language;
 
 @RestController
 @RequestMapping(value = "/api/v1/")

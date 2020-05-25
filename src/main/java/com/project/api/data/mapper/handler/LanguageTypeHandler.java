@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 
-import com.project.api.data.enums.Language;
+import com.project.common.enums.Language;
 
 public class LanguageTypeHandler implements TypeHandler<Language> {
 

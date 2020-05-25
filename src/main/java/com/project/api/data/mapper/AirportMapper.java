@@ -34,11 +34,11 @@ public interface AirportMapper {
 			" FROM project.airport_view av")
     @Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.PlaceType.class, typeHandler = com.project.api.data.mapper.handler.PlaceTypeTypeHandler.class),
 			@Result(property = "address", column = "address_id", javaType = Address.class, one = @One(select = "findAddressById")),
-			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
+			@Result(property = "language", column = "language", javaType = com.project.common.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
     List<Airport> findAllAirports();
     
     @Select("SELECT pn.name, pn.language, pn.slug FROM project.place_name pn WHERE pn.place_id = #{id}")
-	@Results(value = {@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
+	@Results(value = {@Result(property = "language", column = "language", javaType = com.project.common.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	List<Localisation> findAllPlaceNameByPlaceId(long id);
     
 	@Select("SELECT av.id, av.address_title, av.address, av.post_code, av.lat, av.lng, av.subregion_id, av.subregion, av.region_id, av.region, av.city_id, av.city FROM project.address_view av WHERE av.id = #{id}")

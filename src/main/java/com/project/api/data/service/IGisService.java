@@ -2,7 +2,7 @@ package com.project.api.data.service;
 
 import java.util.List;
 
-import com.project.api.data.enums.Language;
+import com.project.common.enums.Language;
 import com.project.api.data.model.gis.City;
 import com.project.api.data.model.gis.District;
 import com.project.api.data.model.gis.Region;

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.api.data.enums.Language;
 import com.project.api.data.model.gis.City;
 import com.project.api.data.model.gis.District;
 import com.project.api.data.model.gis.Region;
@@ -19,6 +18,7 @@ import com.project.api.data.model.gis.enums.CityEnum;
 import com.project.api.data.model.gis.enums.CountryEnum;
 import com.project.api.data.model.gis.enums.DistrictEnum;
 import com.project.api.data.service.IGisService;
+import com.project.common.enums.Language;
 
 @RestController
 @RequestMapping(value = "/api/v1/")

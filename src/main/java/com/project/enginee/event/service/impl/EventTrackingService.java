@@ -30,13 +30,13 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.project.api.data.enums.FeeType;
-import com.project.api.data.enums.Language;
 import com.project.api.data.enums.PeriodType;
 import com.project.api.data.model.event.Event;
 import com.project.api.data.model.event.EventType;
 import com.project.api.data.model.place.Localisation;
 import com.project.api.data.model.place.Place;
 import com.project.api.data.service.IEventService;
+import com.project.common.enums.Language;
 import com.project.enginee.event.service.BiletixVenueEnum;
 import com.project.enginee.event.service.IEventTrackingService;
 

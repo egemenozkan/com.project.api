@@ -14,7 +14,6 @@ import org.springframework.util.CollectionUtils;
 
 import com.google.gson.Gson;
 import com.project.api.data.enums.LandingPageType;
-import com.project.api.data.enums.Language;
 import com.project.api.data.enums.MainType;
 import com.project.api.data.enums.PlaceType;
 import com.project.api.data.enums.Star;
@@ -42,6 +41,7 @@ import com.project.api.data.service.IFileService;
 import com.project.api.data.service.IPlaceService;
 import com.project.api.data.utils.MyBatisUtils;
 import com.project.api.utils.ApiUtils;
+import com.project.common.enums.Language;
 
 @Service
 public class PlaceService implements IPlaceService {

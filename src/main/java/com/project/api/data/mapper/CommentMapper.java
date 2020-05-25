@@ -23,7 +23,7 @@ public interface CommentMapper {
 			@Result(property = "user.firstName", column = "first_name"),
 			@Result(property = "user.lastName", column = "last_name"),
 			@Result(property = "user.email", column = "email"),
-			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
+			@Result(property = "language", column = "language", javaType = com.project.common.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	List<Comment> findAllPlaceCommentsByPlaceId(long id, String language);
 	
 	@Insert("INSERT INTO project.place_comment(title, message, user_id, place_id) VALUES(#{comment.title}, #{comment.message}, #{comment.user.id}, #{placeId})")
@@ -44,7 +44,7 @@ public interface CommentMapper {
 //			@Result(property = "user.firstName", column = "first_name"),
 //			@Result(property = "user.lastName", column = "last_name"),
 			@Result(property = "user.email", column = "email"),
-			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
+			@Result(property = "language", column = "language", javaType = com.project.common.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	List<PlaceComment> findAllPlaceComments(String language);
 	
 	
@@ -56,7 +56,7 @@ public interface CommentMapper {
 			@Result(property = "user.firstName", column = "first_name"),
 			@Result(property = "user.lastName", column = "last_name"),
 			@Result(property = "user.email", column = "email"),
-			@Result(property = "language", column = "language", javaType = com.project.api.data.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
+			@Result(property = "language", column = "language", javaType = com.project.common.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
 	List<Comment> findAllEventCommentsByEventId(long eventId, String language);
 	
 	@Insert("INSERT INTO project.event_comment(title, message, user_id, event_id) VALUES(#{comment.title}, #{comment.message}, #{comment.user.id}, #{eventId})")
