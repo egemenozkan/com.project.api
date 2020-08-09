@@ -18,7 +18,7 @@
 
     <resultMap id="landingPageResultMap" type="com.project.api.data.model.event.EventLandingPage">
         <id property="id" column="id" />
-        <result property="language" column="language" javaType="com.project.api.data.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler" />
+        <result property="language" column="language" javaType="com.project.common.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler" />
     </resultMap>
     <select id="findAllLandingPageByFilter" resultMap="landingPageResultMap">
 		SELECT e.*
@@ -56,7 +56,7 @@
     <resultMap id="EventMap" type="com.project.api.data.model.event.Event">
         <id property="id" column="id" />
         <result property="place.id" column="place_id" />
-        <result property="language" column="language" javaType="com.project.api.data.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler" />
+        <result property="language" column="language" javaType="com.project.common.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler" />
         <result property="type" column="type" javaType="com.project.api.data.model.event.EventType" typeHandler="com.project.api.data.mapper.handler.EventTypeTypeHandler" />
         <result property="periodType" column="period_type" javaType="com.project.api.data.enums.PeriodType" typeHandler="com.project.api.data.mapper.handler.PeriodTypeTypeHandler" />
         <result property="feeType" column="fee_type" javaType="com.project.api.data.enums.FeeType" typeHandler="com.project.api.data.mapper.handler.FeeTypeTypeHandler" />

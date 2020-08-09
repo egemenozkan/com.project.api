@@ -14,10 +14,10 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
 
 import com.google.gson.Gson;
-import com.project.api.data.enums.Language;
 import com.project.api.data.model.event.EventRequest;
 import com.project.api.data.model.event.EventType;
 import com.project.api.test.TestConstants;
+import com.project.common.enums.Language;
 
 public class EventRestControllerTest {
 	@Autowired

@@ -26,7 +26,7 @@
     <resultMap id="landingPageResultMap" type="com.project.api.data.model.place.PlaceLandingPage">
         <id property="id" column="id" />
         <result property="place.id" column="place_id" />
-        <result property="language" column="language" javaType="com.project.api.data.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler"/>
+        <result property="language" column="language" javaType="com.project.common.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler"/>
 
         <!--         <association property="contents" column="id" javaType="List" select="findAllContentByPageId" />         -->
         <!--         <association property="place" column="{id=place_id,language=language}" javaType="com.project.api.data.model.place.Place" select="findPlaceById" /> -->
@@ -76,7 +76,7 @@
     </select>
     <resultMap id="placeResultMap" type="com.project.api.data.model.place.Place">
         <id property="id" column="id" />
-        <result property="language" column="language" javaType="com.project.api.data.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler"/>
+        <result property="language" column="language" javaType="com.project.common.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler"/>
         <result property="type" column="type" javaType="com.project.api.data.enums.PlaceType" typeHandler="com.project.api.data.mapper.handler.PlaceTypeTypeHandler"/>
 
         <!--         <association property="contents" column="id" javaType="List" select="findAllContentByPageId" />         -->
