@@ -5,9 +5,28 @@ spring:
     username: dbuser
     password: Db*12345678
     driver-class-name: com.mysql.cj.jdbc.Driver
+  main:
+    allow-bean-definition-overriding: true
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
 
-    
+server:
+  port: 8090
+  
+      
 logging:
   file: log/api-opetra.log
 
+mybatis:
+  type-aliases-package: com.server.data.model
+  mapper-locations: classpath*:**/mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    
+    
+  
   
