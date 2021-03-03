@@ -15,11 +15,15 @@ spring:
       max-request-size: 215MB
 
 server:
-  port: 8090
+  port: 8081
   
       
 logging:
-  file: log/api-opetra.log
+  level: 
+    root: ERROR
+    org.springframework: WARN
+    com.project: WARN
+  file: log/api.log
 
 mybatis:
   type-aliases-package: com.server.data.model

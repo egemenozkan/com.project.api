@@ -3,4 +3,4 @@ mvn -f $HOME/devel/workspace/projects/com.project.slugify/ clean install
 
 mvn clean install package -DskipTests -Pprod
 
-scp target/api-alfa.jar devops@94.237.97.137:/var/www/jee_projects/api
+scp target/api-alfa.jar webuser@192.168.0.20:/var/www/vantalii/api
