@@ -17,7 +17,7 @@ public class UserService implements IUserService {
 	@Autowired
 	UserMapper userMapper;
 
-	@Autowired
+//	@Autowired
 	PasswordEncoder passwordEncoder;
 
 	@Override

@@ -28,8 +28,6 @@ public class AccountService implements UserDetailsService {
 	@Autowired
 	private Gson gson;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 
 	private static final Logger LOGGER = LogManager.getLogger(AccountService.class);
 

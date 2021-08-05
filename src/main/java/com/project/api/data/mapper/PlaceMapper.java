@@ -32,7 +32,7 @@ public interface PlaceMapper {
 			" WHEN 'TR' THEN pv.tr_name WHEN 'EN' THEN pv.en_name WHEN 'RU' THEN pv.ru_name WHEN 'DE' THEN pv.de_name END AS name," + 
 			" CASE IF(#{language} IS NULL or #{language} = '', 'TR', #{language})" + 
 			" WHEN 'TR' THEN pv.tr_slug WHEN 'EN' THEN pv.en_slug WHEN 'RU' THEN pv.ru_slug WHEN 'DE' THEN pv.de_slug END AS slug" + 
-			" ,pv.create_datetime, pv.update_datetime, pv.opening_time, pv.closing_time, pv.twenty_four_seven" +
+			" ,pv.create_datetime, pv.update_datetime" +
 			" FROM project.place_view_v2 pv";
 		
 	@Insert("INSERT INTO datapool.place(name, longitude, latitude, fb_place_id) VALUES(#{name}, #{coordinate.x}, #{coordinate.y}, #{fbPlaceId}) "
@@ -50,13 +50,15 @@ public interface PlaceMapper {
 //	@Options(flushCache = Options.FlushCachePolicy.TRUE)
 	Place findPlaceById(long id, String language);
 	
-	@Select(SELECT_PLACE + " ORDER BY pv.update_datetime DESC LIMIT 30")
-	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.PlaceType.class, typeHandler = com.project.api.data.mapper.handler.PlaceTypeTypeHandler.class),
-			@Result(property = "address", column = "address_id", javaType = Address.class, one = @One(select = "findAddressById")),
-			@Result(property = "contact", column = "place_id", javaType = Contact.class, one = @One(select = "findContactByPlaceId")),
-			@Result(property="images", column="place_id", javaType=List.class, many=@Many(select="findAllImagesByPlaceId")),
-			@Result(property="mainImage", column="main_image_id", javaType=MyFile.class, one = @One(select="findMainImage")),
-			@Result(property = "language", column = "language", javaType = com.project.common.enums.Language.class, typeHandler = com.project.api.data.mapper.handler.LanguageTypeHandler.class)})
+	@Select("SELECT pv.id, pv.main_image_id, pv.id AS place_id, pv.type, IF(#{language} IS NULL or #{language} = '', 'TR', #{language}) AS language, pv.address_id," + 
+			"CASE IF(#{language} IS NULL or #{language} = '', 'TR', #{language})" + 
+			" WHEN 'TR' THEN pv.tr_name WHEN 'EN' THEN pv.en_name WHEN 'RU' THEN pv.ru_name WHEN 'DE' THEN pv.de_name END AS name," + 
+			" CASE IF(#{language} IS NULL or #{language} = '', 'TR', #{language})" + 
+			" WHEN 'TR' THEN pv.tr_slug WHEN 'EN' THEN pv.en_slug WHEN 'RU' THEN pv.ru_slug WHEN 'DE' THEN pv.de_slug END AS slug" + 
+			" ,pv.create_datetime" +
+			" FROM project.place_view_v2 pv ORDER BY pv.update_datetime")
+	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.enums.PlaceType.class, typeHandler = com.project.data.mybatis.typehandler.PlaceTypeTypeHandler.class),
+			@Result(property = "language", column = "language", javaType = com.project.common.enums.Language.class, typeHandler = com.project.data.mybatis.typehandler.LanguageTypeHandler.class)})
 	List<Place> findAllPlace(String language);
 	
 	@Select(SELECT_PLACE + " WHERE pv.type = #{typeId}")

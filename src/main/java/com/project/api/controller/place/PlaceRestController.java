@@ -33,7 +33,7 @@ import com.project.api.data.service.IPlaceService;
 import com.project.common.enums.Language;
 
 @RestController
-@RequestMapping(value = "/api/v1/")
+@RequestMapping(value = "/api/v1")
 public class PlaceRestController {
 
 	@Autowired

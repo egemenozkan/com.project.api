@@ -18,6 +18,7 @@ import com.project.api.data.model.event.EventLandingPage;
 import com.project.api.data.model.event.EventRequest;
 import com.project.api.data.model.event.TimeTable;
 import com.project.api.data.model.place.Localisation;
+import com.project.api.data.model.place.Place;
 import com.project.api.data.service.IEventService;
 import com.project.api.data.service.IPlaceService;
 import com.project.api.utils.ApiUtils;
@@ -78,9 +79,12 @@ public class EventService implements IEventService {
 				
 				/** Place **/
 				if (!eventRequest.isHidePlace() && event != null && event.getPlace() != null && event.getPlace().getId() > 0) {
-					event.setPlace(placeService.findPlaceById(event.getPlace().getId(), eventRequest.getLanguage().getCode()));
+					Place place = placeService.findPlaceById(event.getPlace().getId(), eventRequest.getLanguage().getCode());
+					event.setPlace(place);
 				}
 			}
+		} else {
+			events = Collections.emptyList();
 		}
 
 		return events;

@@ -97,8 +97,7 @@
 			#{placeRequest.language.code})
 			WHEN 'TR' THEN pv.tr_slug WHEN 'EN' THEN pv.en_slug WHEN 'RU' THEN
 			pv.ru_slug WHEN 'DE' THEN pv.de_slug END AS slug
-			,pv.create_datetime, pv.update_datetime, pv.opening_time, pv.closing_time,
-			pv.twenty_four_seven
+			,pv.create_datetime, pv.update_datetime
 			FROM project.place_view_v2 pv
 			WHERE id = IF(#{placeRequest.id} = 0, id, #{placeRequest.id})
         <if test="placeRequest.type != null">

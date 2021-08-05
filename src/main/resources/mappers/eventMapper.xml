@@ -91,6 +91,9 @@
             <bind name="namePattern" value="'%' + name + '%'" />
         	AND LOWER(CASE #{language.code} WHEN 'TR' THEN ev.tr_name WHEN 'EN' THEN ev.en_name WHEN 'RU' THEN ev.ru_name WHEN 'DE' THEN ev.de_name END) LIKE LOWER(#{namePattern})
         </if>
+        <if test="placeId > 0">
+        	AND ev.place_id = #{placeId}
+        </if>
         ORDER BY ev.id, ev.start_time ASC
     </select>
 </mapper>

@@ -73,13 +73,14 @@ public class EventRestController {
 			@RequestParam(required = false) String name,
 			@RequestParam(required = false, defaultValue = "") String districts,
 			@RequestParam(required = false, defaultValue = "") String regions,
-			@RequestParam(required = false, defaultValue = "1") int status) {
+			@RequestParam(required = false, defaultValue = "1") int status,
+			@RequestParam(required = false, defaultValue = "0") int placeId) {
 
 		EventRequest eventRequest = new EventRequest();
+		
 		if (type > 1) {
 			eventRequest.setType(EventType.getById(type));
 		}
-
 		if (types != null && !types.isBlank()) {
 			eventRequest.setTypes(types.split(","));
 		}
@@ -108,10 +109,13 @@ public class EventRestController {
 
 		eventRequest.setLanguage(Language.getByCode(language));
 
-		List<Event> events = eventService.getEvents(eventRequest);
-		
-		
+		if (placeId > 0) {
+			eventRequest.setPlaceId(placeId);
+		}
 
+		List<Event> events = eventService.getEvents(eventRequest);
+
+		// TODO : stream-e çevir
 		if (distinct && !CollectionUtils.isEmpty(events)) {
 			Iterator<Event> itr = events.iterator();
 			Event previous = itr.next();
@@ -159,7 +163,7 @@ public class EventRestController {
 			autocompleteResponse.setErrorMessage("MinChars");
 			return new ResponseEntity<>(autocompleteResponse, HttpStatus.NOT_ACCEPTABLE);
 		}
-		
+
 		EventRequest eventRequest = new EventRequest();
 		eventRequest.setHidePlace(Boolean.TRUE);
 		eventRequest.setLanguage(Language.getByCode(language));
@@ -294,12 +298,10 @@ public class EventRestController {
 		}
 
 		eventRequest.setLanguage(Language.getByCode(language));
-		
+
 		eventRequest.setStatus(EventStatus.getById(status));
 
 		List<EventLandingPage> pages = eventService.findAllLandingPageByFilter(eventRequest);
-
-		
 
 		return new ResponseEntity<>(pages, HttpStatus.OK);
 	}

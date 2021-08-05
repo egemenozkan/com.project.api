@@ -20,10 +20,11 @@ server:
       
 logging:
   level: 
-    root: ERROR
     org.springframework: WARN
     com.project: WARN
-  file: log/api.log
+  file:
+    path: log 
+    name: api-log
 
 mybatis:
   type-aliases-package: com.server.data.model

@@ -51,8 +51,6 @@ public class EventTrackingService implements IEventTrackingService {
 
 	@Autowired
 	private IEventService eventService;
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public void collectBiletixData() throws ParserConfigurationException, IOException, ParseException {

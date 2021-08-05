@@ -27,7 +27,7 @@ import com.project.common.model.User;
 @RestController
 public class AuthRestController {
 
-	@Autowired
+	//@Autowired
 	PasswordEncoder passwordEncoder;
 
 	@Autowired
