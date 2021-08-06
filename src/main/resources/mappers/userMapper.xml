@@ -1,7 +1,7 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.project.api.data.mapper.UserMapper">
+<mapper namespace="com.vantalii.api.data.mapper.UserMapper">
     <insert id="createUser" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
        INSERT INTO `project`.`user`
 	(`username`,
@@ -15,7 +15,7 @@
 	(#{username}, #{firstName}, #{lastName}, #{email}, #{password}, #{facebookId}, #{googleId}, #{vkontakteId}, #{pictureUrl});
 
     </insert>
-	<!-- <select id="findAllPlaceByType" resultType="com.project.api.data.model.place.Place"> -->
+	<!-- <select id="findAllPlaceByType" resultType="com.vantalii.api.data.model.place.Place"> -->
 	<!-- SELECT pv.id, pv.id AS localisation_id, pv.type, pv.slug, #{language} 
 		AS language, pv.address_id, -->
 	<!-- CASE #{language} WHEN 'TR' THEN pv.tr_name WHEN 'EN' THEN pv.en_name 
@@ -23,7 +23,7 @@
 	<!-- FROM project.place_view_v2 pv WHERE pv.type = #{typeId} -->
 	<!-- </select> -->
 
-<!-- 	<select id="findAllEvents" resultType="com.project.common.model.event.Event"> -->
+<!-- 	<select id="findAllEvents" resultType="com.vantalii.model.event.Event"> -->
 <!-- 		SELECT u.id, u.username, u.first_name, u.last_name, u.password, u.email FROM project.user u -->
 <!-- 	</select> -->
 </mapper>

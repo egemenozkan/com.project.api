@@ -1,9 +1,9 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.project.api.data.mapper.PlaceMapper">
+<mapper namespace="com.vantalii.api.data.mapper.PlaceMapper">
 
-    <!-- 	<select id="findAllPlaceByType" resultType="com.project.api.data.model.place.Place"> -->
+    <!-- 	<select id="findAllPlaceByType" resultType="com.vantalii.api.data.model.place.Place"> -->
     <!-- 		SELECT pv.id, pv.id AS localisation_id, pv.type, pv.slug, #{language} AS language, pv.address_id, -->
     <!--             CASE #{language} WHEN 'TR' THEN pv.tr_name WHEN 'EN' THEN pv.en_name WHEN 'RU' THEN pv.ru_name WHEN 'DE' THEN pv.de_name END AS name -->
     <!--         FROM project.place_view_v2 pv WHERE pv.type = #{typeId} -->
@@ -23,13 +23,13 @@
     </update>
 
 
-    <resultMap id="landingPageResultMap" type="com.project.api.data.model.place.PlaceLandingPage">
+    <resultMap id="landingPageResultMap" type="com.vantalii.api.data.model.place.PlaceLandingPage">
         <id property="id" column="id" />
         <result property="place.id" column="place_id" />
-        <result property="language" column="language" javaType="com.project.common.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler"/>
+        <result property="language" column="language" javaType="com.vantalii.enums.Language" typeHandler="com.vantalii.api.data.mapper.handler.LanguageTypeHandler"/>
 
         <!--         <association property="contents" column="id" javaType="List" select="findAllContentByPageId" />         -->
-        <!--         <association property="place" column="{id=place_id,language=language}" javaType="com.project.api.data.model.place.Place" select="findPlaceById" /> -->
+        <!--         <association property="place" column="{id=place_id,language=language}" javaType="com.vantalii.api.data.model.place.Place" select="findPlaceById" /> -->
     </resultMap>
     <select id="findAllLandingPageByFilter" resultMap="landingPageResultMap" flushCache="true">
 	SELECT id, ifnull(title, name) AS title, slug, description, keywords, place_id, ifnull(language, #{placeRequest.language.code}) AS language,
@@ -74,10 +74,10 @@
         <!--         AND language= #{language.code} -->
         <!--     </if> -->
     </select>
-    <resultMap id="placeResultMap" type="com.project.data.mybatis.entity.PlaceEntity">
+    <resultMap id="placeResultMap" type="com.vantalii.data.mybatis.entity.PlaceEntity">
         <id property="id" column="id" />
-        <result property="language" column="language" javaType="com.project.common.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler"/>
-        <result property="type" column="type" javaType="com.project.api.data.enums.PlaceType" typeHandler="com.project.api.data.mapper.handler.PlaceTypeTypeHandler"/>
+        <result property="language" column="language" javaType="com.vantalii.enums.Language" typeHandler="com.vantalii.api.data.mapper.handler.LanguageTypeHandler"/>
+        <result property="type" column="type" javaType="com.vantalii.api.data.enums.PlaceType" typeHandler="com.vantalii.api.data.mapper.handler.PlaceTypeTypeHandler"/>
     </resultMap>
     <select id="findAllPlaceByFilter" resultMap="placeResultMap" flushCache="true">
 			SELECT pv.id, pv.id AS localisation_id, pv.main_image_id, pv.id AS

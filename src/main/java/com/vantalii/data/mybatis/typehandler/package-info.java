@@ -1,0 +1,1 @@
+package com.vantalii.data.mybatis.typehandler;

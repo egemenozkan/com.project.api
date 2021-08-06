@@ -1,13 +1,13 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.project.api.data.mapper.TimeTableMapper">
+<mapper namespace="com.vantalii.api.data.mapper.TimeTableMapper">
 
 	<!-- Time Table -->
-	<resultMap id="TimeTableMap" type="com.project.api.data.model.event.TimeTable">
+	<resultMap id="TimeTableMap" type="com.vantalii.api.data.model.event.TimeTable">
 	    <id property="id" column="id" />
-	   	<result property="pageType" column="page_type" javaType="com.project.api.data.enums.LandingPageType" typeHandler="com.project.api.data.mapper.handler.LandingPageTypeTypeHandler" />
-	    <result property="periodType" column="period_type" javaType="com.project.api.data.enums.PeriodType" typeHandler="com.project.api.data.mapper.handler.PeriodTypeTypeHandler" />
+	   	<result property="pageType" column="page_type" javaType="com.vantalii.api.data.enums.LandingPageType" typeHandler="com.vantalii.api.data.mapper.handler.LandingPageTypeTypeHandler" />
+	    <result property="periodType" column="period_type" javaType="com.vantalii.api.data.enums.PeriodType" typeHandler="com.vantalii.api.data.mapper.handler.PeriodTypeTypeHandler" />
 	</resultMap>
 	<select id="findAllTimeTableByEventId" resultMap="TimeTableMap">
 			SELECT tt.`id`,

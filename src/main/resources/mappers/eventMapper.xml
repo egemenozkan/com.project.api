@@ -1,7 +1,7 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.project.api.data.mapper.EventMapper">
+<mapper namespace="com.vantalii.api.data.mapper.EventMapper">
 
     <insert id="insertContents" useGeneratedKeys="false">
 		INSERT INTO project.content (title, text, page_id) VALUES
@@ -16,9 +16,9 @@
         </foreach>
     </update>
 
-    <resultMap id="landingPageResultMap" type="com.project.api.data.model.event.EventLandingPage">
+    <resultMap id="landingPageResultMap" type="com.vantalii.api.data.model.event.EventLandingPage">
         <id property="id" column="id" />
-        <result property="language" column="language" javaType="com.project.common.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler" />
+        <result property="language" column="language" javaType="com.vantalii.enums.Language" typeHandler="com.vantalii.api.data.mapper.handler.LanguageTypeHandler" />
     </resultMap>
     <select id="findAllLandingPageByFilter" resultMap="landingPageResultMap">
 		SELECT e.*
@@ -53,13 +53,13 @@
         </if>
     </select>
 
-    <resultMap id="EventMap" type="com.project.data.mybatis.entity.EventEntity">
+    <resultMap id="EventMap" type="com.vantalii.data.mybatis.entity.EventEntity">
         <id property="id" column="id" />
-        <result property="language" column="language" javaType="com.project.common.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler" />
-        <result property="type" column="type" javaType="com.project.api.data.model.event.EventType" typeHandler="com.project.api.data.mapper.handler.EventTypeTypeHandler" />
-        <result property="periodType" column="period_type" javaType="com.project.api.data.enums.PeriodType" typeHandler="com.project.api.data.mapper.handler.PeriodTypeTypeHandler" />
-        <result property="feeType" column="fee_type" javaType="com.project.api.data.enums.FeeType" typeHandler="com.project.api.data.mapper.handler.FeeTypeTypeHandler" />
-        <result property="status" column="status" javaType="com.project.api.data.model.event.EventStatus" typeHandler="com.project.api.data.mapper.handler.EventStatusTypeHandler" />
+        <result property="language" column="language" javaType="com.vantalii.enums.Language" typeHandler="com.vantalii.api.data.mapper.handler.LanguageTypeHandler" />
+        <result property="type" column="type" javaType="com.vantalii.api.data.model.event.EventType" typeHandler="com.vantalii.api.data.mapper.handler.EventTypeTypeHandler" />
+        <result property="periodType" column="period_type" javaType="com.vantalii.api.data.enums.PeriodType" typeHandler="com.vantalii.api.data.mapper.handler.PeriodTypeTypeHandler" />
+        <result property="feeType" column="fee_type" javaType="com.vantalii.api.data.enums.FeeType" typeHandler="com.vantalii.api.data.mapper.handler.FeeTypeTypeHandler" />
+        <result property="status" column="status" javaType="com.vantalii.api.data.model.event.EventStatus" typeHandler="com.vantalii.api.data.mapper.handler.EventStatusTypeHandler" />
     </resultMap>
     <select id="findAllEventsByFilter" resultMap="EventMap">
 		SELECT  ev.id, ev.place_id,  ev.type, ev.period_type, #{language.code} AS language,
