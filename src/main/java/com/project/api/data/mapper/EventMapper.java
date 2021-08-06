@@ -16,6 +16,7 @@ import com.project.api.data.model.event.Event;
 import com.project.api.data.model.event.EventLandingPage;
 import com.project.api.data.model.event.EventRequest;
 import com.project.api.data.model.place.Localisation;
+import com.project.data.mybatis.entity.EventEntity;
 
 @Mapper
 public interface EventMapper extends PlaceMapper{
@@ -76,7 +77,7 @@ public interface EventMapper extends PlaceMapper{
 	
 	void updateContents(@Param("contents") List<Content> contents);
 	
-	List<Event> findAllEventsByFilter(EventRequest eventRequest);
+	List<EventEntity> findAllEventsByFilter(EventRequest eventRequest);
 	
 	@Select(SELECT_EVENT + " WHERE ev.biletix_id = #{biletixKey} AND ifnull(ev.time_table_id, 0) = IF(#{timeTableId} = 0, ifnull(ev.time_table_id, 0), #{timeTableId}) LIMIT 1")
 	@Results(value = {@Result(property = "type", column = "type", javaType = com.project.api.data.model.event.EventType.class, typeHandler = com.project.api.data.mapper.handler.EventTypeTypeHandler.class),

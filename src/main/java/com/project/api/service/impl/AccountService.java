@@ -1,5 +1,7 @@
 package com.project.api.service.impl;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,9 +52,10 @@ public class AccountService implements UserDetailsService {
 				user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role)));
 			}
 
-			return new UserPrincipal(user.getId(), user.getFirstName(), user.getLastName(),
-					user.getEmail(), user.getPictureUrl(), user.getUsername(), user.getPassword(), enabled,
-					accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+//			return new UserPrincipal(user.getId(), user.getFirstName(), user.getLastName(),
+//					user.getEmail(), user.getPictureUrl(), user.getUsername(), user.getPassword(), enabled,
+//					accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+			return null;
 		} else {
 			throw new UsernameNotFoundException(String.format("Username[%s] not found", emailOrUsername));
 		}

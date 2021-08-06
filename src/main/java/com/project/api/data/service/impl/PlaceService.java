@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -42,6 +43,7 @@ import com.project.api.data.service.IPlaceService;
 import com.project.api.data.utils.MyBatisUtils;
 import com.project.api.utils.ApiUtils;
 import com.project.common.enums.Language;
+import com.project.data.mybatis.entity.PlaceEntity;
 
 @Service
 public class PlaceService implements IPlaceService {
@@ -65,6 +67,9 @@ public class PlaceService implements IPlaceService {
 
 	@Autowired
 	private IFileService fileService;
+
+	@Autowired
+	ModelMapper modelMapper;
 
 	@Override
 	public Place findPlaceById(long id, String language) {
@@ -422,20 +427,6 @@ public class PlaceService implements IPlaceService {
 		return null;
 	}
 
-	private List<Integer> getTypesByMainType(MainType mainType) {
-		List<Integer> ids = Collections.emptyList();
-		if (mainType != null && mainType != MainType.NOTSET) {
-			ids = new ArrayList<>();
-			for (PlaceType type : PlaceType.values()) {
-				if (type.getMainType() == mainType) {
-					ids.add(type.getId());
-				}
-			}
-		}
-
-		return ids;
-	}
-
 	@Override
 	public boolean setMainImage(long id, long fileId) {
 		placeMapper.setMainImage(id, fileId);
@@ -459,16 +450,19 @@ public class PlaceService implements IPlaceService {
 
 	@Override
 	public List<Place> findAllPlaceByFilter(PlaceRequest placeRequest) {
-		List<Place> places = placeMapper.findAllPlaceByFilter(placeRequest,
+		List<PlaceEntity> placeEntites = placeMapper.findAllPlaceByFilter(placeRequest,
 				getTypesByMainType(placeRequest.getMainType()));
+		List<Place> places = new ArrayList<>();
 
-		if (places != null && !places.isEmpty()) {
-			for (Place place : places) {
-				List<Localisation> names = placeMapper.findAllPlaceNameByPlaceId(place.getId());
+		if (!CollectionUtils.isEmpty(placeEntites)) {
+			for (PlaceEntity placeEntity : placeEntites) {
+				Place place = modelMapper.map(placeEntity, Place.class);
+				List<Localisation> names = placeMapper.findAllPlaceNameByPlaceId(placeEntity.getId());
 				Map<String, Localisation> localisation = new HashMap<>();
 				for (Localisation name : names) {
-					if (name != null && name.getLanguage() != null)
+					if (name != null && name.getLanguage() != null) {
 						localisation.put(name.getLanguage().toString(), name);
+					}
 				}
 				place.setLocalisation(localisation);
 
@@ -490,7 +484,7 @@ public class PlaceService implements IPlaceService {
 		if (facilitiesJson != null) {
 			return gson.fromJson(facilitiesJson, List.class);
 		}
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -502,4 +496,19 @@ public class PlaceService implements IPlaceService {
 
 		return null;
 	}
+
+	private List<Integer> getTypesByMainType(MainType mainType) {
+		List<Integer> ids = Collections.emptyList();
+		if (mainType != null && mainType != MainType.NOTSET) {
+			ids = new ArrayList<>();
+			for (PlaceType type : PlaceType.values()) {
+				if (type.getMainType() == mainType) {
+					ids.add(type.getId());
+				}
+			}
+		}
+
+		return ids;
+	}
+
 }

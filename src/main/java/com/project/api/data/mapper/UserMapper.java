@@ -33,7 +33,7 @@ public interface UserMapper {
 
     @Select("SELECT id, username, first_name, last_name, email, password, facebook_id, google_id, vkontakte_id, picture_url FROM project.user u WHERE id = #{id}")
     @Results(value = {@Result(property = "roles", column = "user_id", javaType = List.class, many = @Many(select = "getRolesByUserId")) })
-    User getUserById(int id);
+    User getUserById(long id);
 
     @Select("SELECT COUNT(*) FROM project.user WHERE email = #{email}")
     boolean existsByEmail(String email);

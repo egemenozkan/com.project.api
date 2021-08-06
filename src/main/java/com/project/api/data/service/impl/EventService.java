@@ -1,11 +1,13 @@
 package com.project.api.data.service.impl;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -23,6 +25,7 @@ import com.project.api.data.service.IEventService;
 import com.project.api.data.service.IPlaceService;
 import com.project.api.utils.ApiUtils;
 import com.project.common.enums.Language;
+import com.project.data.mybatis.entity.EventEntity;
 
 @Service
 public class EventService implements IEventService {
@@ -35,6 +38,10 @@ public class EventService implements IEventService {
 	@Autowired
 	private IPlaceService placeService;
 
+	@Autowired
+	private ModelMapper modelMapper;
+	
+	
 	@Override
 	public Event getEventById(long id, Language language, long timeTableId) {
 		Event event = eventMapper.findEventById(id, language.getCode(), timeTableId);
@@ -65,28 +72,29 @@ public class EventService implements IEventService {
 
 	@Override
 	public List<Event> getEvents(EventRequest eventRequest) {
-		List<Event> events = eventMapper.findAllEventsByFilter(eventRequest);
-
-		if (events != null && !events.isEmpty()) {
-			for (Event event : events) {
-				List<Localisation> names = eventMapper.findAllEventNameByEventId(event.getId());
+		List<EventEntity> eventEntities = eventMapper.findAllEventsByFilter(eventRequest);
+		List<Event> events = new ArrayList<>();
+		
+		if (!CollectionUtils.isEmpty(eventEntities)) {
+			for (EventEntity eventEntity : eventEntities) {
+				Event eventDto = modelMapper.map(eventEntity, Event.class);
+				events.add(eventDto);
+				
+				List<Localisation> names = eventMapper.findAllEventNameByEventId(eventEntity.getId());
 				Map<String, Localisation> localisation = new HashMap<>();
 				for (Localisation name : names) {
 					if (name != null && name.getLanguage() != null)
 						localisation.put(name.getLanguage().toString(), name);
 				}
-				event.setLocalisation(localisation);
+				eventDto.setLocalisation(localisation);
 				
 				/** Place **/
-				if (!eventRequest.isHidePlace() && event != null && event.getPlace() != null && event.getPlace().getId() > 0) {
-					Place place = placeService.findPlaceById(event.getPlace().getId(), eventRequest.getLanguage().getCode());
-					event.setPlace(place);
+				if (!eventRequest.isHidePlace() && eventEntity != null && eventEntity.getPlaceId() > 0) {
+					Place place = placeService.findPlaceById(eventEntity.getPlaceId(), eventRequest.getLanguage().getCode());
+					eventDto.setPlace(place);
 				}
 			}
-		} else {
-			events = Collections.emptyList();
 		}
-
 		return events;
 	}
 
@@ -179,7 +187,7 @@ public class EventService implements IEventService {
 					EventRequest eventRequest2 = new EventRequest();
 					eventRequest2.setId(landingPage.getId());
 					eventRequest2.setLanguage(eventRequest.getLanguage());
-					landingPage.setEvent(eventMapper.findAllEventsByFilter(eventRequest2).get(0));
+			//		landingPage.setEvent(eventMapper.findAllEventsByFilter(eventRequest2).get(0));
 					if (landingPage.getEvent() != null && landingPage.getEvent().getPlace() != null
 							&& landingPage.getEvent().getPlace().getId() > 0) {
 						landingPage.getEvent()

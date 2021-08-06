@@ -23,6 +23,7 @@ import com.project.api.data.model.place.Place;
 import com.project.api.data.model.place.PlaceLandingPage;
 import com.project.api.data.model.place.PlaceRequest;
 import com.project.api.data.model.place.RestaurantCafe;
+import com.project.data.mybatis.entity.PlaceEntity;
 
 @Mapper
 public interface PlaceMapper {
@@ -159,7 +160,7 @@ public interface PlaceMapper {
 	MyFile findMainImage(long fileId);
 	
 	
-	List<Place> findAllPlaceByFilter(PlaceRequest placeRequest, @Param("types") List<Integer> typesByMainType);
+	List<PlaceEntity> findAllPlaceByFilter(PlaceRequest placeRequest, @Param("types") List<Integer> typesByMainType);
 	
 	@Insert("INSERT INTO project.place_facility(place_id, facilities) VALUES(#{placeId}, #{facilitiesJson})")
 	void savePlaceFacilities(long placeId, String facilitiesJson);

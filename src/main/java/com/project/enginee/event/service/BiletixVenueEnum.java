@@ -10,7 +10,7 @@ public enum BiletixVenueEnum {
 	ALANYA_ACIKHAVA(1055, "Alanya Açıkhava Tiyatrosu","OF"), MOA_GM(6, "Mall of Antalya Gösteri Merkezi","6C"), IBRAHIM_SOZEN_GM(1062, "İbrahim Sözen Gençlik Merkezi","25"),
 	MONTGOMERIE_MAXX(259,"Montgomerie Maxx Royal Belek", "4R"), SANDLAND_LARA(833, "Sandland Lara", "BC"), MANAVGAT_KM(1061, "Manavgat Kültür Merkezi", "7Z"),
 	EPM_KONGRE_MERKEZI(1049, "EPM Kongre Merkezi", "6J"), EXPO_TOWER_ANTALYA(1049, "EPM Kongre Merkezi", "WP"),
-CAM_PIRAMIT(1066,"Cam Piramit", "GQ");
+	CAM_PIRAMIT(1066,"Cam Piramit", "GQ"), ASPENDOS_ANTIK_TIYATRO(1066,"Aspendos Antik Tiyatro", "0A"); ; 
 	private int id;
 	private String venue;
 	private String venueCode;

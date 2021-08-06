@@ -1,3 +1,0 @@
-2021-01-16 15:13:40.379  INFO 51812 --- [com.project.api.Application.main()] com.project.api.Application              : The following profiles are active: prod
-2021-01-16 15:13:44.068  WARN 51812 --- [com.project.api.Application.main()] o.s.s.o.p.t.s.JwtAccessTokenConverter    : Unable to create an RSA verifier from verifierKey (ignoreable if using MAC)
-2021-01-16 15:13:48.507  INFO 51812 --- [com.project.api.Application.main()] com.project.api.Application              : Started Application in 9.284 seconds (JVM running for 19.089)

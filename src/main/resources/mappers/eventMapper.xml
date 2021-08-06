@@ -53,22 +53,20 @@
         </if>
     </select>
 
-    <resultMap id="EventMap" type="com.project.api.data.model.event.Event">
+    <resultMap id="EventMap" type="com.project.data.mybatis.entity.EventEntity">
         <id property="id" column="id" />
-        <result property="place.id" column="place_id" />
         <result property="language" column="language" javaType="com.project.common.enums.Language" typeHandler="com.project.api.data.mapper.handler.LanguageTypeHandler" />
         <result property="type" column="type" javaType="com.project.api.data.model.event.EventType" typeHandler="com.project.api.data.mapper.handler.EventTypeTypeHandler" />
         <result property="periodType" column="period_type" javaType="com.project.api.data.enums.PeriodType" typeHandler="com.project.api.data.mapper.handler.PeriodTypeTypeHandler" />
         <result property="feeType" column="fee_type" javaType="com.project.api.data.enums.FeeType" typeHandler="com.project.api.data.mapper.handler.FeeTypeTypeHandler" />
-        <result property="master.id" column="master_id" />
         <result property="status" column="status" javaType="com.project.api.data.model.event.EventStatus" typeHandler="com.project.api.data.mapper.handler.EventStatusTypeHandler" />
     </resultMap>
     <select id="findAllEventsByFilter" resultMap="EventMap">
-		SELECT  ev.id, ev.place_id,  ev.id AS event_id, ev.type, ev.period_type, #{language.code} AS language,
+		SELECT  ev.id, ev.place_id,  ev.type, ev.period_type, #{language.code} AS language,
         ev.start_date, ev.start_time, ev.end_date, ev.end_time, ev.show_start_time, ev.show_end_time,
         CASE #{language.code} WHEN 'TR' THEN ev.tr_name WHEN 'EN' THEN ev.en_name WHEN 'RU' THEN ev.ru_name WHEN 'DE' THEN ev.de_name END AS name, 
         CASE #{language.code} WHEN 'TR' THEN ev.tr_slug WHEN 'EN' THEN ev.en_slug WHEN 'RU' THEN ev.ru_slug WHEN 'DE' THEN ev.de_slug END AS slug, 
-        ev.create_datetime, ev.update_datetime, ev.all_day, ev.fee_type, ev.master_id, ev.duration, ev.time_table_id, ev.status
+        ev.create_datetime, ev.update_datetime, ev.all_day, ev.fee_type, ev.master_id, ev.duration, ev.time_table_id, ev.status, ev.biletix_id
         FROM project.event_view ev
         WHERE
 		ev.id = IF(#{id} = 0, ev.id, #{id})

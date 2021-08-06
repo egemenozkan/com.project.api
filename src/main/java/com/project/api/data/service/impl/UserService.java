@@ -21,7 +21,7 @@ public class UserService implements IUserService {
 	PasswordEncoder passwordEncoder;
 
 	@Override
-	public int createUser(User user) {
+	public long createUser(User user) {
 		if (user != null && user.getPassword() != null && !user.getPassword().isBlank()) {
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
 		}
@@ -42,7 +42,7 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public User getUserById(int id) {
+	public User getUserById(long id) {
 		return userMapper.getUserById(id);
 	}
 

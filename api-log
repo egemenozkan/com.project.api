@@ -1,0 +1,878 @@
+2021-08-06 12:29:11.211  INFO 6700 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-06 12:29:11.226  INFO 6700 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2021-08-06 12:29:11.330  INFO 6700 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-06 12:29:12.129  WARN 6700 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'authRestController': Unsatisfied dependency expressed through field 'userAccountMapper'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userAccountMapper' defined in file [C:\Devel\workspace\vantalii\com.project.api\target\classes\com\project\api\data\mapper\UserAccountMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.ibatis.session.SqlSessionFactory]: Factory method 'sqlSessionFactory' threw exception; nested exception is org.springframework.core.NestedIOException: Failed to parse mapping resource: 'file [C:\Devel\workspace\vantalii\com.project.api\target\classes\mappers\eventMapper.xml]'; nested exception is org.apache.ibatis.builder.BuilderException: Error parsing Mapper XML. The XML location is 'file [C:\Devel\workspace\vantalii\com.project.api\target\classes\mappers\eventMapper.xml]'. Cause: org.apache.ibatis.builder.BuilderException: Error resolving class. Cause: org.apache.ibatis.type.TypeException: Could not resolve type alias 'com.project.data.mybatis.entity.Event'.  Cause: java.lang.ClassNotFoundException: Cannot find class: com.project.data.mybatis.entity.Event
+2021-08-06 12:29:12.133  INFO 6700 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2021-08-06 12:29:12.171 ERROR 6700 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'authRestController': Unsatisfied dependency expressed through field 'userAccountMapper'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userAccountMapper' defined in file [C:\Devel\workspace\vantalii\com.project.api\target\classes\com\project\api\data\mapper\UserAccountMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.ibatis.session.SqlSessionFactory]: Factory method 'sqlSessionFactory' threw exception; nested exception is org.springframework.core.NestedIOException: Failed to parse mapping resource: 'file [C:\Devel\workspace\vantalii\com.project.api\target\classes\mappers\eventMapper.xml]'; nested exception is org.apache.ibatis.builder.BuilderException: Error parsing Mapper XML. The XML location is 'file [C:\Devel\workspace\vantalii\com.project.api\target\classes\mappers\eventMapper.xml]'. Cause: org.apache.ibatis.builder.BuilderException: Error resolving class. Cause: org.apache.ibatis.type.TypeException: Could not resolve type alias 'com.project.data.mybatis.entity.Event'.  Cause: java.lang.ClassNotFoundException: Cannot find class: com.project.data.mybatis.entity.Event
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:660) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:640) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:399) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1413) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:944) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:918) ~[spring-context-5.3.9.jar:5.3.9]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583) ~[spring-context-5.3.9.jar:5.3.9]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145) ~[spring-boot-2.5.3.jar:2.5.3]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-2.5.3.jar:2.5.3]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434) ~[spring-boot-2.5.3.jar:2.5.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:338) ~[spring-boot-2.5.3.jar:2.5.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[spring-boot-2.5.3.jar:2.5.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1332) ~[spring-boot-2.5.3.jar:2.5.3]
+	at com.project.api.Application.main(Application.java:21) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:564) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) ~[spring-boot-devtools-2.5.3.jar:2.5.3]
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userAccountMapper' defined in file [C:\Devel\workspace\vantalii\com.project.api\target\classes\com\project\api\data\mapper\UserAccountMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.ibatis.session.SqlSessionFactory]: Factory method 'sqlSessionFactory' threw exception; nested exception is org.springframework.core.NestedIOException: Failed to parse mapping resource: 'file [C:\Devel\workspace\vantalii\com.project.api\target\classes\mappers\eventMapper.xml]'; nested exception is org.apache.ibatis.builder.BuilderException: Error parsing Mapper XML. The XML location is 'file [C:\Devel\workspace\vantalii\com.project.api\target\classes\mappers\eventMapper.xml]'. Cause: org.apache.ibatis.builder.BuilderException: Error resolving class. Cause: org.apache.ibatis.type.TypeException: Could not resolve type alias 'com.project.data.mybatis.entity.Event'.  Cause: java.lang.ClassNotFoundException: Cannot find class: com.project.data.mybatis.entity.Event
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireByType(AbstractAutowireCapableBeanFactory.java:1516) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1399) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1380) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1300) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:657) ~[spring-beans-5.3.9.jar:5.3.9]
+	... 25 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.ibatis.session.SqlSessionFactory]: Factory method 'sqlSessionFactory' threw exception; nested exception is org.springframework.core.NestedIOException: Failed to parse mapping resource: 'file [C:\Devel\workspace\vantalii\com.project.api\target\classes\mappers\eventMapper.xml]'; nested exception is org.apache.ibatis.builder.BuilderException: Error parsing Mapper XML. The XML location is 'file [C:\Devel\workspace\vantalii\com.project.api\target\classes\mappers\eventMapper.xml]'. Cause: org.apache.ibatis.builder.BuilderException: Error resolving class. Cause: org.apache.ibatis.type.TypeException: Could not resolve type alias 'com.project.data.mybatis.entity.Event'.  Cause: java.lang.ClassNotFoundException: Cannot find class: com.project.data.mybatis.entity.Event
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:658) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:638) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1334) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1177) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:564) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1380) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1300) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireByType(AbstractAutowireCapableBeanFactory.java:1501) ~[spring-beans-5.3.9.jar:5.3.9]
+	... 36 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.ibatis.session.SqlSessionFactory]: Factory method 'sqlSessionFactory' threw exception; nested exception is org.springframework.core.NestedIOException: Failed to parse mapping resource: 'file [C:\Devel\workspace\vantalii\com.project.api\target\classes\mappers\eventMapper.xml]'; nested exception is org.apache.ibatis.builder.BuilderException: Error parsing Mapper XML. The XML location is 'file [C:\Devel\workspace\vantalii\com.project.api\target\classes\mappers\eventMapper.xml]'. Cause: org.apache.ibatis.builder.BuilderException: Error resolving class. Cause: org.apache.ibatis.type.TypeException: Could not resolve type alias 'com.project.data.mybatis.entity.Event'.  Cause: java.lang.ClassNotFoundException: Cannot find class: com.project.data.mybatis.entity.Event
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:185) ~[spring-beans-5.3.9.jar:5.3.9]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-5.3.9.jar:5.3.9]
+	... 49 common frames omitted
+Caused by: org.springframework.core.NestedIOException: Failed to parse mapping resource: 'file [C:\Devel\workspace\vantalii\com.project.api\target\classes\mappers\eventMapper.xml]'; nested exception is org.apache.ibatis.builder.BuilderException: Error parsing Mapper XML. The XML location is 'file [C:\Devel\workspace\vantalii\com.project.api\target\classes\mappers\eventMapper.xml]'. Cause: org.apache.ibatis.builder.BuilderException: Error resolving class. Cause: org.apache.ibatis.type.TypeException: Could not resolve type alias 'com.project.data.mybatis.entity.Event'.  Cause: java.lang.ClassNotFoundException: Cannot find class: com.project.data.mybatis.entity.Event
+	at org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:596) ~[mybatis-spring-2.0.2.jar:2.0.2]
+	at org.mybatis.spring.SqlSessionFactoryBean.afterPropertiesSet(SqlSessionFactoryBean.java:475) ~[mybatis-spring-2.0.2.jar:2.0.2]
+	at org.mybatis.spring.SqlSessionFactoryBean.getObject(SqlSessionFactoryBean.java:616) ~[mybatis-spring-2.0.2.jar:2.0.2]
+	at org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration.sqlSessionFactory(MybatisAutoConfiguration.java:180) ~[mybatis-spring-boot-autoconfigure-2.1.0.jar:2.1.0]
+	at org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration$$EnhancerBySpringCGLIB$$574fa9a8.CGLIB$sqlSessionFactory$2(<generated>) ~[mybatis-spring-boot-autoconfigure-2.1.0.jar:2.1.0]
+	at org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration$$EnhancerBySpringCGLIB$$574fa9a8$$FastClassBySpringCGLIB$$c8692f1.invoke(<generated>) ~[mybatis-spring-boot-autoconfigure-2.1.0.jar:2.1.0]
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:244) ~[spring-core-5.3.9.jar:5.3.9]
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:331) ~[spring-context-5.3.9.jar:5.3.9]
+	at org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration$$EnhancerBySpringCGLIB$$574fa9a8.sqlSessionFactory(<generated>) ~[mybatis-spring-boot-autoconfigure-2.1.0.jar:2.1.0]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:564) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154) ~[spring-beans-5.3.9.jar:5.3.9]
+	... 50 common frames omitted
+Caused by: org.apache.ibatis.builder.BuilderException: Error parsing Mapper XML. The XML location is 'file [C:\Devel\workspace\vantalii\com.project.api\target\classes\mappers\eventMapper.xml]'. Cause: org.apache.ibatis.builder.BuilderException: Error resolving class. Cause: org.apache.ibatis.type.TypeException: Could not resolve type alias 'com.project.data.mybatis.entity.Event'.  Cause: java.lang.ClassNotFoundException: Cannot find class: com.project.data.mybatis.entity.Event
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.configurationElement(XMLMapperBuilder.java:122) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.parse(XMLMapperBuilder.java:94) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:594) ~[mybatis-spring-2.0.2.jar:2.0.2]
+	... 63 common frames omitted
+Caused by: org.apache.ibatis.builder.BuilderException: Error resolving class. Cause: org.apache.ibatis.type.TypeException: Could not resolve type alias 'com.project.data.mybatis.entity.Event'.  Cause: java.lang.ClassNotFoundException: Cannot find class: com.project.data.mybatis.entity.Event
+	at org.apache.ibatis.builder.BaseBuilder.resolveClass(BaseBuilder.java:118) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.resultMapElement(XMLMapperBuilder.java:262) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.resultMapElement(XMLMapperBuilder.java:253) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.resultMapElements(XMLMapperBuilder.java:245) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.configurationElement(XMLMapperBuilder.java:118) ~[mybatis-3.5.2.jar:3.5.2]
+	... 65 common frames omitted
+Caused by: org.apache.ibatis.type.TypeException: Could not resolve type alias 'com.project.data.mybatis.entity.Event'.  Cause: java.lang.ClassNotFoundException: Cannot find class: com.project.data.mybatis.entity.Event
+	at org.apache.ibatis.type.TypeAliasRegistry.resolveAlias(TypeAliasRegistry.java:120) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.builder.BaseBuilder.resolveAlias(BaseBuilder.java:149) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.builder.BaseBuilder.resolveClass(BaseBuilder.java:116) ~[mybatis-3.5.2.jar:3.5.2]
+	... 69 common frames omitted
+Caused by: java.lang.ClassNotFoundException: Cannot find class: com.project.data.mybatis.entity.Event
+	at org.apache.ibatis.io.ClassLoaderWrapper.classForName(ClassLoaderWrapper.java:200) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.io.ClassLoaderWrapper.classForName(ClassLoaderWrapper.java:89) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.io.Resources.classForName(Resources.java:261) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.type.TypeAliasRegistry.resolveAlias(TypeAliasRegistry.java:116) ~[mybatis-3.5.2.jar:3.5.2]
+	... 71 common frames omitted
+
+2021-08-06 12:30:28.084  INFO 18412 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-06 12:30:28.087  INFO 18412 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2021-08-06 12:30:28.182  INFO 18412 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-06 12:30:29.760  WARN 18412 --- [restartedMain] o.s.d.elasticsearch.support.VersionInfo  : Version mismatch in between Elasticsearch Client and Cluster: 7.12.1 - 7.13.4
+2021-08-06 12:30:30.440  INFO 18412 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-08-06 12:30:30.512  WARN 18412 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2021-08-06 12:30:30.550  WARN 18412 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2021-08-06 12:30:30.703  INFO 18412 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-08-06 12:30:31.149  INFO 18412 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2021-08-06 12:30:31.170  INFO 18412 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2021-08-06 12:30:31.223  INFO 18412 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2021-08-06 12:30:31.522  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCompaniesUsingGET_1
+2021-08-06 12:30:31.769  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCommentByIdUsingGET_1
+2021-08-06 12:30:31.772  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCommentResponseUsingGET_1
+2021-08-06 12:30:31.774  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getPlaceCommentsUsingGET_1
+2021-08-06 12:30:31.785  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: savePlaceCommentUsingPOST_1
+2021-08-06 12:30:31.795  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: updateStatusUsingPOST_1
+2021-08-06 12:30:31.806  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteTimeTableByIdUsingDELETE_1
+2021-08-06 12:30:31.810  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllPagesByFilterUsingGET_1
+2021-08-06 12:30:31.816  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findFilesUsingGET_1
+2021-08-06 12:30:31.821  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findPageByIdAndLanguageUsingGET_1
+2021-08-06 12:30:31.828  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findPageByIdAndLanguageUsingGET_2
+2021-08-06 12:30:31.832  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getTimeTableByEventIdUsingGET_1
+2021-08-06 12:30:31.851  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: saveLandingPageUsingPOST_1
+2021-08-06 12:30:31.865  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: savePlaceUsingPOST_1
+2021-08-06 12:30:31.875  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: saveTimeTableUsingPOST_1
+2021-08-06 12:30:31.885  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: setMainPageUsingPOST_1
+2021-08-06 12:30:31.888  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllPlaceUsingGET_1
+2021-08-06 12:30:32.480  INFO 18412 --- [cluster-ClusterId{value='610d01360d5306056ea8b1c6', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Exception in monitor thread while connecting to server localhost:27017
+
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:143) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:188) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:144) ~[mongodb-driver-core-4.2.3.jar:na]
+	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:660) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:549) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:597) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:333) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:648) ~[na:na]
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65) ~[mongodb-driver-core-4.2.3.jar:na]
+	... 4 common frames omitted
+
+2021-08-06 12:30:32.838  INFO 18412 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-08-06 12:30:33.777  INFO 18412 --- [http-nio-8081-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2021-08-06 12:30:33.987  INFO 18412 --- [http-nio-8081-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2021-08-06 12:30:34.043 ERROR 18412 --- [http-nio-8081-exec-2] c.p.a.utils.CustomRestExceptionHandler   : error
+
+org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.reflection.ReflectionException: There is no getter for property named 'place' in 'class com.project.data.mybatis.entity.EventEntity'
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:78) ~[mybatis-spring-2.0.2.jar:2.0.2]
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:440) ~[mybatis-spring-2.0.2.jar:2.0.2]
+	at com.sun.proxy.$Proxy102.selectList(Unknown Source) ~[na:na]
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:223) ~[mybatis-spring-2.0.2.jar:2.0.2]
+	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:147) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:80) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:57) ~[mybatis-3.5.2.jar:3.5.2]
+	at com.sun.proxy.$Proxy120.findAllEventsByFilter(Unknown Source) ~[na:na]
+	at com.project.api.data.service.impl.EventService.getEvents(EventService.java:70) ~[classes/:na]
+	at com.project.api.controller.event.EventRestController.getEvents(EventRestController.java:116) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:564) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:197) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:141) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:106) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1064) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655) ~[tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) ~[tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:228) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96) ~[spring-boot-actuator-2.5.3.jar:2.5.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1723) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630) ~[na:na]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
+Caused by: org.apache.ibatis.reflection.ReflectionException: There is no getter for property named 'place' in 'class com.project.data.mybatis.entity.EventEntity'
+	at org.apache.ibatis.reflection.Reflector.getGetInvoker(Reflector.java:371) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.reflection.MetaClass.getGetInvoker(MetaClass.java:163) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.reflection.wrapper.BeanWrapper.getBeanProperty(BeanWrapper.java:162) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.reflection.wrapper.BeanWrapper.get(BeanWrapper.java:49) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.reflection.MetaObject.getValue(MetaObject.java:122) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.reflection.MetaObject.metaObjectForProperty(MetaObject.java:145) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.reflection.MetaObject.setValue(MetaObject.java:129) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.applyPropertyMappings(DefaultResultSetHandler.java:455) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.getRowValue(DefaultResultSetHandler.java:404) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleRowValuesForSimpleResultMap(DefaultResultSetHandler.java:354) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleRowValues(DefaultResultSetHandler.java:328) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleResultSet(DefaultResultSetHandler.java:301) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleResultSets(DefaultResultSetHandler.java:194) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:65) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:79) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:63) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:324) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:156) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:109) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:83) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:147) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:140) ~[mybatis-3.5.2.jar:3.5.2]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:564) ~[na:na]
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:426) ~[mybatis-spring-2.0.2.jar:2.0.2]
+	... 54 common frames omitted
+
+2021-08-06 12:30:57.023  INFO 18412 --- [Thread-4] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2021-08-06 12:30:57.028  INFO 18412 --- [Thread-4] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2021-08-06 12:30:57.910  INFO 18412 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-06 12:30:57.910  INFO 18412 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2021-08-06 12:30:57.940  INFO 18412 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-06 12:30:58.777  INFO 18412 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-08-06 12:30:58.781  WARN 18412 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2021-08-06 12:30:58.811  WARN 18412 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2021-08-06 12:30:58.862  INFO 18412 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-08-06 12:30:59.011  INFO 18412 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2021-08-06 12:30:59.012  INFO 18412 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2021-08-06 12:30:59.025  INFO 18412 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2021-08-06 12:30:59.161  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCompaniesUsingGET_1
+2021-08-06 12:30:59.362  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCommentByIdUsingGET_1
+2021-08-06 12:30:59.365  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCommentResponseUsingGET_1
+2021-08-06 12:30:59.367  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getPlaceCommentsUsingGET_1
+2021-08-06 12:30:59.376  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: savePlaceCommentUsingPOST_1
+2021-08-06 12:30:59.386  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: updateStatusUsingPOST_1
+2021-08-06 12:30:59.396  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteTimeTableByIdUsingDELETE_1
+2021-08-06 12:30:59.400  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllPagesByFilterUsingGET_1
+2021-08-06 12:30:59.407  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findFilesUsingGET_1
+2021-08-06 12:30:59.408  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findPageByIdAndLanguageUsingGET_1
+2021-08-06 12:30:59.414  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findPageByIdAndLanguageUsingGET_2
+2021-08-06 12:30:59.418  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getTimeTableByEventIdUsingGET_1
+2021-08-06 12:30:59.435  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: saveLandingPageUsingPOST_1
+2021-08-06 12:30:59.448  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: savePlaceUsingPOST_1
+2021-08-06 12:30:59.458  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: saveTimeTableUsingPOST_1
+2021-08-06 12:30:59.467  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: setMainPageUsingPOST_1
+2021-08-06 12:30:59.470  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllPlaceUsingGET_1
+2021-08-06 12:31:00.784  INFO 18412 --- [cluster-ClusterId{value='610d01520d5306056ea8b1c7', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Exception in monitor thread while connecting to server localhost:27017
+
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:143) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:188) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:144) ~[mongodb-driver-core-4.2.3.jar:na]
+	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:660) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:549) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:597) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:333) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:648) ~[na:na]
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65) ~[mongodb-driver-core-4.2.3.jar:na]
+	... 4 common frames omitted
+
+2021-08-06 12:31:05.805  INFO 18412 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-06 12:31:05.805  INFO 18412 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2021-08-06 12:31:05.836  INFO 18412 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-06 12:31:06.758  INFO 18412 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-08-06 12:31:06.761  WARN 18412 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2021-08-06 12:31:06.794  WARN 18412 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2021-08-06 12:31:06.857  INFO 18412 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-08-06 12:31:07.015  INFO 18412 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2021-08-06 12:31:07.016  INFO 18412 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2021-08-06 12:31:07.028  INFO 18412 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2021-08-06 12:31:07.167  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCompaniesUsingGET_1
+2021-08-06 12:31:07.360  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCommentByIdUsingGET_1
+2021-08-06 12:31:07.362  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCommentResponseUsingGET_1
+2021-08-06 12:31:07.364  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getPlaceCommentsUsingGET_1
+2021-08-06 12:31:07.374  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: savePlaceCommentUsingPOST_1
+2021-08-06 12:31:07.383  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: updateStatusUsingPOST_1
+2021-08-06 12:31:07.394  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteTimeTableByIdUsingDELETE_1
+2021-08-06 12:31:07.397  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllPagesByFilterUsingGET_1
+2021-08-06 12:31:07.403  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findFilesUsingGET_1
+2021-08-06 12:31:07.404  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findPageByIdAndLanguageUsingGET_1
+2021-08-06 12:31:07.410  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findPageByIdAndLanguageUsingGET_2
+2021-08-06 12:31:07.414  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getTimeTableByEventIdUsingGET_1
+2021-08-06 12:31:07.432  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: saveLandingPageUsingPOST_1
+2021-08-06 12:31:07.445  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: savePlaceUsingPOST_1
+2021-08-06 12:31:07.455  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: saveTimeTableUsingPOST_1
+2021-08-06 12:31:07.464  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: setMainPageUsingPOST_1
+2021-08-06 12:31:07.467  INFO 18412 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllPlaceUsingGET_1
+2021-08-06 12:31:08.769  INFO 18412 --- [cluster-ClusterId{value='610d015a0d5306056ea8b1c8', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Exception in monitor thread while connecting to server localhost:27017
+
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:143) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:188) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:144) ~[mongodb-driver-core-4.2.3.jar:na]
+	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:660) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:549) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:597) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:333) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:648) ~[na:na]
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65) ~[mongodb-driver-core-4.2.3.jar:na]
+	... 4 common frames omitted
+
+2021-08-06 12:31:15.868  INFO 18412 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-06 12:31:15.868  INFO 18412 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2021-08-06 12:31:15.898  INFO 18412 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-06 12:31:23.527  INFO 28308 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-06 12:31:23.529  INFO 28308 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2021-08-06 12:31:23.633  INFO 28308 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-06 12:31:25.178  WARN 28308 --- [restartedMain] o.s.d.elasticsearch.support.VersionInfo  : Version mismatch in between Elasticsearch Client and Cluster: 7.12.1 - 7.13.4
+2021-08-06 12:31:25.914  INFO 28308 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-08-06 12:31:25.986  WARN 28308 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2021-08-06 12:31:26.023  WARN 28308 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2021-08-06 12:31:26.183  INFO 28308 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-08-06 12:31:26.616  INFO 28308 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2021-08-06 12:31:26.636  INFO 28308 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2021-08-06 12:31:26.686  INFO 28308 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2021-08-06 12:31:26.980  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCompaniesUsingGET_1
+2021-08-06 12:31:27.213  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCommentByIdUsingGET_1
+2021-08-06 12:31:27.215  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCommentResponseUsingGET_1
+2021-08-06 12:31:27.218  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getPlaceCommentsUsingGET_1
+2021-08-06 12:31:27.228  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: savePlaceCommentUsingPOST_1
+2021-08-06 12:31:27.239  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: updateStatusUsingPOST_1
+2021-08-06 12:31:27.251  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteTimeTableByIdUsingDELETE_1
+2021-08-06 12:31:27.255  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllPagesByFilterUsingGET_1
+2021-08-06 12:31:27.261  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findFilesUsingGET_1
+2021-08-06 12:31:27.264  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findPageByIdAndLanguageUsingGET_1
+2021-08-06 12:31:27.271  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findPageByIdAndLanguageUsingGET_2
+2021-08-06 12:31:27.275  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getTimeTableByEventIdUsingGET_1
+2021-08-06 12:31:27.293  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: saveLandingPageUsingPOST_1
+2021-08-06 12:31:27.306  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: savePlaceUsingPOST_1
+2021-08-06 12:31:27.316  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: saveTimeTableUsingPOST_1
+2021-08-06 12:31:27.326  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: setMainPageUsingPOST_1
+2021-08-06 12:31:27.329  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllPlaceUsingGET_1
+2021-08-06 12:31:27.957  INFO 28308 --- [cluster-ClusterId{value='610d016d0e041c12edb1ea9e', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Exception in monitor thread while connecting to server localhost:27017
+
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:143) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:188) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:144) ~[mongodb-driver-core-4.2.3.jar:na]
+	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:660) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:549) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:597) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:333) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:648) ~[na:na]
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65) ~[mongodb-driver-core-4.2.3.jar:na]
+	... 4 common frames omitted
+
+2021-08-06 12:31:28.013  INFO 28308 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-08-06 12:31:29.711  INFO 28308 --- [http-nio-8081-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2021-08-06 12:31:29.875  INFO 28308 --- [http-nio-8081-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2021-08-06 12:32:54.055 ERROR 28308 --- [http-nio-8081-exec-2] c.p.a.utils.CustomRestExceptionHandler   : error
+
+java.lang.NullPointerException: Cannot invoke "String.indexOf(String)" because "path" is null
+	at org.springframework.web.util.UrlPathHelper.getSanitizedPath(UrlPathHelper.java:409) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.util.UrlPathHelper.decodeAndCleanUriString(UrlPathHelper.java:550) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.util.UrlPathHelper.getOriginatingRequestUri(UrlPathHelper.java:495) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor.addContentDispositionHeader(AbstractMessageConverterMethodProcessor.java:431) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor.writeWithMessageConverters(AbstractMessageConverterMethodProcessor.java:288) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.HttpEntityMethodProcessor.handleReturnValue(HttpEntityMethodProcessor.java:219) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.method.support.HandlerMethodReturnValueHandlerComposite.handleReturnValue(HandlerMethodReturnValueHandlerComposite.java:78) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:124) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1064) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655) ~[tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) ~[tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:228) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96) ~[spring-boot-actuator-2.5.3.jar:2.5.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1723) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630) ~[na:na]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
+
+2021-08-06 12:32:54.058  WARN 28308 --- [http-nio-8081-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Failure in @ExceptionHandler com.project.api.utils.CustomRestExceptionHandler#handleAll(Exception, WebRequest)
+
+java.lang.NullPointerException: Cannot invoke "String.indexOf(String)" because "path" is null
+	at org.springframework.web.util.UrlPathHelper.getSanitizedPath(UrlPathHelper.java:409) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.util.UrlPathHelper.decodeAndCleanUriString(UrlPathHelper.java:550) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.util.UrlPathHelper.getOriginatingRequestUri(UrlPathHelper.java:495) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor.addContentDispositionHeader(AbstractMessageConverterMethodProcessor.java:431) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.AbstractMessageConverterMethodProcessor.writeWithMessageConverters(AbstractMessageConverterMethodProcessor.java:288) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.HttpEntityMethodProcessor.handleReturnValue(HttpEntityMethodProcessor.java:219) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.method.support.HandlerMethodReturnValueHandlerComposite.handleReturnValue(HandlerMethodReturnValueHandlerComposite.java:78) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:124) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver.doResolveHandlerMethodException(ExceptionHandlerExceptionResolver.java:428) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodExceptionResolver.doResolveException(AbstractHandlerMethodExceptionResolver.java:75) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver.resolveException(AbstractHandlerExceptionResolver.java:141) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.handler.HandlerExceptionResolverComposite.resolveException(HandlerExceptionResolverComposite.java:80) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.processHandlerException(DispatcherServlet.java:1324) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.processDispatchResult(DispatcherServlet.java:1135) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1081) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655) ~[tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) ~[tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:228) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96) ~[spring-boot-actuator-2.5.3.jar:2.5.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1723) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630) ~[na:na]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
+
+2021-08-06 12:32:54.060 ERROR 28308 --- [http-nio-8081-exec-2] o.s.web.servlet.HandlerExecutionChain    : HandlerInterceptor.afterCompletion threw exception
+
+java.lang.NullPointerException: Cannot invoke "org.springframework.boot.actuate.metrics.web.servlet.LongTaskTimingHandlerInterceptor$LongTaskTimingContext.getLongTaskTimerSamples()" because "timingContext" is null
+	at org.springframework.boot.actuate.metrics.web.servlet.LongTaskTimingHandlerInterceptor.stopLongTaskTimers(LongTaskTimingHandlerInterceptor.java:133) ~[spring-boot-actuator-2.5.3.jar:2.5.3]
+	at org.springframework.boot.actuate.metrics.web.servlet.LongTaskTimingHandlerInterceptor.afterCompletion(LongTaskTimingHandlerInterceptor.java:83) ~[spring-boot-actuator-2.5.3.jar:2.5.3]
+	at org.springframework.web.servlet.HandlerExecutionChain.triggerAfterCompletion(HandlerExecutionChain.java:178) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.triggerAfterCompletion(DispatcherServlet.java:1451) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1084) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655) ~[tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) ~[tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:228) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96) ~[spring-boot-actuator-2.5.3.jar:2.5.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1723) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630) ~[na:na]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
+
+2021-08-06 12:32:54.063  WARN 28308 --- [http-nio-8081-exec-2] o.s.b.a.m.w.servlet.WebMvcMetricsFilter  : Failed to record timer metrics
+
+java.lang.NullPointerException: null
+	at java.base/java.util.Objects.requireNonNull(Objects.java:208) ~[na:na]
+	at io.micrometer.core.instrument.ImmutableTag.<init>(ImmutableTag.java:35) ~[micrometer-core-1.7.2.jar:1.7.2]
+	at io.micrometer.core.instrument.Tag.of(Tag.java:29) ~[micrometer-core-1.7.2.jar:1.7.2]
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcTags.method(WebMvcTags.java:74) ~[spring-boot-actuator-2.5.3.jar:2.5.3]
+	at org.springframework.boot.actuate.metrics.web.servlet.DefaultWebMvcTagsProvider.getTags(DefaultWebMvcTagsProvider.java:74) ~[spring-boot-actuator-2.5.3.jar:2.5.3]
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.getTimer(WebMvcMetricsFilter.java:161) ~[spring-boot-actuator-2.5.3.jar:2.5.3]
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.lambda$record$0(WebMvcMetricsFilter.java:139) ~[spring-boot-actuator-2.5.3.jar:2.5.3]
+	at org.springframework.boot.actuate.metrics.AutoTimer.apply(AutoTimer.java:109) ~[spring-boot-actuator-2.5.3.jar:2.5.3]
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.record(WebMvcMetricsFilter.java:138) ~[spring-boot-actuator-2.5.3.jar:2.5.3]
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:108) ~[spring-boot-actuator-2.5.3.jar:2.5.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1723) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630) ~[na:na]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
+
+2021-08-06 12:32:54.080  INFO 28308 --- [Thread-4] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2021-08-06 12:32:54.086  INFO 28308 --- [Thread-4] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2021-08-06 12:32:54.984  INFO 28308 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-06 12:32:54.985  INFO 28308 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2021-08-06 12:32:55.018  INFO 28308 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-06 12:32:55.981  INFO 28308 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-08-06 12:32:55.987  WARN 28308 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2021-08-06 12:32:56.032  WARN 28308 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2021-08-06 12:32:56.094  INFO 28308 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-08-06 12:32:56.256  INFO 28308 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2021-08-06 12:32:56.257  INFO 28308 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2021-08-06 12:32:56.270  INFO 28308 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2021-08-06 12:32:56.411  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCompaniesUsingGET_1
+2021-08-06 12:32:56.614  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCommentByIdUsingGET_1
+2021-08-06 12:32:56.616  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCommentResponseUsingGET_1
+2021-08-06 12:32:56.618  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getPlaceCommentsUsingGET_1
+2021-08-06 12:32:56.628  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: savePlaceCommentUsingPOST_1
+2021-08-06 12:32:56.637  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: updateStatusUsingPOST_1
+2021-08-06 12:32:56.648  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteTimeTableByIdUsingDELETE_1
+2021-08-06 12:32:56.652  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllPagesByFilterUsingGET_1
+2021-08-06 12:32:56.658  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findFilesUsingGET_1
+2021-08-06 12:32:56.660  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findPageByIdAndLanguageUsingGET_1
+2021-08-06 12:32:56.666  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findPageByIdAndLanguageUsingGET_2
+2021-08-06 12:32:56.670  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getTimeTableByEventIdUsingGET_1
+2021-08-06 12:32:56.688  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: saveLandingPageUsingPOST_1
+2021-08-06 12:32:56.701  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: savePlaceUsingPOST_1
+2021-08-06 12:32:56.712  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: saveTimeTableUsingPOST_1
+2021-08-06 12:32:56.730  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: setMainPageUsingPOST_1
+2021-08-06 12:32:56.735  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllPlaceUsingGET_1
+2021-08-06 12:32:57.987  INFO 28308 --- [cluster-ClusterId{value='610d01c70e041c12edb1ea9f', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Exception in monitor thread while connecting to server localhost:27017
+
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:143) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:188) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:144) ~[mongodb-driver-core-4.2.3.jar:na]
+	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:660) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:549) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:597) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:333) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:648) ~[na:na]
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65) ~[mongodb-driver-core-4.2.3.jar:na]
+	... 4 common frames omitted
+
+2021-08-06 12:33:00.968  INFO 28308 --- [http-nio-8081-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-08-06 12:33:00.972  INFO 28308 --- [http-nio-8081-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2021-08-06 12:33:01.000  INFO 28308 --- [http-nio-8081-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2021-08-06 12:33:01.050 ERROR 28308 --- [http-nio-8081-exec-2] c.p.a.utils.CustomRestExceptionHandler   : error
+
+org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column 'ev.biletixId' in 'field list'
+### The error may exist in file [C:\Devel\workspace\vantalii\com.project.api\target\classes\mappers\eventMapper.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT  ev.id, ev.place_id,  ev.type, ev.period_type, ? AS language,         ev.start_date, ev.start_time, ev.end_date, ev.end_time, ev.show_start_time, ev.show_end_time,         CASE ? WHEN 'TR' THEN ev.tr_name WHEN 'EN' THEN ev.en_name WHEN 'RU' THEN ev.ru_name WHEN 'DE' THEN ev.de_name END AS name,          CASE ? WHEN 'TR' THEN ev.tr_slug WHEN 'EN' THEN ev.en_slug WHEN 'RU' THEN ev.ru_slug WHEN 'DE' THEN ev.de_slug END AS slug,          ev.create_datetime, ev.update_datetime, ev.all_day, ev.fee_type, ev.master_id, ev.duration, ev.time_table_id, ev.status, ev.biletixId         FROM project.event_view ev         WHERE   ev.id = IF(? = 0, ev.id, ?)                                                  AND ev.status = ?                                                  AND ev.place_id = ?                   ORDER BY ev.id, ev.start_time ASC
+### Cause: java.sql.SQLSyntaxErrorException: Unknown column 'ev.biletixId' in 'field list'
+; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: Unknown column 'ev.biletixId' in 'field list'
+	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:239) ~[spring-jdbc-5.3.9.jar:5.3.9]
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:70) ~[spring-jdbc-5.3.9.jar:5.3.9]
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:74) ~[mybatis-spring-2.0.2.jar:2.0.2]
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:440) ~[mybatis-spring-2.0.2.jar:2.0.2]
+	at com.sun.proxy.$Proxy102.selectList(Unknown Source) ~[na:na]
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:223) ~[mybatis-spring-2.0.2.jar:2.0.2]
+	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:147) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:80) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:57) ~[mybatis-3.5.2.jar:3.5.2]
+	at com.sun.proxy.$Proxy173.findAllEventsByFilter(Unknown Source) ~[na:na]
+	at com.project.api.data.service.impl.EventService.getEvents(EventService.java:70) ~[classes/:na]
+	at com.project.api.controller.event.EventRestController.getEvents(EventRestController.java:116) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:564) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:197) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:141) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:106) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1064) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655) ~[tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.3.9.jar:5.3.9]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764) ~[tomcat-embed-core-9.0.50.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:228) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96) ~[spring-boot-actuator-2.5.3.jar:2.5.3]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.3.9.jar:5.3.9]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:190) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:163) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:382) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1723) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630) ~[na:na]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.50.jar:9.0.50]
+	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
+Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'ev.biletixId' in 'field list'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:370) ~[mysql-connector-java-8.0.26.jar:8.0.26]
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44) ~[HikariCP-4.0.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.execute(HikariProxyPreparedStatement.java) ~[HikariCP-4.0.3.jar:na]
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:64) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:79) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:63) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:324) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:156) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:109) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:83) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:147) ~[mybatis-3.5.2.jar:3.5.2]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:140) ~[mybatis-3.5.2.jar:3.5.2]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:564) ~[na:na]
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:426) ~[mybatis-spring-2.0.2.jar:2.0.2]
+	... 54 common frames omitted
+
+2021-08-06 12:33:13.763  INFO 28308 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2021-08-06 12:33:13.765  INFO 28308 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2021-08-06 12:33:14.680  INFO 28308 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-06 12:33:14.680  INFO 28308 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2021-08-06 12:33:14.711  INFO 28308 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-06 12:33:15.647  INFO 28308 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-08-06 12:33:15.653  WARN 28308 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2021-08-06 12:33:15.689  WARN 28308 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2021-08-06 12:33:15.762  INFO 28308 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-08-06 12:33:15.952  INFO 28308 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2021-08-06 12:33:15.953  INFO 28308 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2021-08-06 12:33:15.966  INFO 28308 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2021-08-06 12:33:16.113  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCompaniesUsingGET_1
+2021-08-06 12:33:16.307  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCommentByIdUsingGET_1
+2021-08-06 12:33:16.310  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCommentResponseUsingGET_1
+2021-08-06 12:33:16.312  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getPlaceCommentsUsingGET_1
+2021-08-06 12:33:16.322  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: savePlaceCommentUsingPOST_1
+2021-08-06 12:33:16.332  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: updateStatusUsingPOST_1
+2021-08-06 12:33:16.344  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteTimeTableByIdUsingDELETE_1
+2021-08-06 12:33:16.348  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllPagesByFilterUsingGET_1
+2021-08-06 12:33:16.354  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findFilesUsingGET_1
+2021-08-06 12:33:16.356  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findPageByIdAndLanguageUsingGET_1
+2021-08-06 12:33:16.362  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findPageByIdAndLanguageUsingGET_2
+2021-08-06 12:33:16.366  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getTimeTableByEventIdUsingGET_1
+2021-08-06 12:33:16.385  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: saveLandingPageUsingPOST_1
+2021-08-06 12:33:16.400  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: savePlaceUsingPOST_1
+2021-08-06 12:33:16.423  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: saveTimeTableUsingPOST_1
+2021-08-06 12:33:16.440  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: setMainPageUsingPOST_1
+2021-08-06 12:33:16.445  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllPlaceUsingGET_1
+2021-08-06 12:33:17.653  INFO 28308 --- [cluster-ClusterId{value='610d01db0e041c12edb1eaa0', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Exception in monitor thread while connecting to server localhost:27017
+
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:143) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:188) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:144) ~[mongodb-driver-core-4.2.3.jar:na]
+	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:660) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:549) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:597) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:333) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:648) ~[na:na]
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65) ~[mongodb-driver-core-4.2.3.jar:na]
+	... 4 common frames omitted
+
+2021-08-06 12:33:32.605  INFO 28308 --- [http-nio-8081-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-08-06 12:33:32.610  INFO 28308 --- [http-nio-8081-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2021-08-06 12:33:33.662  INFO 28308 --- [http-nio-8081-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2021-08-06 12:34:35.669  INFO 28308 --- [Thread-11] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2021-08-06 12:34:35.671  INFO 28308 --- [Thread-11] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2021-08-06 12:34:36.574  INFO 28308 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-06 12:34:36.574  INFO 28308 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2021-08-06 12:34:36.605  INFO 28308 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-06 12:34:37.534  INFO 28308 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-08-06 12:34:37.539  WARN 28308 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2021-08-06 12:34:37.574  WARN 28308 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2021-08-06 12:34:37.632  INFO 28308 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-08-06 12:34:37.802  INFO 28308 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2021-08-06 12:34:37.803  INFO 28308 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2021-08-06 12:34:37.817  INFO 28308 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2021-08-06 12:34:37.957  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCompaniesUsingGET_1
+2021-08-06 12:34:38.142  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCommentByIdUsingGET_1
+2021-08-06 12:34:38.144  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCommentResponseUsingGET_1
+2021-08-06 12:34:38.146  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getPlaceCommentsUsingGET_1
+2021-08-06 12:34:38.156  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: savePlaceCommentUsingPOST_1
+2021-08-06 12:34:38.166  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: updateStatusUsingPOST_1
+2021-08-06 12:34:38.177  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteTimeTableByIdUsingDELETE_1
+2021-08-06 12:34:38.181  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllPagesByFilterUsingGET_1
+2021-08-06 12:34:38.186  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findFilesUsingGET_1
+2021-08-06 12:34:38.188  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findPageByIdAndLanguageUsingGET_1
+2021-08-06 12:34:38.194  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findPageByIdAndLanguageUsingGET_2
+2021-08-06 12:34:38.198  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getTimeTableByEventIdUsingGET_1
+2021-08-06 12:34:38.217  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: saveLandingPageUsingPOST_1
+2021-08-06 12:34:38.231  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: savePlaceUsingPOST_1
+2021-08-06 12:34:38.246  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: saveTimeTableUsingPOST_1
+2021-08-06 12:34:38.259  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: setMainPageUsingPOST_1
+2021-08-06 12:34:38.264  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllPlaceUsingGET_1
+2021-08-06 12:34:39.540  INFO 28308 --- [cluster-ClusterId{value='610d022d0e041c12edb1eaa1', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Exception in monitor thread while connecting to server localhost:27017
+
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:143) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:188) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:144) ~[mongodb-driver-core-4.2.3.jar:na]
+	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:660) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:549) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:597) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:333) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:648) ~[na:na]
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65) ~[mongodb-driver-core-4.2.3.jar:na]
+	... 4 common frames omitted
+
+2021-08-06 12:34:58.803  INFO 28308 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-06 12:34:58.803  INFO 28308 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2021-08-06 12:34:58.830  INFO 28308 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-06 12:34:59.780  INFO 28308 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms'}
+2021-08-06 12:34:59.784  WARN 28308 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2021-08-06 12:34:59.817  WARN 28308 --- [restartedMain] o.s.data.convert.CustomConversions       : Registering converter from class java.time.LocalDateTime to class org.joda.time.LocalDateTime as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+2021-08-06 12:34:59.877  INFO 28308 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-08-06 12:35:00.037  INFO 28308 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2021-08-06 12:35:00.038  INFO 28308 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2021-08-06 12:35:00.051  INFO 28308 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2021-08-06 12:35:00.190  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCompaniesUsingGET_1
+2021-08-06 12:35:00.371  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCommentByIdUsingGET_1
+2021-08-06 12:35:00.373  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getCommentResponseUsingGET_1
+2021-08-06 12:35:00.375  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getPlaceCommentsUsingGET_1
+2021-08-06 12:35:00.385  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: savePlaceCommentUsingPOST_1
+2021-08-06 12:35:00.401  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: updateStatusUsingPOST_1
+2021-08-06 12:35:00.413  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteTimeTableByIdUsingDELETE_1
+2021-08-06 12:35:00.418  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllPagesByFilterUsingGET_1
+2021-08-06 12:35:00.426  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findFilesUsingGET_1
+2021-08-06 12:35:00.427  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findPageByIdAndLanguageUsingGET_1
+2021-08-06 12:35:00.439  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findPageByIdAndLanguageUsingGET_2
+2021-08-06 12:35:00.444  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getTimeTableByEventIdUsingGET_1
+2021-08-06 12:35:00.466  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: saveLandingPageUsingPOST_1
+2021-08-06 12:35:00.479  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: savePlaceUsingPOST_1
+2021-08-06 12:35:00.489  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: saveTimeTableUsingPOST_1
+2021-08-06 12:35:00.498  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: setMainPageUsingPOST_1
+2021-08-06 12:35:00.500  INFO 28308 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findAllPlaceUsingGET_1
+2021-08-06 12:35:01.785  INFO 28308 --- [cluster-ClusterId{value='610d02430e041c12edb1eaa2', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Exception in monitor thread while connecting to server localhost:27017
+
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:143) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:188) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:144) ~[mongodb-driver-core-4.2.3.jar:na]
+	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:660) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:549) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:597) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:333) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:648) ~[na:na]
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79) ~[mongodb-driver-core-4.2.3.jar:na]
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65) ~[mongodb-driver-core-4.2.3.jar:na]
+	... 4 common frames omitted
+
+2021-08-06 12:36:00.889  INFO 28308 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-06 12:36:00.890  INFO 28308 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.50]
+2021-08-06 12:36:00.918  INFO 28308 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext

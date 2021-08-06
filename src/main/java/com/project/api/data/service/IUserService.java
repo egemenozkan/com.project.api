@@ -6,13 +6,13 @@ import com.project.api.data.model.user.UserSearchRequest;
 import com.project.common.model.User;
 
 public interface IUserService {
-	int createUser(User user);
+	long createUser(User user);
 
 	List<User> findAllUsers(UserSearchRequest userSearchRequest);
 
 	User updateUser(User user);
 
-	User getUserById(int id);
+	User getUserById(long id);
 
 	User getUserByEmailOrUsername(String emailOrUsername);
 

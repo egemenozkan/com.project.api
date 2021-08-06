@@ -19,9 +19,6 @@ server:
   
       
 logging:
-  level: 
-    org.springframework: WARN
-    com.project: WARN
   file:
     path: log 
     name: api-log
